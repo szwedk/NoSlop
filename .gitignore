@@ -1,0 +1,7 @@
+*.xcodeproj/
+xcuserdata/
+DerivedData/
+build/
+node_modules/
+.DS_Store
+tests/.cache/

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "NoSlop",
+  "version": "0.1.0",
+  "description": "Removes AI-generated content and AI slop from your feeds.",
+  "icons": { "48": "images/icon-48.png", "96": "images/icon-96.png", "128": "images/icon-128.png", "256": "images/icon-256.png", "512": "images/icon-512.png" },
+  "background": { "scripts": ["background.js"], "persistent": false },
+  "content_scripts": [
+    { "matches": ["*://*.youtube.com/*"], "js": ["content.js"], "run_at": "document_start" }
+  ],
+  "permissions": ["storage", "nativeMessaging"],
+  "browser_specific_settings": { "safari": { "strict_min_version": "17.0" } }
+}
