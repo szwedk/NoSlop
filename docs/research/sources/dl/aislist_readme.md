@@ -1,0 +1,112 @@
+<div align="center">
+  
+[![Discord](https://img.shields.io/discord/1454479086964576477?color=7289da&label=Join&logo=discord&logoColor=ffffff&style=for-the-badge)](https://discord.gg/6zn9y2GYbE)
+![API Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Override92/37698312a7642ef30df91abfbec57a00/raw/backend-status.json&style=for-the-badge&label=API)
+[![Statistics](https://img.shields.io/badge/📈_View-Statistics-4BB0C6?style=for-the-badge)](https://override92.github.io/AiSList/stats.html)
+<!--![AI Detection Status](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Override92/0fc97e007bafebf4d081d43e4cd725a2/raw/api-status.json&style=for-the-badge&label=AI-Detection)-->
+</br>
+<a href="https://ko-fi.com/R6R41JCKWA" target="_blank">
+    <img src="https://ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png" 
+         alt="Support me on Ko-fi" 
+         height="36">
+</a>
+
+# AiSList
+Community-maintained lists of YouTube channels that primarily use AI-generated content. These lists are used by the [AiBlock for Youtube](https://github.com/Override92/AiBlock) browser extension to help you filter AI-generated content on YouTube.
+</div>
+
+<div align="center">
+  
+## 🎉 **What's New**
+You can now directly submit channels from within the extension. Either use the context menu, the small flag in the media controls of the video player or the "Submit AI Channel"-tab in the extension popup.
+Don't forget to set your username in the settings.
+
+</div>
+
+<br/>
+<div align="center">
+
+<!-- LEADERBOARD:START -->
+## 🏆 Top 10 Contributor Leaderboard
+
+| Rank | Contributor | Contributed Channels |
+|------|-------------|---------------|
+| 🥇 1 | [@crazypillx](https://github.com/crazypillx) | 8576 |
+| 🥈 2 | [@Thibaultmol](https://github.com/Thibaultmol) | 6889 |
+| 🥉 3 | [@www2](https://github.com/www2) | 4272 |
+| 4 | [@Robert Ivens](https://github.com/Robert%20Ivens) | 3545 |
+| 5 | [@FedupOfAI](https://github.com/FedupOfAI) | 2226 |
+| 6 | [@magikarp](https://github.com/magikarp) | 589 |
+| 7 | [@BallsMcTits](https://github.com/BallsMcTits) | 399 |
+| 8 | [@Beavermafia](https://github.com/Beavermafia) | 382 |
+| 9 | [@Oflogon](https://github.com/Oflogon) | 342 |
+| 10 | [@tomjas1963](https://github.com/tomjas1963) | 319 |
+
+<!-- LEADERBOARD:END -->
+_This leaderboard is automatically updated once a day. You can find an hourly updated ranking on our Discord server._
+</div>
+
+## How to Contribute
+I welcome contributions from the community! Please help by identifying channels on YouTube that produce useless AI-generated content.
+
+### Before You Submit
+
+**What qualifies as an AI channel?**
+
+A YouTube channel should be added if it:
+- Uses AI-generated voices (text-to-speech, synthetic narration) as primary content
+- Uses AI-generated visuals (Midjourney, DALL-E, Stable Diffusion)
+- Uses AI-generated scripts
+- AI-generated music
+- Heavily relies on automation with minimal human creativity
+- Mass-produces content using AI tools
+
+**What does NOT qualify?**
+
+- Channels that occasionally use AI tools as part of creative work
+- Channels that review or discuss AI technology
+- Channels with light AI editing assistance (grammar, suggestions)
+- Educational content about AI
+
+**When in doubt:** 
+- Possible case for the warnlist
+
+### Submission Methods
+
+Always provide evidence!
+
+#### - Submit directly from browser extension (Recommended)
+#### - [Submission on discord server](https://discord.gg/6zn9y2GYbE)
+#### - [GitHub Issue](https://github.com/Override92/AiSList/issues/new?template=report-ai-channel.md) 
+#### - Bulk submission on hold
+
+<br/>
+
+## Removal Requests
+
+If you are certain that a channel is not using AI-generated content or doesn't meet the qualification criteria, you can request the removal from a list.
+Always provide channelHandle, a detailed description and at least one video as evidence.
+Be aware that removals will not be handled with priority.
+
+Once a channel was approved and has been added to the list, it is actively being monitored. Changing the handle will not protect a channel from being listed, even if it doesn't publish AI content anymore.
+
+#### - [GitHub Issue](https://github.com/Override92/AiSList/issues/new?template=removal-request.md)
+
+Bulk removals will not be possible.
+
+<div align="center">
+
+## Workflow
+
+```mermaid
+flowchart TD
+  A[User submits YouTube channel<br/>API/Discord/GitHub] --> B[Backend<br/>Data validation]
+  B --> C[n8n<br/>YT-API checks, duplicate prevention and automated analysis]
+  C --> D{Discord<br/>Reviewing}
+  D -->|Yes| E[Approval<br/>Commit to blocklist]
+  D -->|Maybe/Light usage| F[Warnlist<br/>Commit to warnlist]
+  D -->|No| G[Reject]
+```
+</div>
+
+###

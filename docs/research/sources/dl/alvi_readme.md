@@ -1,0 +1,166 @@
+# AI uBlock Origin Blacklist
+A personal list for [uBlock Origin](https://github.com/gorhill/uBlock) and [uBlacklist](https://github.com/iorate/ublacklist) blocking AI content farms. Pull requests welcome.
+
+## Install
+### Ublock Origin
+You can [click here](https://subscribe.adblockplus.org/?location=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2Falvi%2Dse%2Fai%2Dublock%2Dblacklist%2Fmaster%2Flist%2Etxt&title=AI%20Content%20Farms) to subscribe to this list automatically on uBlock Origin.
+
+Alternatively, you import it manually by going in the uBlock Origin options, *Filter lists* tab > *Import...* and entering the following URL:
+* `https://raw.githubusercontent.com/alvi-se/ai-ublock-blacklist/master/list.txt`
+
+### uBlacklist
+[Click here](https://ublacklist.github.io/rulesets/subscribe?url=https%3A%2F%2Fraw%2Egithubusercontent%2Ecom%2Falvi%2Dse%2Fai%2Dublock%2Dblacklist%2Frefs%2Fheads%2Fmaster%2Fublacklist%2Etxt) to automatically subscribe to the list.
+
+Alternatively, you can manually subscribe to the list going to Options in uBlacklist > Subscription > Add a subscription button, and entering the following link on `URL`:
+* `https://raw.githubusercontent.com/alvi-se/ai-ublock-blacklist/refs/heads/master/ublacklist.txt`
+
+## Why?
+While browsing it happens ~sometimes~ [**most of the times**](https://www.axios.com/2025/10/14/ai-generated-writing-humans) that I come across websites which text is written by generative AI. These websites provide no useful information, have mediocre content and are filled up with ads and referral links to earn money.
+So when I find this kind of website, I put it here.
+
+The key idea is simple: if I wanted my question to be answered by AI, *I* would ask AI. If I'm searching online, it means that I want an answer written by a person. A person has experience, opinions, ideas, creativity and a lot more information that might want to share with the web. AI doesn't.
+
+What's more, AI content can also be **dangerous**: articles in content farms are not checked by anyone before being published, since they are massively generated. An AI might hallucinate when writing about dangerous topics: it might suggest you to short-circuit on your circuit board. Or to execute dangerous commands on your PC such as `rm -rf /`. Or to mix bleach and ammonia (DON'T DO THESE THINGS). AI generated content is not reliable, and if no one is checking what is being published, it needs to be blocked.
+
+As I said, I'm adding pages as I browse, so each entry is added manually. I'm not considering using automated tools simply because it's hard for an algorithm to understand if a page is AI generated or not, especially with the guidelines I wrote next. An argument could be that this list is useless because it's too short. However, since these websites are doing SEO to appear first on search engines, you will meet the same website more than once, especially for searches related to each other. I've found this list to be blocking websites since the very first day I began writing it, even with very few entries.
+
+However, there is indeed some bias for my entries. For example, as I am an Italian citizen, you will find a lot of Italian websites. This is another reason why pull requests are welcome.
+
+## How to add websites
+If you're not a technical user and don't know how GitHub works, simply report your suspects creating an issue, by clicking [here](https://github.com/alvi-se/ai-ublock-blacklist/issues/new).
+
+If you want to create a pull request, here's how to add sites to the list.
+
+### Repository structure
+The repository stores the blocked sites in JSON format. All files are stored in
+the `./src/` folder, where:
+* The `./src/main.json` file stores entries found randomly, not related each other.
+* The `./src/grouped/` folder stores sites grouped in different files. Sites on
+  the same file have some kind of relationship (e.g. same source).
+* The `./src/sheets/` folder stores sites imported by some Google Spreadsheets
+  (see below for more explanations about this)
+
+Each file has the following structure:
+```json
+{
+    "name": "<Name of the list>",
+    "references": [
+		"<Any kind of reference for the list>",
+        "<Can be empty, as in the case of main.json>"
+	],
+    "sites": [
+        {
+            "site": "<site to block>",
+            "reason": "<reason for being added here>",
+            "references": []
+        },
+        {
+            "site": "<another site to block>",
+            "reason": "<reason for being added here>",
+            "references": []
+        }
+    ]
+}
+```
+Sites to be added are defined as a JSON object inside the `sites` array.
+
+### Adding sites
+First, try to find the scope of the AI spammer. Usually, it will be a domain, but I've found also a lot of Medium blogs or dev.to blogs. These platforms should not be blocked as a whole, but just the blog who's spamming.
+
+Say that you want to add site `example.com/@slopUser`. Create a new JSON object
+at the bottom of the `sites` array in the `./src/main.json` object and add the
+site like this:
+```jsonc
+// ./src/main.json
+{
+    "name": "main",
+    "references": [],
+    "sites": [
+        // ... Other sites
+        {
+            "site": "<last site before yours>",
+            "reason": "AI slop",
+            "references": []
+        },  // Remember to add this comma
+        // Here add your website
+        {
+            "site": "example.com/@slopUser",
+            "reason": "AI slop",
+            "references": []
+        }   // No trailing comma!
+    ]
+}
+```
+Explanation:
+* The `site` attribute contains the site to be blocked. It is mandatory.
+* The `reason` attribute contains a string that will be shown in the page
+  which is displayed when a page is blocked by uBlock Origin. You can default
+  it to "AI slop", but you are welcome to add more info if necessary
+  (e.g. malware). It is mandatory.
+* `references` is an array of strings that can store any external reference
+  if needed. It is mandatory, but it can be left empty.
+  
+
+If you find multiple entries related to each other, you are welcome to group
+them into a new file, saved in `./src/grouped/`. Take a look at files inside
+that folder for some examples.
+
+If you really hate AI and have a lot of time to spend, you are welcome to do some research about the website you have found. Most of these content farms are built by people or organizations [who sell SEO and digital marketing](https://www.fiverr.com/categories/online-marketing/seo-services/seo-packages).
+If you find the source, you might also find other content farms they have created. If you do, add them at the bottom of the file.
+
+
+## How websites are added
+Content farm have have some patterns that make them recognizable. Here are the ones I understood. Of course, these are not strict rules.
+
+* **Unnecessary introduction and conclusion**: this is probably the easiest way to spot content farms. Often, the intro is also annoyingly baroque. For example, you click on some guide on how to use a specific feature in Flutter.
+  The article would begin giving an introduction about Flutter itself like the following:
+  > In today’s fast-moving digital landscape, users expect apps to be fast, beautiful, and consistent across every device they touch.
+  
+  Probably, no human would write such an introduction to explain a *specific* feature.
+  It could fit to generally speak about Flutter (still too baroque though), but not for a super specific code that can be understood only by experienced developers. If I'm writing such an article, I'm supposing that the reader will already know what Flutter is!
+* **\[topic\]: A Comprehensive Guide/A Step-To-Step Guide/Ultimate Guide**: LLMs love these catchphrases for titles of tutorials and guides.
+* **No/few links to external content**
+* **No sources and references**: same as above, but for sources about facts. This is very important to check, especially for articles about (pseudo)science, politics and content that could spread misinformation.
+* **Referral links everywhere**: content farms are there just to make money. I've personally seen sites shamelessly putting purchase advice in navbars or footers.
+* **Reference to product of company**: the website is owned by a company that sells some product or service. The page will probably be like "How to solve \[problem\]" -> buy our product.
+* **Blog with hundreds of thousands of articles**: especially when published in a very short time span. A lot of AI slop blogs post tens or hundreds of articles a day, mostly by the same author.
+* **Hallucinations**: the content is plain wrong.
+* **Date after November 2022**: the AI hype began with the release of ChatGPT in November 2022. A weak guideline for sure, but it adds up to all others. Dates can be easily faked though.
+* **No/few images, videos, non-text media**: these pages are automatically generated and published, and it's hard to generate other kind of content to be put into the page.
+* **AI generated images, logos**: usually it's the banner of the article or the blog logo.
+* **Poor text formatting**
+* **Not-rendered Markdown characters**: text has no formatting and has Markdown syntax.
+* **Long post, with unnecessary or out-of-context content**: at some point the article can start talking about another topic, which can be related to the original one but irrelevant.
+* **Always on top of search engines result**: they are of course abusing SEO.
+* **Know-it-all blog**: the same blog appears in the search engine for completely different topics.
+* **Vague content**: lots of headings, each with a short content that provides no useful information.
+* **Unprofessional or missing contact information**: they have bought a domain, why are they using Gmail for contact?
+* **Vague or missing about page**
+* **AI enthusiastic content**: if someone loves ChatGPT they will use it for **everything**. So if you stumble across an AI-devoted blog, it's for sure 100% AI generated.
+
+
+## Google Dorks
+Because AI users are dumb enough to copy-paste LLM responses without reading them, the LLM will sometimes reveal itself, for example in the intro of the content.
+The following are some Google Dorks to find 100% AI generated pages. Such pages will have their whole domain put into the uBlock list.
+Dorks can be easily generated by asking an LLM to generate naive content, for example by prompting `Generate an article for my blog about dogs`.
+The LLM will answer with an intro like `Sure! Here's an article about`. Take this phrase and search it surrounded by quotes.
+```
+# English
+"Sure! Here's an article about"
+
+# Italian
+"Certo! Ecco un articolo"
+```
+
+## (Experimental) SEO backlinks spreadsheets
+When SEO marketers advertise themselves, sometimes they publish Google Spreadsheets in which they list the websites they control. This is mostly to sell backlinks: when your website is linked by a lot of others, search engines tend to consider it as more trusted and so they will increase its rank. Or at least, this is what people who sell backlinks say. I'm not a SEO expert, so I don't actually know whether this actually works. What I've noticed though, is that websites listed in these spreadsheets are [mostly AI slop](https://github.com/alvi-se/ai-ublock-blacklist/issues/22). This can be an effective way to massively add websites to the list. However, this increases the chances of false positives: there is no guarantee that the websites are actually AI slop. [Issue 31](https://github.com/alvi-se/ai-ublock-blacklist/issues/31) shows a clear example in which popular websites have been accidentally added to the list.
+
+What I suggest is to download the spreadsheet and analyze it, to find potential false positives and remove them from the list. Here are some ways to analyze the spreadsheet:
+* **Compare it with the [Tranco list](https://tranco-list.eu/)**, as done in [issue 31](https://github.com/alvi-se/ai-ublock-blacklist/issues/31). If a site is ranked too high, it might be a false positive.
+* **Sort by traffic/price**: spreadsheets show also the traffic of the website. The more popular a website is, the more expensive a backlink from it. If a website has a particularly high traffic compared to others, it's better to inspect it.
+
+
+## Similar projects
+* [uBlockOrigin & uBlacklist Huge AI Blocklist](https://github.com/laylavish/uBlockOrigin-HUGE-AI-Blocklist): this projects hides every AI-related result from search engines, including
+  websites that I believe are legit tools (e.g. ChatGPT). What I want instead is blocking access only to garbage AI content farms.
+* [Stevo's GenAI Blocklist](https://github.com/Stevoisiak/Stevos-GenAI-Blocklist): hides AI widgets from websites.

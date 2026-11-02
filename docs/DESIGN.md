@@ -1,0 +1,186 @@
+# NoSlop — engineering contract (v1)
+
+NoSlop removes AI-generated content and "AI slop" from social feeds. It ships as ONE codebase:
+an iPhone app and a Mac app, each containing the same Safari Web Extension (plain JS, no bundler),
+plus a Chrome build of the same extension folder. No backend, no ML model in v1.
+
+## 0. The honest ceiling (put this in onboarding, never hide it)
+- On iPhone, Apple gives no app any way to see or change what the native Instagram / X / YouTube
+  apps show. NoSlop filters those sites **in Safari** (instagram.com, x.com, m.youtube.com).
+  Home-Screen web apps do NOT run extensions on iOS; Private Browsing needs a per-extension toggle.
+  The "nuclear option" is a Screen Time shield on the native app so the user opens Safari instead.
+- On Mac, X / Instagram / YouTube have no native apps, so Safari (and the Chrome build) IS everything.
+- Only platform labels (YouTube AI badge / "how this was made", Meta "AI info", TikTok aigc tag,
+  X "Made with AI" + Grok links) and self-disclosure are high-precision. Style heuristics only DIM,
+  never hide. Unlabelled, undisclosed AI images cannot be reliably detected on-device in 2026.
+
+## 1. Repository layout and file ownership
+```
+project.yml                     XcodeGen spec (owner: swift-app agent; others report needed changes)
+package.json                    node --test + jsdom
+Extension/
+  Shared/SafariWebExtensionHandler.swift   native handler (owner: swift-app)
+  Resources/                    THE web extension folder (Safari manifest). Plain scripts, no modules.
+    manifest.json               Safari: background.scripts + persistent:false  (owner: core)
+    rules.json                  canonical data: selectors, labels, lexicon, seeds (owner: core; adapters may APPEND to sites.<site>)
+    rules.js                    generated from rules.json by `npm run build:rules`; committed (owner: core)
+    lib/host-extension.js       host shim for the extension runtime (owner: core)
+    lib/scorer.js               pure scoring (owner: core)
+    lib/engine.js               observer/pipeline/hiding/caching/stats (owner: core)
+    lib/dom.js                  small DOM helpers: text(), closest(), visible(), hashtags() (owner: core)
+    adapters/<site>.js          one per site (owner: that adapter agent)
+    content.js                  bootstrap: pick adapter by hostname, start engine (owner: core)
+    content.css                 stub + dim styles (owner: core)
+    background.js               settings sync, native bridge, fetch proxy, stats (owner: core)
+    popup/popup.html|js|css     extension UI (owner: popup agent)
+    images/icon-*.png
+App/Shared/*.swift              SwiftUI app shared by iOS+macOS (owner: swift-app)
+App/iOS, App/macOS              platform bits (owner: swift-app)
+tools/build-rules.mjs           rules.json -> rules.js (owner: core)
+tools/build-chrome.mjs          Extension/Resources -> dist/chrome (service_worker manifest, polyfill) (owner: chrome agent)
+scripts/build-mac.sh, build-ios.sh, install-iphone.sh, test.sh (owner: swift-app / integration)
+tests/helpers/load.mjs          jsdom + vm loader for the plain scripts (owner: core)
+tests/<area>.test.mjs           node --test (each agent owns tests for its own files)
+tests/fixtures/<site>/*.html    real captures (youtube, tiktok, reddit) or SYNTHETIC (x, instagram, facebook, linkedin — mark in a README)
+tests/corpus/ai.json, human.json  golden set (owner: core)
+docs/                           this file, research/, USER-GUIDE.md
+```
+Rules: agents only write the files they own. Needed changes to someone else's file go in the agent's
+return value under `requests`. Nobody runs git. Nobody edits project.yml except swift-app.
+
+## 2. Script loading model (plain scripts, one namespace)
+Every extension script is a classic script that attaches to `globalThis.NoSlop` (create if missing).
+Load order in manifest `content_scripts[].js`:
+`rules.js, lib/dom.js, lib/scorer.js, lib/host-extension.js, lib/engine.js, adapters/youtube.js, ..., content.js`
+(all adapters are listed for all matches; each adapter registers itself with
+`NoSlop.adapters.register(adapter)` and `content.js` picks the first whose `matches(location)` is true).
+`run_at: document_start`; the engine waits for `document.body` then observes.
+Tests load the same files with jsdom via `tests/helpers/load.mjs`: `const {window, NoSlop} = await loadScripts(['rules.js','lib/dom.js',...], {url, html})`.
+
+## 3. Data: rules.json schema
+```jsonc
+{
+  "version": "2026-11-02.1",
+  "scoring": { "modes": { "strict": {"hide": 0.8, "dim": 0.4}, "balanced": {"hide": 1.0, "dim": 0.6} },
+               "styleCap": 0.6, "categoryCaps": { "<category>": number } },
+  "labels": {            // platform-native AI labels, tier 0 (score 1.5)
+    "youtube": { "badgeText": ["AI"], "watchSection": ["how-this-was-made-section-view-model"], "watchHtmlRegex": "howThisWasMadeSectionViewModel|\"Made with AI\"|Altered or synthetic", "autoDubExclude": "..." },
+    "instagram": { "text": ["AI info", "Imagined with AI", "AI-generated profile", "<localized variants>"] },
+    "facebook": { "text": [...] }, "x": { "text": ["Made with AI"], "grokHref": "/i/grok/share/" },
+    "tiktok": { "selectors": ["[data-e2e=\"aigc-tag\"]"], "text": ["AI-generated", "Creator labeled as AI-generated"], "jsonKeys": ["aigcLabelType","moderationAigcLabelType","IsAigc"] },
+    "linkedin": { ... }, "reddit": { ... }
+  },
+  "disclosure": { "regex": ["..."], "score": 1.0 },                 // tier 1 self-disclosure
+  "hashtags": { "strong": [...], "strongScore": 0.8, "weak": [...], "weakScore": 0.4 },
+  "toolNames": { "terms": [...], "scoreEach": 0.4, "cap": 0.8 },
+  "chatbotResidue": { "regex": [...], "score": 0.9 },
+  "promptMetadata": { "regex": [...], "score": 0.9 },
+  "style": {                                                          // tier 3: DIM ONLY, total capped at styleCap
+    "structure": [{ "id": "contrast_pivot", "regex": "...", "score": 0.3 }, ...],
+    "engagementBait": { "regex": [...], "scoreEach": 0.2, "cap": 0.4 },
+    "vocabAlways": { "terms": [...], "scoreEach": 0.12, "cap": 0.5 },
+    "vocabCluster": { "terms": [...], "min": 2, "score": 0.2 },
+    "closers": { "regex": [...], "scoreEach": 0.2, "cap": 0.4 },
+    "humanTells": [{ "regex": "...", "score": -0.3 }],
+    "minWords": 6
+  },
+  "accounts": { "youtube": { "block": ["@handle", "UCxxxx"] }, "x": { "block": [...] }, "instagram": {...}, "reddit": { "subreddits": [...] } },  // tier 2 seeds (MIT-licensed sources only)
+  "sites": {                                                           // per-site selectors; adapters read these, never hardcode
+    "youtube": { "desktop": { "item": "ytd-rich-item-renderer, ytd-video-renderer, ...", "title": "...", "channel": "...", "badge": ".ytBadgeShapeText, .badge-shape-wiz__text", "shortsShelf": "...", "videoIdAttr": "..." },
+                 "mobile":  { ... ytm-* ... } },
+    "x": { "cell": "[data-testid=\"cellInnerDiv\"]", "article": "article[data-testid=\"tweet\"]", "text": "[data-testid=\"tweetText\"]", "userName": "[data-testid=\"User-Name\"]", "promoted": "[data-testid=\"placementTracking\"]", "grokLink": "a[href^=\"/i/grok/share/\"]", "grokSvgPath": "..." },
+    "instagram": {...}, "facebook": {...}, "tiktok": {...}, "reddit": {...}, "linkedin": {...}
+  },
+  "platformActions": { "xMutedWords": [...], "instagramHiddenWords": [...], "instagramYourAlgorithmLess": [...], "tiktok": "...", "youtube": "..." }
+}
+```
+Seed content comes from docs/research/slop-detection-prior-art.md §7 (JSON block) and the selector
+tables in docs/research/platform-dom-and-ai-labels.md §2. Use ONLY MIT-licensed sources (listed in
+the report §1.1); AiSList (CC BY-NC) and OpenSlop (PolyForm NC) are NOT bundled — the app offers
+"Import list from URL" instead. All regexes are strings (JSON) compiled once, case-insensitive, unicode.
+
+## 4. Engine contract (lib/engine.js)
+```js
+NoSlop.engine.start({ adapter, rules, host })   // host: see §6
+// Pipeline per candidate element `el` returned by adapter.findItems(root):
+//   item = adapter.extract(el)  -> null (skip) or Item
+//   id   = item.id              (stable post/video id; NEVER the element). el.dataset.noslopId = id
+//   verdict = cache.get(id) || scorer.score(item, rules, settings, site)  -> { score, tier, reasons[], action }
+//   if action==='none' && adapter.enrich && settings allows: queue enrich(item) (async, concurrency from settings), re-score on result
+//   apply(el, item, verdict): hide -> adapter.hide(el,item,verdict) (default strategy per site), dim -> add .noslop-dim + badge
+//   stats.bump(site, action, reason)
+// Cell reuse: on every mutation inside a processed element, re-run extract; if id changed -> unapply + re-verdict.
+// Observer: one MutationObserver on document.body, childList+subtree, batched with requestIdleCallback/setTimeout(0),
+//   plus a 1 s safety sweep while the tab is visible. Must handle the SPA navigation (history pushState hook + popstate) and re-read surface.
+// Verdict cache: Map in memory; verdicts with tier<=1 or from enrich persisted in storage.local 'verdicts' (LRU 5000, TTL 7 d).
+// Hidden-item stub: unless settings.showStubs===false, insert a compact .noslop-stub ("Hidden: AI content — <reason> · Show · Never show @author");
+//   Show -> unhide this one (session allow); Never -> settings.blockedAccounts[site].push(author) via host.
+// Auto-promotion: N (settings.autoPromote.hits, default 3) tier-0/1 hits on the same author -> added to blockedAccounts (reversible in the app/popup).
+// Surfaces: adapter.surfaces() returns [{ settingKey:'hideShorts', selector:'...' }]; engine hides those elements when setting is on.
+// Hide strategies (adapter.hideStrategy): 'display-none' (youtube, reddit, linkedin), 'height-zero' (facebook: height:0;overflow:hidden on the cell),
+//   'collapse-inner' (x, instagram: hide the cell's first child / article inner content, keep the cell mounted; pause+mute <video>).
+```
+Item shape:
+```ts
+{ id: string, kind: 'post'|'video'|'short'|'ad'|'shelf', surface: 'home'|'search'|'watch'|'profile'|'reels'|'shorts'|'other',
+  text: string, title?: string, author: { handle?: string, name?: string, id?: string }, hashtags: string[], links: string[],
+  labels: Array<{ type: 'platform_ai'|'promoted'|'c2pa', text?: string }>, media: Array<'image'|'video'|'none'>, extra?: object }
+```
+Verdict actions: `'hide' | 'dim' | 'none'`. `reasons` are short machine ids (`label:youtube_badge`, `hashtag:#aiart`, `account:block`, `style:contrast_pivot`).
+
+## 5. Scorer contract (lib/scorer.js) — pure, no DOM, fully unit-tested
+`NoSlop.scorer.score(item, rules, settings, site) -> verdict`.
+Tiers: 0 platform label (1.5) · 1 disclosure / hashtags / tool names / chatbot residue / prompt metadata · 2 accounts
+(user block list = 1.5, seed list = 1.0, allow list -> action none always) · 3 style (sum capped at rules.scoring.styleCap; can only reach 'dim').
+Mode thresholds from rules.scoring.modes[settings.sites[site].mode]; mode 'off' -> none. `settings.dimInsteadOfHide` turns hide into dim.
+Custom phrases/hashtags from settings score 1.0. Promoted/ads: hide only when settings.surfaces.hideAds.
+Golden-set gate (tests/corpus): on human.json, hide = 0 and dim <= 2 %; on ai.json, labelled/disclosed items hide >= 95 %.
+
+## 6. Host contract (lib/host-extension.js; a WKWebView shim implements the same)
+```js
+NoSlop.host = {
+  getSettings(): Promise<Settings>, onSettingsChanged(cb), patchSettings(partial): Promise<Settings>,
+  storageGet(keys), storageSet(obj),               // storage.local, namespaced
+  fetchText(url, {timeout}): Promise<string>,     // via background (extension) or native (webview); used by youtube enrich
+  report(event)                                    // { type:'stats', site, action, reason } batched to background
+}
+```
+Settings (storage.local key `settings`, `version: 1`):
+```jsonc
+{ "enabled": true, "updatedAt": 0,
+  "sites": { "youtube": {"mode":"balanced"}, "x": {...}, "instagram": {...}, "facebook": {...}, "tiktok": {...}, "reddit": {...}, "linkedin": {...} },
+  "surfaces": { "hideShorts": false, "hideReels": false, "hideGrokPosts": true, "hideTikTokForYou": false, "hideAds": false },
+  "youtubePrefetch": true, "youtubePrefetchConcurrency": 2,
+  "showStubs": true, "dimInsteadOfHide": false,
+  "blockedAccounts": { "youtube": [], "x": [], "instagram": [], "facebook": [], "tiktok": [], "reddit": [], "linkedin": [] },
+  "allowedAccounts": { ...same keys... }, "customPhrases": [], "customHashtags": [],
+  "autoPromote": { "enabled": true, "hits": 3 }, "rulesOverride": null }
+```
+Stats (storage.local key `stats`): `{ "<YYYY-MM-DD>": { "<site>": { "hide": n, "dim": n, "reasons": { "<reason>": n } } } }`.
+
+## 7. Native messaging protocol (background.js <-> SafariWebExtensionHandler.swift)
+Content scripts never call native; background does. Messages (`SFExtensionMessageKey` dict):
+- `{type:'ping'}` -> `{ok:true, version, platform:'ios'|'macos'}`
+- `{type:'getSharedSettings'}` -> `{settings|null}` from App Group `group.com.szwedk.noslop` UserDefaults key `settings` (JSON string)
+- `{type:'putSharedSettings', settings}` -> `{ok}`
+- `{type:'recordStats', stats}` -> `{ok}` (merged into App Group key `stats`)
+- `{type:'classify', items:[{id,text}]}` -> `{verdicts:[]}` (v1 returns empty; hook for Core ML; batching contract: <=32 items, 100 ms debounce, 2 s timeout, fail-open)
+Sync: last-writer-wins on `updatedAt`. Background pulls shared settings on startup and when the popup opens; pushes on every change.
+
+## 8. Swift app (SwiftUI, shared for iOS + macOS)
+Tabs/sidebar: **Home** (status + today's counts from App Group stats, "Enable in Safari" steps per platform),
+**Sites** (per-site mode strict/balanced/off, surface toggles, YouTube prefetch), **Lists** (blocked/allowed accounts, custom phrases/hashtags,
+import list from URL), **Platform controls** (paste-lists + deep links from rules.platformActions: X muted words, Instagram Hidden Words / Your Algorithm,
+TikTok AIGC slider path, YouTube "Don't recommend"), **Feeds** (only when `NOSLOP_CLEAN_FEEDS` is defined — Debug/sideload builds: WKWebView tabs for
+instagram.com, x.com, m.youtube.com with the extension scripts injected at documentStart in `.defaultClient` world via a `host-webview.js` shim),
+**About** (the honest ceiling). App writes settings to App Group with `updatedAt`; extension picks them up (see §7).
+macOS: `SFSafariApplication.showPreferencesForExtension(withIdentifier: "com.szwedk.noslop.Extension")`. iOS: deep link to Settings is not possible; show steps.
+App icon: generate a 1024 px PNG programmatically (dark rounded square, white slashed-circle glyph) into `App/Shared/Assets.xcassets/AppIcon.appiconset`.
+
+## 9. Chrome build (tools/build-chrome.mjs)
+Copy Extension/Resources to dist/chrome; rewrite manifest: `background.service_worker` (importScripts the same background.js), add `action` popup,
+drop `browser_specific_settings`, prepend `globalThis.browser ??= chrome;` polyfill to each script. Load unpacked for smoke tests.
+
+## 10. Verification bar before "done"
+`npm test` green · macOS signed build · iOS signed device build · dist/chrome builds · live smoke: inject the content scripts into youtube.com in a browser and
+observe hides/dims with reasons · adversarial review (correctness under virtualization, false-positive risk, Safari-iOS API compatibility) with fixes applied.

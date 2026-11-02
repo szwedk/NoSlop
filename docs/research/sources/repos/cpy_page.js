@@ -1,0 +1,7242 @@
+void function() {
+
+//#region Default config
+let prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+/** @type {import("./types").SiteConfig} */
+let defaultConfig = {
+  enabled: true,
+  debug: false,
+  debugLogGetElementStats: false,
+  debugLogGridObservers: false,
+  debugManualHiding: false,
+  blockAds: true,
+  disableAIGeneratedChapters: true,
+  disableAmbientMode: true,
+  disableAutoplay: true,
+  disableHomeFeed: false,
+  disableStableVolume: false,
+  hiddenChannels: [],
+  hideAI: true,
+  hideAskButton: false,
+  hideAutoDubbed: false,
+  hideChannelBanner: false,
+  hideChannelWatermark: true,
+  hideChannels: true,
+  hideCommentGifs: true,
+  hideComments: false,
+  hideHiddenVideos: true,
+  hideHomeCategories: false,
+  hideInfoPanels: true,
+  hideLive: false,
+  hideLowViews: true,
+  hideMembersOnly: true,
+  hideMetadata: true,
+  hideMixes: true,
+  hideMoviesAndTV: false,
+  hideNextButton: true,
+  hidePlaylists: false,
+  hidePremiumUpsells: true,
+  hideRelated: true,
+  hideShareThanksClip: false,
+  hideShorts: true,
+  hideShortsMusicLink: true,
+  hideShortsRelatedLink: true,
+  hideShortsSuggestedActions: true,
+  hideSponsored: true,
+  hideStreamed: true,
+  hideSuggestedSections: true,
+  hideThumbnailBadges: false,
+  hideUpcoming: true,
+  hideVoiceSearch: true,
+  hideWatched: true,
+  hideWatchedThreshold: '85',
+  playerHideFullScreenControls: false,
+  playerHideFullScreenMoreVideos: true,
+  redirectShorts: true,
+  removePink: true,
+  showFullVideoTitles: false,
+  stopShortsLooping: true,
+  useSquareCorners: false,
+  // Desktop only
+  addTakeSnapshot: true,
+  alwaysUseOriginalAudio: true,
+  alwaysUseTheaterMode: false,
+  animateHiding: !prefersReducedMotion,
+  disableContinueWatching: false,
+  disableNumberKeySeeking: false,
+  disableThemedHover: true,
+  disableVideoPreviews: false,
+  displayHomeGridAsList: false,
+  displaySubscriptionsGridAsList: false,
+  downloadTranscript: true,
+  enforceTheme: 'default',
+  fixGhostCards: true,
+  fullSizeTheaterMode: false,
+  fullSizeTheaterModeHideHeader: true,
+  fullWidthChannelPage: false,
+  hideAskYouTubeSearch: true,
+  hideChat: false,
+  hideChatFullScreen: false,
+  hideCollaborations: true,
+  hideEndCards: true,
+  hideEndVideos: true,
+  hideExperiencingInterruptions: false,
+  hideJumpAheadButton: false,
+  hideMerchEtc: true,
+  hideNotifications: false,
+  hideRelatedBelow: true,
+  hideSidebarSubscriptions: false,
+  hideSidebarWhenEmpty: false,
+  hideShortsMetadataUntilHover: true,
+  hideShortsRemixButton: true,
+  hideSubscriptionsLatestBar: true,
+  hideViewsIcon: false,
+  minimumGridItemsPerRow: '+1',
+  minimumShortsPerRow: '8',
+  pauseChannelTrailers: true,
+  playerControlsBg: 'default',
+  playerFixFullScreenButton: true,
+  playerHideFullScreenMoreActions: true,
+  playerHideFullScreenTitle: true,
+  playerHideFullScreenVoting: true,
+  playerRemoveDelhiExperimentFlags: false,
+  redirectChannelToVideos: false,
+  redirectLogoToSubscriptions: false,
+  restoreMiniplayerButton: true,
+  restoreSidebarSubscriptionsLink: true,
+  revertGiantRelated: true,
+  revertSidebarOrder: true,
+  revertWatchLayout: false,
+  searchThumbnailSize: 'xsmall',
+  snapshotFormat: 'jpeg',
+  snapshotQuality: '0.92',
+  showChannelHeadersInListView: true,
+  showViewsOnSeparateLine: true,
+  tidyGuideSidebar: true,
+  // Mobile only
+  allowBackgroundPlay: true,
+  hideExploreButton: true,
+  hideHomePosts: true,
+  hideOpenApp: true,
+  hideSubscriptionsChannelList: true,
+  mobileGridView: true,
+}
+//#endregion
+
+let debug = false
+let debugLogGetElementStats = false
+let debugLogGridObservers = false
+let debugManualHiding = false
+
+let mobile = location.hostname == 'm.youtube.com'
+let desktop = !mobile
+/** @type {import("./types").Version} */
+let version = mobile ? 'mobile' : 'desktop'
+/** @type {string} */
+let lang = document.documentElement.lang || ''
+let loggedIn = /(^|; )SID=/.test(document.cookie)
+
+function log(...args) {
+  if (debug) {
+    console.log('🙋', ...args)
+  }
+}
+
+function warn(...args) {
+  if (debug) {
+    console.log('❗️', ...args)
+  }
+}
+
+/** @type {import("./types").SiteConfigKey[]} */
+const cachedConfigKeys = [
+  'blockAds',
+  'debug',
+  'disableAIGeneratedChapters',
+  'enabled',
+  'hideExperiencingInterruptions',
+  'playerRemoveDelhiExperimentFlags',
+  'revertWatchLayout',
+]
+/** @type {import("./types").SiteConfig} */
+let config = {...defaultConfig}
+
+//#region Locales
+/**
+ * @type {Record<string, import("./types").Locale>}
+ */
+const locales = {
+  'af-ZA': {
+    ADS_BLOCKED: 'Pre-roll advertensies suksesvol geblokkeer!',
+    EXPERIENCING_INTERRUPTIONS: 'Ervaar jy onderbrekings?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+kyke$',
+    MINIPLAYER: 'Minispeler',
+    ORIGINAL: 'oorspronklike',
+    SEARCH: 'Soek',
+    SHARE: 'Deel',
+    SHORTS: "Kortvideo's",
+  },
+  'am-ET': {
+    ADS_BLOCKED: 'ከቪዲዮ በፊት ያሉ ማስታወቂያዎች በተሳካ ሁኔታ ታግደዋል!',
+    EXPERIENCING_INTERRUPTIONS: 'መቆራረጦች እያጋጠሙዎት ነው?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ዕይታዎች$',
+    MINIPLAYER: 'ትንሽ አጫዋች',
+    ORIGINAL: 'የመጀመሪያ',
+    SEARCH: 'ፍለጋ',
+    SHARE: 'አጋራ',
+    SHORTS: 'ቁምጣ',
+  },
+  ar: {
+    ADS_BLOCKED: 'تم حظر إعلانات ما قبل الفيديو بنجاح!',
+    EXPERIENCING_INTERRUPTIONS: 'هل ينقطع التشغيل؟',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+مشاهدات$',
+    MINIPLAYER: 'المشغّل المصغّر',
+    ORIGINAL: 'أصلي',
+    SEARCH: 'بحث',
+    SHARE: 'مشاركة',
+    SHORTS: 'Shorts',
+  },
+  'as-IN': {
+    ADS_BLOCKED: "ভিডিঅ'ৰ আগৰ বিজ্ঞাপনসমূহ সফলতাৰে অৱৰোধ কৰা হৈছে!",
+    EXPERIENCING_INTERRUPTIONS: 'বাধা পাইছে নেকি?',
+    LOW_VIEWS_RE: '^(\\d{1,3})টা\\s+ভিউ$',
+    MINIPLAYER: 'মিনিপ্লে’য়াৰ',
+    ORIGINAL: 'মূল',
+    SEARCH: 'সন্ধান কৰক',
+    SHARE: 'শ্বেয়াৰ কৰক',
+    SHORTS: 'Shorts',
+  },
+  'az-Latn-AZ': {
+    ADS_BLOCKED: 'Video öncəsi reklamlar uğurla bloklandı!',
+    EXPERIENCING_INTERRUPTIONS: 'Fasilələr yaşanılır?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+baxış$',
+    MINIPLAYER: 'Minipleyer',
+    ORIGINAL: 'orijinal',
+    SEARCH: 'Axtar',
+    SHARE: 'Paylaşın',
+    SHORTS: 'Shorts',
+  },
+  'be-BY': {
+    ADS_BLOCKED: 'Рэклама перад відэа паспяхова заблакіравана!',
+    EXPERIENCING_INTERRUPTIONS: 'Прайграванне перарываецца?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+праглядаў$',
+    MINIPLAYER: 'Міні-прайгравальнік',
+    ORIGINAL: 'арыгінальны',
+    SEARCH: 'Пошук',
+    SHARE: 'Абагуліць',
+    SHORTS: 'Кароткія відэа',
+  },
+  'bg-BG': {
+    ADS_BLOCKED: 'Рекламите преди видеото са блокирани успешно!',
+    EXPERIENCING_INTERRUPTIONS: 'Изпитвате прекъсвания?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+показвания$',
+    MINIPLAYER: 'Миниплейър',
+    ORIGINAL: 'оригинален',
+    SEARCH: 'Търсене',
+    SHARE: 'Споделяне',
+    SHORTS: 'Кратки видеоклипове',
+  },
+  'bn-BD': {
+    ADS_BLOCKED: 'ভিডিওর শুরুর বিজ্ঞাপন সফলভাবে ব্লক করা হয়েছে!',
+    EXPERIENCING_INTERRUPTIONS: 'ভিডিও দেখতে বিঘ্ন ঘটছে?',
+    LOW_VIEWS_RE: '^(\\d{1,3})টি\\s+ভিউ$',
+    MINIPLAYER: 'মিনিপ্লেয়ার',
+    ORIGINAL: 'মূল',
+    SEARCH: 'সার্চ করুন',
+    SHARE: 'শেয়ার করুন',
+    SHORTS: 'Shorts',
+  },
+  'bs-Latn-BA': {
+    ADS_BLOCKED: 'Reklame prije videa su uspješno blokirane!',
+    EXPERIENCING_INTERRUPTIONS: 'Imate li prekide?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+pregleda$',
+    MINIPLAYER: 'Miniplejer',
+    ORIGINAL: 'original',
+    SEARCH: 'Pretražite',
+    SHARE: 'Dijeli',
+    SHORTS: 'Shorts',
+  },
+  'ca-ES': {
+    ADS_BLOCKED: 'Anuncis pre-roll bloquejats amb èxit!',
+    EXPERIENCING_INTERRUPTIONS: 'Estàs patint interrupcions?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visualitzacions$',
+    MINIPLAYER: 'Minireproductor',
+    ORIGINAL: 'original',
+    SEARCH: 'Cerca',
+    SHARE: 'Comparteix',
+    SHORTS: 'Curts',
+  },
+  'cs-CZ': {
+    ADS_BLOCKED: 'Reklamy před videem byly úspěšně zablokovány!',
+    EXPERIENCING_INTERRUPTIONS: 'Přehrává se video přerušovaně?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+zhlédnutí$',
+    MINIPLAYER: 'Minipřehrávač',
+    ORIGINAL: 'původní',
+    SEARCH: 'Hledat',
+    SHARE: 'Sdílet',
+    SHORTS: 'Shorts',
+  },
+  'da-DK': {
+    ADS_BLOCKED: 'Pre-roll reklamer blokeret!',
+    EXPERIENCING_INTERRUPTIONS: 'Oplever du afbrydelser?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visninger$',
+    MINIPLAYER: 'Miniafspiller',
+    ORIGINAL: 'originalt',
+    SEARCH: 'Søg',
+    SHARE: 'Del',
+    SHORTS: 'Shorts',
+  },
+  'de-DE': {
+    ADS_BLOCKED: 'Pre-Roll-Anzeigen erfolgreich blockiert!',
+    COLLABORATORS: 'Collab-Partner',
+    EXPERIENCING_INTERRUPTIONS: 'Kommt es zu Unterbrechungen?',
+    HIDE_CHANNEL: 'Kanal ausblenden',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+Aufrufe$',
+    MINIPLAYER: 'Miniplayer',
+    MIXES: 'Mixe',
+    ORIGINAL: 'Original',
+    SEARCH: 'Suchen',
+    SHARE: 'Teilen',
+    SHORTS: 'Shorts',
+    STREAMED_METADATA_INNERTEXT_RE: '\\bgestreamt$',
+    STREAMED_TITLE_ARIA_LABEL_RE: 'Aufrufe vor .* \\bgestreamt\\b',
+    TAKE_SNAPSHOT: 'Screenshot erstellen',
+    UNHIDE_CHANNEL: 'Kanal einblenden',
+  },
+  'el-GR': {
+    ADS_BLOCKED: 'Οι διαφημίσεις στην αρχή του βίντεο αποκλείστηκαν!',
+    EXPERIENCING_INTERRUPTIONS: 'Αντιμετωπίζετε διακοπές κατά την αναπαραγωγή;',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+προβολές$',
+    MINIPLAYER: 'Ελαχιστοποιημένο player',
+    ORIGINAL: 'πρωτότυπο',
+    SEARCH: 'Αναζήτηση',
+    SHARE: 'Κοινοποίηση',
+    SHORTS: 'Shorts',
+  },
+  en: {
+    ADS_BLOCKED: 'Pre-roll ads successfully blocked!',
+    CLIP: 'Clip',
+    COLLABORATORS: 'Collaborators',
+    EXPERIENCING_INTERRUPTIONS: 'Experiencing interruptions?',
+    HIDE_CHANNEL: 'Hide channel',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+views$',
+    MINIPLAYER: 'Miniplayer',
+    MIXES: 'Mixes',
+    ORIGINAL: 'original',
+    SEARCH: 'Search',
+    SHARE: 'Share',
+    SHORTS: 'Shorts',
+    STREAMED_METADATA_INNERTEXT_RE: '(?:^|\\n)\\s*Streamed',
+    STREAMED_TITLE_ARIA_LABEL_RE: 'views Streamed',
+    TAKE_SNAPSHOT: 'Take snapshot',
+    THANKS: 'Thanks',
+    UNHIDE_CHANNEL: 'Unhide channel',
+  },
+  'es-419': {
+    ADS_BLOCKED: '¡Anuncios pre-roll bloqueados con éxito!',
+    EXPERIENCING_INTERRUPTIONS: '¿El video se interrumpe?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+vistas$',
+    MINIPLAYER: 'Reproductor en miniatura',
+    ORIGINAL: 'original',
+    SEARCH: 'Buscar',
+    SHARE: 'Compartir',
+    SHORTS: 'Shorts',
+  },
+  'es-ES': {
+    ADS_BLOCKED: '¡Anuncios pre-roll bloqueados con éxito!',
+    EXPERIENCING_INTERRUPTIONS: '¿El vídeo se interrumpe?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visualizaciones$',
+    MINIPLAYER: 'Minirreproductor',
+    ORIGINAL: 'original',
+    SEARCH: 'Búsqueda',
+    SHARE: 'Compartir',
+    SHORTS: 'Shorts',
+  },
+  'es-US': {
+    ADS_BLOCKED: '¡Anuncios pre-roll bloqueados con éxito!',
+    EXPERIENCING_INTERRUPTIONS: '¿El video se interrumpe?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+vistas$',
+    MINIPLAYER: 'Reproductor en miniatura',
+    ORIGINAL: 'original',
+    SEARCH: 'Buscar',
+    SHARE: 'Compartir',
+    SHORTS: 'Shorts',
+  },
+  'et-EE': {
+    ADS_BLOCKED: 'Videolaadsed reklaamid edukalt blokeeritud!',
+    EXPERIENCING_INTERRUPTIONS: 'Video on katkendlik?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+vaatamist$',
+    MINIPLAYER: 'Minipleier',
+    ORIGINAL: 'algne',
+    SEARCH: 'Otsing',
+    SHARE: 'Jagamine',
+    SHORTS: 'Lühivideod',
+  },
+  'eu-ES': {
+    ADS_BLOCKED: 'Bideo aurreko iragarkiak ondo blokeatu dira!',
+    EXPERIENCING_INTERRUPTIONS: 'Bideoa eteten zaizu?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ikustaldi$',
+    MINIPLAYER: 'Erreproduzigailu txikia',
+    ORIGINAL: 'jatorrizkoa',
+    SEARCH: 'Bilatu',
+    SHARE: 'Partekatu',
+    SHORTS: 'Film laburrak',
+  },
+  'fa-IR': {
+    ADS_BLOCKED: 'تبلیغات ابتدای ویدیو با موفقیت مسدود شد!',
+    EXPERIENCING_INTERRUPTIONS: 'دچار وقفه شده‌اید؟',
+    LOW_VIEWS_RE: '^\\u200f(\\d{1,3})\\s+بازدید$',
+    MINIPLAYER: 'پخش‌کننده کوچک',
+    ORIGINAL: 'اصلی',
+    SEARCH: 'جستجو',
+    SHARE: 'هم‌رسانی',
+    SHORTS: 'کوته‌ویدیوهای YouTube',
+  },
+  'fil-PH': {
+    ADS_BLOCKED: 'Matagumpay na na-block ang mga pre-roll ad!',
+    EXPERIENCING_INTERRUPTIONS: 'Nakakaranas ng mga pagkaantala?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+panonood$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'orihinal',
+    SEARCH: 'Maghanap',
+    SHARE: 'Ibahagi',
+    SHORTS: 'Shorts',
+  },
+  'fr-CA': {
+    ADS_BLOCKED: 'Publicités avant la vidéo bloquées avec succès !',
+    EXPERIENCING_INTERRUPTIONS: "Problème d'interruptions?",
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visionnements$',
+    MINIPLAYER: 'Minilecteur',
+    ORIGINAL: 'originale',
+    SEARCH: 'Rechercher',
+    SHARE: 'Partager',
+    SHORTS: 'Shorts',
+  },
+  'fr-FR': {
+    ADS_BLOCKED: 'Publicités avant la vidéo bloquées avec succès !',
+    COLLABORATORS: 'Collaborateurs',
+    EXPERIENCING_INTERRUPTIONS: 'La lecture de votre vidéo se bloque ?',
+    HIDE_CHANNEL: 'Masquer la chaîne',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+vues$',
+    MINIPLAYER: 'Lecteur réduit',
+    MIXES: 'Mix',
+    ORIGINAL: 'original',
+    SEARCH: 'Rechercher',
+    SHARE: 'Partager',
+    SHORTS: 'Shorts',
+    STREAMED_METADATA_INNERTEXT_RE: '(?:^|\\n)\\s*Diffusé',
+    STREAMED_TITLE_ARIA_LABEL_RE: 'vues Diffusé',
+    TAKE_SNAPSHOT: 'Prendre une capture',
+    THANKS: 'Merci',
+    UNHIDE_CHANNEL: 'Afficher la chaîne',
+  },
+  'gl-ES': {
+    ADS_BLOCKED: 'Anuncios pre-roll bloqueados con éxito!',
+    EXPERIENCING_INTERRUPTIONS: 'Estás a sufrir interrupcións?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+reproducións$',
+    MINIPLAYER: 'Reprodutor minimizado',
+    ORIGINAL: 'orixinal',
+    SEARCH: 'Buscar',
+    SHARE: 'Compartir',
+    SHORTS: 'Curtas',
+  },
+  'gu-IN': {
+    ADS_BLOCKED: 'વીડિયો પહેલાની જાહેરાતો સફળતાપૂર્વક બ્લોક કરી!',
+    EXPERIENCING_INTERRUPTIONS: 'શું વિક્ષેપો અનુભવી રહ્યાં છો?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+જોવાયાની\\s+સંખ્યા$',
+    MINIPLAYER: 'મીનીપ્લેયર',
+    ORIGINAL: 'ઑરિજિનલ',
+    SEARCH: 'શોધો',
+    SHARE: 'શેર કરો',
+    SHORTS: 'Shorts',
+  },
+  'he-IL': {
+    ADS_BLOCKED: 'פרסומות לפני הסרטון נחסמו בהצלחה!',
+    EXPERIENCING_INTERRUPTIONS: 'שיבושים בצפייה?',
+    LOW_VIEWS_RE: '^\\u202b(\\d{1,3})\\u202c\\s+צפיות$',
+    MINIPLAYER: 'מיני-נגן',
+    ORIGINAL: 'מקור',
+    SEARCH: 'חיפוש',
+    SHARE: 'שיתוף',
+    SHORTS: 'סרטוני Shorts',
+  },
+  'hi-IN': {
+    ADS_BLOCKED: 'वीडियो से पहले आने वाले विज्ञापन सफलतापूर्वक ब्लॉक किए गए!',
+    EXPERIENCING_INTERRUPTIONS: 'क्या आपको वीडियो देखने में रुकावट आ रही है?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+व्यू$',
+    MINIPLAYER: 'मिनी प्लेयर',
+    ORIGINAL: 'मूल',
+    SEARCH: 'खोजें',
+    SHARE: 'शेयर करें',
+    SHORTS: 'Shorts',
+  },
+  'hr-HR': {
+    ADS_BLOCKED: 'Oglasi prije videa uspješno blokirani!',
+    EXPERIENCING_INTERRUPTIONS: 'Dolazi do prekida?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+pregleda$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'izvorno',
+    SEARCH: 'Pretraživanje',
+    SHARE: 'Podijelite',
+    SHORTS: 'Shorts',
+  },
+  'hu-HU': {
+    ADS_BLOCKED: 'Videó előtti hirdetések sikeresen blokkolva!',
+    EXPERIENCING_INTERRUPTIONS: 'Megszakításokat tapasztalsz?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+megtekintés$',
+    MINIPLAYER: 'Minilejátszó',
+    ORIGINAL: 'eredeti',
+    SEARCH: 'Keresés',
+    SHARE: 'Megosztás',
+    SHORTS: 'Rövid videók',
+  },
+  'hy-AM': {
+    ADS_BLOCKED: 'Տեսանյութից առաջ գովազդները հաջողությամբ արգելափակվեցին:',
+    EXPERIENCING_INTERRUPTIONS: 'Տեսանյութն ընդհատվո՞ւմ է',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+դիտում$',
+    MINIPLAYER: 'Մինի նվագարկիչ',
+    ORIGINAL: 'բնօրինակ',
+    SEARCH: 'Որոնել',
+    SHARE: 'Կիսվել',
+    SHORTS: 'Կարճ հոլովակներ',
+  },
+  'id-ID': {
+    ADS_BLOCKED: 'Iklan pre-roll berhasil diblokir!',
+    EXPERIENCING_INTERRUPTIONS: 'Mengalami gangguan?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+x\\s+ditonton$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'asli',
+    SEARCH: 'Telusuri',
+    SHARE: 'Bagikan',
+    SHORTS: 'Shorts',
+  },
+  'is-IS': {
+    ADS_BLOCKED: 'Forauglýsingar lokaðar!',
+    EXPERIENCING_INTERRUPTIONS: 'Einhverjar truflanir?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+áhorf$',
+    MINIPLAYER: 'Smáspilari',
+    ORIGINAL: 'upprunalegt',
+    SEARCH: 'Leit',
+    SHARE: 'Deila',
+    SHORTS: 'Shorts',
+  },
+  'it-IT': {
+    ADS_BLOCKED: 'Annunci pre-roll bloccati con successo!',
+    EXPERIENCING_INTERRUPTIONS: 'Hai riscontrato interruzioni?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visualizzazioni$',
+    MINIPLAYER: 'Mini player',
+    ORIGINAL: 'originale',
+    SEARCH: 'Cerca',
+    SHARE: 'Condividi',
+    SHORTS: 'Short',
+  },
+  'ja-JP': {
+    ADS_BLOCKED: '動画再生前の広告をブロックしました！',
+    CLIP: 'クリップ',
+    COLLABORATORS: 'コラボレーター',
+    EXPERIENCING_INTERRUPTIONS: '再生が中断されていますか？',
+    HIDE_CHANNEL: 'チャンネルを隠す',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+回視聴$',
+    MINIPLAYER: 'ミニプレーヤー',
+    MIXES: 'ミックス',
+    ORIGINAL: 'オリジナル',
+    SEARCH: '検索',
+    SHARE: '共有',
+    SHORTS: 'ショート',
+    STREAMED_METADATA_INNERTEXT_RE: 'に配信済み\\s*$',
+    STREAMED_TITLE_ARIA_LABEL_RE: '前 に配信済み',
+    TAKE_SNAPSHOT: 'スナップショットを撮る',
+    UNHIDE_CHANNEL: 'チャンネルの再表示',
+  },
+  'ka-GE': {
+    ADS_BLOCKED: 'რეკლამები ვიდეომდე წარმატებით დაიბლოკა!',
+    EXPERIENCING_INTERRUPTIONS: 'შეფერხებები ხომ არ წარმოიშვა?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ნახვა$',
+    MINIPLAYER: 'მინიდამკვრელი',
+    ORIGINAL: 'ორიგინალია',
+    SEARCH: 'ძიება',
+    SHARE: 'გაზიარება',
+    SHORTS: 'Shorts',
+  },
+  'kk-KZ': {
+    ADS_BLOCKED: 'Бейне алдындағы жарнамалар сәтті бұғатталды!',
+    EXPERIENCING_INTERRUPTIONS: 'Үзілістер орын алып жатыр ма?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+рет\\s+көрілді$',
+    MINIPLAYER: 'Шағын ойнатқыш',
+    ORIGINAL: 'түпнұсқа',
+    SEARCH: 'Іздеу',
+    SHARE: 'Бөлісу',
+    SHORTS: 'Shorts',
+  },
+  'km-KH': {
+    ADS_BLOCKED: 'ការផ្សាយពាណិជ្ជកម្មមុនវីដេអូត្រូវបានទប់ស្កាត់ដោយជោគជ័យ!',
+    EXPERIENCING_INTERRUPTIONS: 'ធ្លាប់​ជួប​ប្រទះ​បញ្ហា​​កាត់​ផ្ដាច់​មែនទេ?',
+    LOW_VIEWS_RE: '^ចំនួនមើល\\s+(\\d{1,3})$',
+    MINIPLAYER: 'កម្មវិធី​ចាក់ខ្នាត​តូច',
+    ORIGINAL: 'ដើម',
+    SEARCH: 'ស្វែងរក',
+    SHARE: 'ចែករំលែក',
+    SHORTS: 'Shorts',
+  },
+  'kn-IN': {
+    ADS_BLOCKED: 'ವೀಡಿಯೊಗೆ ಮುಂಚಿನ ಜಾಹೀರಾತುಗಳನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನಿರ್ಬಂಧಿಸಲಾಗಿದೆ!',
+    EXPERIENCING_INTERRUPTIONS: 'ಅಡಚಣೆಗಳನ್ನು ಅನುಭವಿಸುತ್ತಿದ್ದೀರಾ?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ವೀಕ್ಷಣೆಗಳು$',
+    MINIPLAYER: 'ಮಿನಿಪ್ಲೇಯರ್',
+    ORIGINAL: 'ಮೂಲ',
+    SEARCH: 'ಹುಡುಕಿ',
+    SHARE: 'ಹಂಚಿಕೊಳ್ಳಿ',
+    SHORTS: 'Shorts',
+  },
+  'ko-KR': {
+    ADS_BLOCKED: '동영상 시작 전 광고가 차단되었습니다!',
+    EXPERIENCING_INTERRUPTIONS: '동영상 끊김 현상이 발생하나요?',
+    LOW_VIEWS_RE: '^조회수\\s+(\\d{1,3})회$',
+    MINIPLAYER: '소형 플레이어',
+    ORIGINAL: '원본',
+    SEARCH: '검색',
+    SHARE: '공유',
+    SHORTS: 'Shorts',
+  },
+  'ky-KG': {
+    ADS_BLOCKED: 'Видеонун алдындагы жарнамалар ийгиликтүү бөгөттөлдү!',
+    EXPERIENCING_INTERRUPTIONS: 'Үзүлүп жатабы?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+жолу\\s+көрүлдү$',
+    MINIPLAYER: 'Мини ойноткуч',
+    ORIGINAL: 'түпнуска',
+    SEARCH: 'Издөө',
+    SHARE: 'Бөлүшүү',
+    SHORTS: 'Кыска видеолор',
+  },
+  'lo-LA': {
+    ADS_BLOCKED: 'ບລັອກໂຄສະນາກ່ອນວິດີໂອສຳເລັດແລ້ວ!',
+    EXPERIENCING_INTERRUPTIONS: 'ກຳລັງປະສົບບັນຫາການຂັດຈັງຫວະບໍ?',
+    LOW_VIEWS_RE: '^ຍອດເບິ່ງ\\s+(\\d{1,3})\\s+ເທື່ອ$',
+    MINIPLAYER: 'ຕົວຫຼິ້ນຂະໜາດນ້ອຍ',
+    ORIGINAL: 'ຕົ້ນສະບັບ',
+    SEARCH: 'ຊອກຫາ',
+    SHARE: 'ແບ່ງປັນ',
+    SHORTS: 'Shorts',
+  },
+  'lt-LT': {
+    ADS_BLOCKED: 'Reklama prieš vaizdo įrašą sėkmingai užblokuota!',
+    EXPERIENCING_INTERRUPTIONS: 'Vaizdo įrašas stabčioja?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+views$',
+    MINIPLAYER: 'Sumažinta leistuvė',
+    ORIGINAL: 'pradinis',
+    SEARCH: 'Paieška',
+    SHARE: 'Bendrinti',
+    SHORTS: 'Klipukai',
+  },
+  'lv-LV': {
+    ADS_BLOCKED: 'Reklāmas pirms video veiksmīgi bloķētas!',
+    EXPERIENCING_INTERRUPTIONS: 'Vai rodas atskaņošanas pārtraukumi?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+skatījumi$',
+    MINIPLAYER: 'Mini atskaņotājs',
+    ORIGINAL: 'oriģināls',
+    SEARCH: 'Meklēt',
+    SHARE: 'Kopīgot',
+    SHORTS: 'Īsie videoklipi',
+  },
+  'mk-MK': {
+    ADS_BLOCKED: 'Рекламите пред видеото се успешно блокирани!',
+    EXPERIENCING_INTERRUPTIONS: 'Се соочувате со прекини?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+прегледи$',
+    MINIPLAYER: 'Миниплеер',
+    ORIGINAL: 'оригинален',
+    SEARCH: 'Пребарување',
+    SHARE: 'Споделете',
+    SHORTS: 'Shorts',
+  },
+  'ml-IN': {
+    ADS_BLOCKED: 'വീഡിയോയ്ക്ക് മുമ്പുള്ള പരസ്യങ്ങൾ വിജയകരമായി തടഞ്ഞു!',
+    EXPERIENCING_INTERRUPTIONS: 'തടസ്സങ്ങൾ നേരിടുന്നുണ്ടോ?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+കാഴ്‌ച$',
+    MINIPLAYER: 'മിനിപ്ലേയർ',
+    ORIGINAL: 'ഒറിജിനൽ',
+    SEARCH: 'തിരയുക',
+    SHARE: 'പങ്കിടുക',
+    SHORTS: 'Shorts',
+  },
+  'mn-MN': {
+    ADS_BLOCKED: 'Видеоны өмнөх сурталчилгааг амжилттай хаасан!',
+    EXPERIENCING_INTERRUPTIONS: 'Тасалдаад байна уу?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+үзэлт$',
+    MINIPLAYER: 'Мини тоглуулагч',
+    ORIGINAL: 'эх хувь',
+    SEARCH: 'Хайх',
+    SHARE: 'Хуваалцах',
+    SHORTS: 'Shorts',
+  },
+  'mr-IN': {
+    ADS_BLOCKED:
+      'व्हिडिओ सुरू होण्याआधीच्या जाहिराती यशस्वीरित्या ब्लॉक केल्या!',
+    EXPERIENCING_INTERRUPTIONS: 'व्यत्यय येत आहेत का?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+व्ह्यू$',
+    MINIPLAYER: 'मिनीप्लेअर',
+    ORIGINAL: 'मूळ',
+    SEARCH: 'शोधा',
+    SHARE: 'शेअर करा',
+    SHORTS: 'शॉर्ट',
+  },
+  'ms-MY': {
+    ADS_BLOCKED: 'Iklan pra-roll berjaya disekat!',
+    EXPERIENCING_INTERRUPTIONS: 'Mengalami gangguan?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+tontonan$',
+    MINIPLAYER: 'Pemain mini',
+    ORIGINAL: 'asal',
+    SEARCH: 'Cari',
+    SHARE: 'Kongsi',
+    SHORTS: 'Shorts',
+  },
+  'my-MM': {
+    ADS_BLOCKED: 'ဗီဒီယိုမစမီ ကြော်ငြာများကို အောင်မြင်စွာ ပိတ်လိုက်ပါပြီ!',
+    EXPERIENCING_INTERRUPTIONS: 'အနှောင့်အယှက်များ ကြုံတွေ့နေရပါလား။',
+    LOW_VIEWS_RE: '^ကြည့်ရှုမှု\\s+(\\d{1,3})$',
+    MINIPLAYER: 'မီနီပလေယာ',
+    ORIGINAL: 'မူရင်း',
+    SEARCH: 'ရှာရန်',
+    SHARE: 'မျှဝေရန်',
+    SHORTS: 'Shorts',
+  },
+  'nb-NO': {
+    ADS_BLOCKED: 'Pre-roll annonser blokkert!',
+    EXPERIENCING_INTERRUPTIONS: 'Opplever du avbrudd?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+avspillinger$',
+    MINIPLAYER: 'Minispiller',
+    ORIGINAL: 'original',
+    SEARCH: 'Søk',
+    SHARE: 'Del',
+    SHORTS: 'Shorts',
+  },
+  'ne-NP': {
+    ADS_BLOCKED: 'भिडियो सुरु हुनु अघिको विज्ञापन सफलतापूर्वक रोकियो!',
+    EXPERIENCING_INTERRUPTIONS: 'अवरोधहरू आइरहेका छन्?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+भ्यु$',
+    MINIPLAYER: 'मिनिप्लेयर',
+    ORIGINAL: 'मूल',
+    SEARCH: 'खोज्नुहोस्',
+    SHARE: 'सेयर गर्नुहोस्',
+    SHORTS: 'Shorts',
+  },
+  'nl-NL': {
+    ADS_BLOCKED: 'Pre-roll advertenties succesvol geblokkeerd!',
+    EXPERIENCING_INTERRUPTIONS: 'Last van onderbrekingen?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+weergaven$',
+    MINIPLAYER: 'Minispeler',
+    ORIGINAL: 'Originele',
+    SEARCH: 'Zoeken',
+    SHARE: 'Delen',
+    SHORTS: 'Shorts',
+  },
+  'or-IN': {
+    ADS_BLOCKED: 'ଭିଡିଓ ପୂର୍ବର ବିଜ୍ଞାପନ ସଫଳତାର ସହ ଅବରୋଧ କରାଗଲା!',
+    EXPERIENCING_INTERRUPTIONS: 'ବାଧା ଅନୁଭବ କରୁଛନ୍ତି?',
+    LOW_VIEWS_RE: '^(\\d{1,3})ଟି\\s+ଭ୍ୟୁ$',
+    MINIPLAYER: 'ମିନି ପ୍ଲେୟାର',
+    ORIGINAL: 'ମୂଳ',
+    SEARCH: 'ସର୍ଚ୍ଚ କରନ୍ତୁ',
+    SHARE: 'ସେୟାର କରନ୍ତୁ',
+    SHORTS: 'Shorts',
+  },
+  'pa-Guru-IN': {
+    ADS_BLOCKED: 'ਵੀਡੀਓ ਤੋਂ ਪਹਿਲਾਂ ਵਾਲੇ ਇਸ਼ਤਿਹਾਰ ਸਫਲਤਾਪੂਰਵਕ ਬਲੌਕ ਕੀਤੇ ਗਏ!',
+    EXPERIENCING_INTERRUPTIONS: 'ਕੀ ਰੁਕਾਵਟਾਂ ਦਾ ਸਾਹਮਣਾ ਕਰ ਰਹੇ ਹੋ?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ਵਾਰ\\s+ਦੇਖਿਆ$',
+    MINIPLAYER: 'ਮਿਨੀ ਪਲੇਅਰ',
+    ORIGINAL: 'ਮੂਲ',
+    SEARCH: 'ਖੋਜੋ',
+    SHARE: 'ਸਾਂਝਾ ਕਰੋ',
+    SHORTS: 'Shorts',
+  },
+  'pl-PL': {
+    ADS_BLOCKED: 'Reklamy przed filmem pomyślnie zablokowane!',
+    EXPERIENCING_INTERRUPTIONS: 'Film nie odtwarza się płynnie?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+wyświetleń$',
+    MINIPLAYER: 'Miniodtwarzacz',
+    ORIGINAL: 'oryginalny',
+    SEARCH: 'Szukaj',
+    SHARE: 'Udostępnij',
+    SHORTS: 'Shorts',
+  },
+  'pt-BR': {
+    ADS_BLOCKED: 'Anúncios pré-roll bloqueados com sucesso!',
+    EXPERIENCING_INTERRUPTIONS: 'Enfrentando interrupções?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visualizações$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'original',
+    SEARCH: 'Pesquisa',
+    SHARE: 'Compartilhar',
+    SHORTS: 'Shorts',
+  },
+  'pt-PT': {
+    ADS_BLOCKED: 'Anúncios pré-roll bloqueados com sucesso!',
+    EXPERIENCING_INTERRUPTIONS: 'O vídeo está a ter interrupções?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+visualizações$',
+    MINIPLAYER: 'Minileitor',
+    ORIGINAL: 'original',
+    SEARCH: 'Pesquisar',
+    SHARE: 'Partilhar',
+    SHORTS: 'Shorts',
+  },
+  'ro-RO': {
+    ADS_BLOCKED: 'Reclamele pre-roll au fost blocate cu succes!',
+    EXPERIENCING_INTERRUPTIONS: 'Există întreruperi?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+vizionări$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'original',
+    SEARCH: 'Caută',
+    SHARE: 'Trimite',
+    SHORTS: 'Shorts',
+  },
+  'ru-RU': {
+    ADS_BLOCKED: 'Реклама перед видео успешно заблокирована!',
+    EXPERIENCING_INTERRUPTIONS: 'Возникли неполадки?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+просмотров$',
+    MINIPLAYER: 'Мини-проигрыватель',
+    ORIGINAL: 'оригинальная',
+    SEARCH: 'Поиск',
+    SHARE: 'Поделиться',
+    SHORTS: 'Shorts',
+  },
+  'si-LK': {
+    ADS_BLOCKED: 'වීඩියෝවට පෙර දැන්වීම් සාර්ථකව අවහිර කරන ලදී!',
+    EXPERIENCING_INTERRUPTIONS: 'බාධා කිරීම් අත්විඳිමින් සිටින්නේ ද?',
+    LOW_VIEWS_RE: '^බැලීම්\\s+(\\d{1,3})$',
+    MINIPLAYER: 'කුඩා වාදකය',
+    ORIGINAL: 'මුල්',
+    SEARCH: 'සෙවීම',
+    SHARE: 'බෙදාගන්න',
+    SHORTS: 'Shorts',
+  },
+  'sk-SK': {
+    ADS_BLOCKED: 'Reklamy pred videom boli úspešne zablokované!',
+    EXPERIENCING_INTERRUPTIONS: 'Máte problémy s prehrávaním?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+zhliadnutí$',
+    MINIPLAYER: 'Miniprehrávač',
+    ORIGINAL: 'pôvodná',
+    SEARCH: 'Hľadať',
+    SHARE: 'Zdieľať',
+    SHORTS: 'Shorts',
+  },
+  'sl-SI': {
+    ADS_BLOCKED: 'Oglasi pred predvajanjem uspešno blokirani!',
+    EXPERIENCING_INTERRUPTIONS: 'Prihaja do prekinitev?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ogledov$',
+    MINIPLAYER: 'Minipredvajalnik',
+    ORIGINAL: 'Izvirnik',
+    SEARCH: 'Iskanje',
+    SHARE: 'Deli',
+    SHORTS: 'Kratki videoposnetki',
+  },
+  'sq-AL': {
+    ADS_BLOCKED: 'Reklamat para videos u bllokuan me sukses!',
+    EXPERIENCING_INTERRUPTIONS: 'Po has ndërprerje?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+shikime$',
+    MINIPLAYER: 'Miniluajtësi',
+    ORIGINAL: 'origjinale',
+    SEARCH: 'Kërko',
+    SHARE: 'Ndaj',
+    SHORTS: 'Shorts',
+  },
+  'sr-Cyrl-RS': {
+    ADS_BLOCKED: 'Рекламе пре видеа су успешно блокиране!',
+    EXPERIENCING_INTERRUPTIONS: 'Примећујете прекиде?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+прегледа$',
+    MINIPLAYER: 'Мини-плејер',
+    ORIGINAL: 'оригинална',
+    SEARCH: 'Претражи',
+    SHARE: 'Дели',
+    SHORTS: 'Шортси',
+  },
+  'sr-Latn-RS': {
+    ADS_BLOCKED: 'Reklame pre videa su uspešno blokirane!',
+    EXPERIENCING_INTERRUPTIONS: 'Primećujete prekide?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+pregleda$',
+    MINIPLAYER: 'Mini-plejer',
+    ORIGINAL: 'originalna',
+    SEARCH: 'Pretraži',
+    SHARE: 'Deli',
+    SHORTS: 'Šortsi',
+  },
+  'sw-TZ': {
+    ADS_BLOCKED: 'Matangazo ya kabla ya video yamezuiwa!',
+    EXPERIENCING_INTERRUPTIONS: 'Unakumbana na matatizo?',
+    LOW_VIEWS_RE: '^Kutazamwa:\\s+(\\d{1,3})$',
+    MINIPLAYER: 'Kichezaji kidogo',
+    ORIGINAL: 'halisi',
+    SEARCH: 'Tafuta',
+    SHARE: 'Tuma',
+    SHORTS: 'Video Fupi',
+  },
+  'ta-IN': {
+    ADS_BLOCKED: 'வீடியோவிற்கு முந்தைய விளம்பரங்கள் வெற்றிகரமாக முடக்கப்பட்டன!',
+    EXPERIENCING_INTERRUPTIONS: 'இடையூறுகளை எதிர்கொள்கிறீர்களா?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+பார்வைகள்$',
+    MINIPLAYER: 'மினிபிளேயர்',
+    ORIGINAL: 'அசல்',
+    SEARCH: 'தேடுக',
+    SHARE: 'பகிர்',
+    SHORTS: 'Shorts வீடியோக்கள்',
+  },
+  'te-IN': {
+    ADS_BLOCKED: 'వీడియోకి ముందు వచ్చే యాడ్స్ విజయవంతంగా నిరోధించబడ్డాయి!',
+    EXPERIENCING_INTERRUPTIONS: 'అంతరాయాలను ఎదుర్కొంటున్నారా?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+వీక్షణలు$',
+    MINIPLAYER: 'మినీ ప్లేయర్',
+    ORIGINAL: 'అసలైనది',
+    SEARCH: 'సెర్చ్',
+    SHARE: 'షేర్ చేయండి',
+    SHORTS: 'షార్ట్‌లు',
+  },
+  'th-TH': {
+    ADS_BLOCKED: 'บล็อกโฆษณาก่อนเล่นวิดีโอเรียบร้อยแล้ว!',
+    EXPERIENCING_INTERRUPTIONS: 'ถูกขัดจังหวะอยู่ใช่ไหม',
+    LOW_VIEWS_RE: '^การดู\\s+(\\d{1,3})\\s+ครั้ง$',
+    MINIPLAYER: 'มินิเพลเยอร์',
+    ORIGINAL: 'เสียงต้นฉบับ',
+    SEARCH: 'ค้นหา',
+    SHARE: 'แชร์',
+    SHORTS: 'วิดีโอสั้น',
+  },
+  'tr-TR': {
+    ADS_BLOCKED: 'Video öncesi reklamlar başarıyla engellendi!',
+    EXPERIENCING_INTERRUPTIONS: 'Kesinti mi yaşıyorsunuz?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+görüntüleme$',
+    MINIPLAYER: 'Mini oynatıcı',
+    ORIGINAL: 'orijinal',
+    SEARCH: 'Ara',
+    SHARE: 'Paylaş',
+    SHORTS: 'Shorts',
+  },
+  'uk-UA': {
+    ADS_BLOCKED: 'Рекламу перед відео успішно заблоковано!',
+    EXPERIENCING_INTERRUPTIONS: 'Відео не завантажується?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+переглядів$',
+    MINIPLAYER: 'Мініпрогравач',
+    ORIGINAL: 'оригінал',
+    SEARCH: 'Пошук',
+    SHARE: 'Поділитися',
+    SHORTS: 'Відео Shorts',
+  },
+  'ur-PK': {
+    ADS_BLOCKED: 'ویڈیو سے پہلے آنے والے اشتہارات کامیابی سے بلاک کر دیے گئے!',
+    EXPERIENCING_INTERRUPTIONS: 'مداخلتوں کا سامنا کر رہے ہیں؟',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ملاحظات$',
+    MINIPLAYER: 'مِنی پلیئر',
+    ORIGINAL: 'اصل',
+    SEARCH: 'تلاش کریں',
+    SHARE: 'اشتراک کریں',
+    SHORTS: 'Shorts',
+  },
+  'uz-Latn-UZ': {
+    ADS_BLOCKED: 'Video oldidan reklamalar muvaffaqiyatli bloklandi!',
+    EXPERIENCING_INTERRUPTIONS: 'Kamchiliklar bormi?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+marta$',
+    MINIPLAYER: 'Miniplayer',
+    ORIGINAL: 'original',
+    SEARCH: 'Qidiruv',
+    SHARE: 'Ulashish',
+    SHORTS: 'Shorts',
+  },
+  'vi-VN': {
+    ADS_BLOCKED: 'Đã chặn thành công quảng cáo đầu video!',
+    EXPERIENCING_INTERRUPTIONS: 'Bạn đang gặp sự cố gây gián đoạn?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+lượt\\s+xem$',
+    MINIPLAYER: 'Trình phát thu nhỏ',
+    ORIGINAL: 'gốc',
+    SEARCH: 'Tìm kiếm',
+    SHARE: 'Chia sẻ',
+    SHORTS: 'Shorts',
+  },
+  'zh-Hans-CN': {
+    ADS_BLOCKED: '片头广告已成功拦截！',
+    CLIP: '剪辑',
+    COLLABORATORS: '联合创作者',
+    EXPERIENCING_INTERRUPTIONS: '有中断问题？',
+    HIDE_CHANNEL: '隐藏频道',
+    LOW_VIEWS_RE: '^(\\d{1,3})次观看$',
+    MINIPLAYER: '迷你播放器',
+    MIXES: '合辑',
+    ORIGINAL: '原始',
+    SEARCH: '搜索',
+    SHARE: '分享',
+    SHORTS: '短视频',
+    STREAMED_METADATA_INNERTEXT_RE: '直播时间：',
+    STREAMED_TITLE_ARIA_LABEL_RE: '直播时间：',
+    TAKE_SNAPSHOT: '截取快照',
+    THANKS: '感谢',
+    UNHIDE_CHANNEL: '取消隐藏频道',
+  },
+  'zh-Hant-HK': {
+    ADS_BLOCKED: '影片前廣告已成功封鎖！',
+    EXPERIENCING_INTERRUPTIONS: '觀賞體驗中斷？',
+    LOW_VIEWS_RE: '^收看次數：(\\d{1,3})\\s+次$',
+    MINIPLAYER: '迷你播放器',
+    ORIGINAL: '原聲',
+    SEARCH: '搜尋',
+    SHARE: '分享',
+    SHORTS: 'Shorts',
+  },
+  'zh-Hant-TW': {
+    ADS_BLOCKED: '影片前廣告已成功封鎖！',
+    EXPERIENCING_INTERRUPTIONS: '影片播放不順嗎？',
+    LOW_VIEWS_RE: '^觀看次數：(\\d{1,3})次$',
+    MINIPLAYER: '迷你播放器',
+    ORIGINAL: '原文',
+    SEARCH: '搜尋',
+    SHARE: '分享',
+    SHORTS: 'Shorts',
+  },
+  'zu-ZA': {
+    ADS_BLOCKED: 'Izikhangiso zangaphambi kwevidiyo zivinjwe ngempumelelo!',
+    EXPERIENCING_INTERRUPTIONS: 'Ingabe kuneziphazamiso?',
+    LOW_VIEWS_RE: '^(\\d{1,3})\\s+ukubukwa$',
+    MINIPLAYER: 'Isidlali Esincane',
+    ORIGINAL: 'yokuqala',
+    SEARCH: 'Sesha',
+    SHARE: 'Yabelana',
+    SHORTS: 'Okufushane',
+  },
+}
+
+
+const langCodes = lang.split('-')
+  .map((_, index, parts) => parts.slice(0, parts.length - index).join('-'))
+  .filter(langCode => Object.hasOwn(locales, langCode))
+  .concat('en')
+
+/**
+ * @param {import("./types").LocaleKey} code
+ * @returns {string}
+ */
+function getString(code) {
+  for (let langCode of langCodes) {
+    if (Object.hasOwn(locales[langCode], code)) {
+      return locales[langCode][code]
+    }
+  }
+}
+
+function getYtString(...keys) {
+  for (let key of keys) {
+    // @ts-expect-error
+    let string = window.ytcfg?.msgs?.[key]
+    if (string) return string
+  }
+  warn(`ytcfg.msgs key not found:`, keys)
+}
+//#endregion
+
+//#region Constants
+const ANIMATE_HIDE_DURATION_MS = 350
+const UNDO_HIDE_DELAY_MS = 5000
+
+const Classes = {
+  COLLABORATION: 'cpfyt-collaboration',
+  HIDE_CHANNEL: 'cpfyt-hide-channel',
+  HIDE_HIDDEN: 'cpfyt-hide-hidden',
+  HIDE_LOW_VIEWS: 'cpfyt-hide-low-views',
+  HIDE_OPEN_APP: 'cpfyt-hide-open-app',
+  HIDE_STREAMED: 'cpfyt-hide-streamed',
+  HIDE_WATCHED: 'cpfyt-hide-watched',
+  HIDE_SHARE_THANKS_CLIP: 'cpfyt-hide-share-thanks-clip',
+}
+
+/**
+ * @type {Record<string, {
+ *   itemSelector: string
+ *   itemTextSelector: string
+ * }>} menu tag name to config
+ */
+const MenuConfigs = {
+  'TP-YT-PAPER-LISTBOX': {
+    itemSelector: 'ytd-menu-service-item-renderer',
+    itemTextSelector: 'yt-formatted-string',
+  },
+  'YT-LIST-ITEM-VIEW-MODEL': {
+    itemSelector: 'yt-list-item-view-model',
+    itemTextSelector: '.ytListItemViewModelTitle',
+  },
+}
+
+const Svgs = {
+  CHAT_PATH: 'M16 2H4a3 3 0 00-3 3v8a3 3 0 003 3h1v2.14a.8.8 0 001.188.7L11.3 16H16a3 3 0 003-3V5a3 3 0 00-3-3ZM4 4h12a1 1 0 011 1v8a1 1 0 01-1 1h-5.218l-.452.252L7 16.1V14H4a1 1 0 01-1-1V5a1 1 0 011-1Zm17 2.174A3 3 0 0123 9v8a3 3 0 01-2.846 2.996L20 20v2.14a.8.8 0 01-1.189.7L13.701 20H8.216l3.6-2h2.402l.453.252L18 20.101V18.05l1.95-.05.113-.003A1 1 0 0021 17V6.174Z',
+  DELETE: '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M19 3h-4V2a1 1 0 00-1-1h-4a1 1 0 00-1 1v1H5a2 2 0 00-2 2h18a2 2 0 00-2-2ZM6 19V7H4v12a4 4 0 004 4h8a4 4 0 004-4V7h-2v12a2 2 0 01-2 2H8a2 2 0 01-2-2Zm4-11a1 1 0 00-1 1v8a1 1 0 102 0V9a1 1 0 00-1-1Zm4 0a1 1 0 00-1 1v8a1 1 0 002 0V9a1 1 0 00-1-1Z"></path></svg>',
+  GEMINI_PATH_DESKTOP: 'M480-80q0-83-31.5-156T363-363q-54-54-127-85.5T80-480q83 0 156-31.5T363-597q54-54 85.5-127T480-880q0 83 31.5 156T597-597q54 54 127 85.5T880-480q-83 0-156 31.5T597-363q-54 54-85.5 127T480-80Z',
+  GEMINI_PATH_MOBILE: 'M1 12c6.075 0 11 4.925 11 11 0-6.075 4.925-11 11-11-6.075 0-11-4.925-11-11 0 6.075-4.925 11-11 11z',
+  MINIPLAYER_NEW_PATH: 'M21.20 3.01C21.66 3.05 22.08 3.26 22.41 3.58C22.73 3.91 22.94 4.33 22.98 4.79L23 5V19C23.00 19.49 22.81 19.97 22.48 20.34C22.15 20.70 21.69 20.93 21.20 20.99L21 21H3L2.79 20.99C2.30 20.93 1.84 20.70 1.51 20.34C1.18 19.97 .99 19.49 1 19V13H3V19H21V5H11V3H21L21.20 3.01ZM1.29 3.29C1.10 3.48 1.00 3.73 1.00 4C1.00 4.26 1.10 4.51 1.29 4.70L5.58 9H3C2.73 9 2.48 9.10 2.29 9.29C2.10 9.48 2 9.73 2 10C2 10.26 2.10 10.51 2.29 10.70C2.48 10.89 2.73 11 3 11H9V5C9 4.73 8.89 4.48 8.70 4.29C8.51 4.10 8.26 4 8 4C7.73 4 7.48 4.10 7.29 4.29C7.10 4.48 7 4.73 7 5V7.58L2.70 3.29C2.51 3.10 2.26 3.00 2 3.00C1.73 3.00 1.48 3.10 1.29 3.29ZM19.10 11.00L19 11H12L11.89 11.00C11.66 11.02 11.45 11.13 11.29 11.29C11.13 11.45 11.02 11.66 11.00 11.89L11 12V17C10.99 17.24 11.09 17.48 11.25 17.67C11.42 17.85 11.65 17.96 11.89 17.99L12 18H19L19.10 17.99C19.34 17.96 19.57 17.85 19.74 17.67C19.90 17.48 20.00 17.24 20 17V12L19.99 11.89C19.97 11.66 19.87 11.45 19.70 11.29C19.54 11.13 19.33 11.02 19.10 11.00ZM13 16V13H18V16H13Z',
+  MINIPLAYER_OLD_PATH: 'M25,17 L17,17 L17,23 L25,23 L25,17 L25,17 Z M29,25 L29,10.98 C29,9.88 28.1,9 27,9 L9,9 C7.9,9 7,9.88 7,10.98 L7,25 C7,26.1 7.9,27 9,27 L27,27 C28.1,27 29,26.1 29,25 L29,25 Z M27,25.02 L9,25.02 L9,10.97 L27,10.97 L27,25.02 L27,25.02 Z',
+  RESTORE: '<svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" width="24" focusable="false" style="pointer-events: none; display: block; width: 100%; height: 100%;"><path d="M8.76 1.487c9.617-2.963 17.833 7.473 12.698 16.126-5.135 8.652-18.231 6.441-20.238-3.42-.267-1.307 1.693-1.707 1.96-.4 1.321 6.495 8.971 9.382 14.254 5.38 5.016-3.8 4.683-11.443-.644-14.793A9 9 0 0 0 4.518 7H7c1.333 0 1.333 2 0 2H1V3c0-1.333 2-1.333 2 0v2.678a11 11 0 0 1 5.76-4.192Z"/></svg>',
+  SHARE_PATH_MOBILE: 'M10 3.158V7.51c-5.428.223-8.27 3.75-8.875 11.199-.04.487-.07.975-.09 1.464l-.014.395c-.014.473.578.684.88.32.302-.368.61-.73.925-1.086l.244-.273c1.79-1.967 3-2.677 4.93-2.917a18.011 18.011 0 012-.112v4.346a1 1 0 001.646.763l9.805-8.297 1.55-1.31-1.55-1.31-9.805-8.297A1 1 0 0010 3.158Zm2 6.27v.002-4.116l7.904 6.688L12 18.689v-4.212l-2.023.024c-1.935.022-3.587.17-5.197 1.024a9 9 0 00-1.348.893c.355-1.947.916-3.39 1.63-4.425 1.062-1.541 2.607-2.385 5.02-2.485L12 9.428Z',
+  SHORTS_MUSIC_PATH: 'M11 2.766v10.99a4.5 4.5 0 101.994 3.976L13 17.5V9.2l5.485 3.292A1 1 0 0020 11.634V6.966a1 1 0 00-.485-.857l-7-4.2A1 1 0 0011 2.766Zm2 4.102V4.533l5 3v2.335l-5-3ZM8.5 15a2.5 2.5 0 110 5.001A2.5 2.5 0 018.5 15Z',
+  VIEWS_ICON_PATH: 'M5 4.623v14.755a1.5 1.5 0 002.261 1.294l12.766-7.51L22 12.002l-1.973-1.162L7.26 3.33A1.5 1.5 0 005 4.623Zm2 13.88V5.497L18.056 12 7 18.503Z',
+}
+
+// YouTube channel URLs: https://support.google.com/youtube/answer/6180214
+const URL_CHANNEL_RE = /\/(?:@[^\/]+|(?:c|channel|user)\/[^\/]+)(?:\/(featured|videos|shorts|streams|podcasts|playlists|community|posts|membership|search))?\/?$/
+const URL_CHANNEL_TAB_RE = /\/(featured|videos|shorts|streams|podcasts|playlists|community|posts|membership|search)\/?$/
+//#endregion
+
+//#region State
+/** @type {HTMLElement} */
+let $lastClickedElement
+/** @type {number} */
+let effectiveGridItemsPerRow
+/** @type {'auto' | 'minimum' | 'relative'} */
+let effectiveGridMode
+/** @type {Map<string, import("./types").Disconnectable>} */
+let globalObservers = new Map()
+/** @type {ReturnType<typeof createHideAnimationController>} */
+let hideAnimationController
+/** @type {import("./types").Channel} */
+let lastClickedChannel
+/** @type {number} */
+let lastElementsPerRow
+/** @type {() => void} */
+let onDialogClosed
+/** @type {Map<string, import("./types").Disconnectable>} */
+let pageObservers = new Map()
+/** @type {boolean} */
+let realDocumentHidden
+//#endregion
+
+//#region Utilities
+function addStyle(css = '') {
+  let $style = document.createElement('style')
+  if (css) {
+    $style.textContent = css
+  }
+  document.documentElement.appendChild($style)
+  return $style
+}
+
+function createHideAnimationController() {
+  /** @type {() => void} */
+  let cleanupActiveAnimation = null
+  let disconnected = false
+  /** @type {Set<Element>} */
+  let pendingHideElements = new Set()
+  let pendingTimers = 0
+
+  function flush() {
+    if (disconnected || pendingHideElements.size == 0) return
+    let itemsToHide = Array.from(pendingHideElements)
+    pendingHideElements.clear()
+    cleanupActiveAnimation = animateHidingHiddenItems(itemsToHide)
+  }
+
+  function maybeFlush() {
+    if (disconnected) return
+    if (--pendingTimers <= 0) {
+      flush()
+    }
+  }
+
+  pageObservers.set('hide animation controller', {
+    disconnect() {
+      disconnected = true
+      hideAnimationController = null
+      cleanupActiveAnimation?.()
+    }
+  })
+
+  return {
+    enqueue(element) {
+      if (disconnected || !element) return
+      pendingHideElements.add(element)
+      pendingTimers++
+      log('enqueued', {pendingTimers})
+    },
+    dequeue(element) {
+      if (disconnected || !element) return
+      if (pendingHideElements.delete(element)) {
+        maybeFlush()
+      }
+    },
+    expire() {
+      if (disconnected) return
+      maybeFlush()
+    },
+    remove(element) {
+      if (disconnected || !element) return
+      pendingHideElements.delete(element)
+    }
+  }
+}
+
+function currentUrlChanges() {
+  let currentUrl = getCurrentUrl()
+  return () => currentUrl != getCurrentUrl()
+}
+
+/**
+ * @param {string} str
+ * @return {string}
+ */
+function dedent(str) {
+  str = str.replace(/^[ \t]*\r?\n/, '')
+  let indent = /^[ \t]+/m.exec(str)
+  if (indent) str = str.replace(new RegExp('^' + indent[0], 'gm'), '')
+  return str.replace(/(\r?\n)[ \t]+$/, '$1')
+}
+
+/** @param {Map<string, import("./types").Disconnectable>} observers */
+function disconnectObservers(observers, scope) {
+  if (observers.size == 0) return
+  log(
+    `disconnecting ${observers.size} ${scope} observer${s(observers.size)}`,
+    Array.from(observers.keys())
+  )
+  logObserverDisconnects = false
+  for (let observer of observers.values()) observer.disconnect()
+  logObserverDisconnects = true
+}
+
+function frame() {
+  return new Promise((resolve) => requestAnimationFrame(resolve))
+}
+
+function getCurrentUrl() {
+  return location.origin + location.pathname + location.search
+}
+
+/**
+ * @typedef {{
+ *   context?: Document | HTMLElement
+ *   mutationObserverOptions?: MutationObserverInit
+ *   name?: string
+ *   observers?: Map<string, import("./types").Disconnectable>
+ *   stopIf?: () => boolean
+ *   timeout?: number
+ * }} GetElementOptions
+ *
+ * @param {string} selector
+ * @param {GetElementOptions} options
+ * @returns {Promise<HTMLElement | null>}
+ */
+function getElement(selector, {
+  context = document.body || document.documentElement,
+  mutationObserverOptions = {childList: true, subtree: true},
+  name = null,
+  observers = pageObservers,
+  stopIf = null,
+  timeout = Infinity,
+} = {}) {
+  return new Promise((resolve) => {
+    let startTime = Date.now()
+    let observer
+    let intervalId
+    let timeoutId
+    let resolved = false
+    let queryCount = 0
+
+    function stop($element, reason) {
+      if (resolved) return
+      resolved = true
+      if ($element == null) {
+        log(`getElement: stopped waiting for ${name || selector} after ${reason}`)
+      }
+      else if (debugLogGetElementStats && reason != 'initial query') {
+        log(`getElement: got ${name || selector} after ${Date.now() - startTime}ms (${queryCount} ${queryCount == 1 ? 'query' : 'queries'})`)
+      }
+      observer?.disconnect()
+      if (timeoutId) clearTimeout(timeoutId)
+      if (intervalId) clearInterval(intervalId)
+      resolve($element)
+    }
+
+    if (stopIf?.() === true) return stop(null, 'stopIf condition met (initial query)')
+
+    let $element = context.querySelector(selector)
+    if ($element) return stop($element, 'initial query')
+
+    observer = observeElement(context, () => {
+      if (stopIf?.() === true) return stop(null, 'stopIf condition met (observer)')
+      queryCount++
+      let $element = context.querySelector(selector)
+      if ($element) stop($element)
+    }, {
+      name: `getElement: ${name || selector}`,
+      observers,
+      onDisconnect() {
+        if (!resolved) stop(null, 'observer disconnected')
+      },
+    }, mutationObserverOptions)
+
+    if (stopIf) {
+      intervalId = setInterval(() => {
+        if (stopIf() === true) stop(null, 'stopIf condition met (interval)')
+      }, 250)
+    }
+
+    if (timeout !== Infinity) {
+      timeoutId = setTimeout(stop, timeout, null, `${timeout}ms timeout`)
+    }
+  })
+}
+
+function getGridPagesNeedingGhostCardFix() {
+  return [
+    !config.displayHomeGridAsList && 'home',
+    !config.displaySubscriptionsGridAsList && 'subscriptions',
+  ].filter(Boolean)
+}
+
+let policy = window.trustedTypes?.createPolicy?.('tagged-html-policy', {createHTML: (s) => s}) || {createHTML: (s) => s}
+function html(strings, ...values) {
+  return /** @type {string} */ (policy.createHTML(strings.reduce((acc, str, i) => acc + str + (values[i] || ''), '')))
+}
+
+/**
+ * @param {import("./types").Channel} channel
+ * @param {import("./types").Channel} other
+ */
+function channelsMatch(channel, other) {
+  return channel.url && other.url ? channel.url == other.url : channel.name == other.name
+}
+
+/** @param {import("./types").Channel} channel */
+function isChannelHidden(channel) {
+  return config.hiddenChannels.some(hiddenChannel => channelsMatch(channel, hiddenChannel))
+}
+
+/** @param {import("./types").Channel} channel */
+function toggleHiddenChannel(channel) {
+  if (isChannelHidden(channel)) {
+    log('unhiding channel', channel)
+    config.hiddenChannels = config.hiddenChannels.filter(hiddenChannel => !channelsMatch(channel, hiddenChannel))
+  } else {
+    log('hiding channel', channel)
+    config.hiddenChannels.unshift(channel)
+  }
+}
+
+let logObserverDisconnects = true
+
+/**
+ * Convenience wrapper for the MutationObserver API:
+ *
+ * - Defaults to {childList: true}
+ * - Observers have associated names
+ * - Optional leading call for callback
+ * - Observers are stored in a scope object
+ * - Observers already in the given scope will be disconnected
+ * - onDisconnect hook for post-disconnect logic
+ *
+ * @param {Node} $target
+ * @param {MutationCallback} callback
+ * @param {{
+ *   leading?: boolean
+ *   logDisconnect?: boolean
+ *   logElement?: boolean
+ *   logObserve?: boolean
+ *   name: string
+ *   observers: Map<string, import("./types").Disconnectable> | Map<string, import("./types").Disconnectable>[]
+ *   onDisconnect?: () => void
+ * }} options
+ * @param {MutationObserverInit} mutationObserverOptions
+ * @return {import("./types").CustomMutationObserver}
+ */
+function observeElement($target, callback, options, mutationObserverOptions = {childList: true}) {
+  let {leading, logDisconnect = true, logElement, logObserve = true, name, observers, onDisconnect} = options
+  let observerMaps = Array.isArray(observers) ? observers : [observers]
+
+  /** @type {import("./types").CustomMutationObserver} */
+  let observer = Object.assign(new MutationObserver(callback), {name})
+  let disconnect = observer.disconnect.bind(observer)
+  let disconnected = false
+  observer.disconnect = () => {
+    if (disconnected) return
+    disconnected = true
+    disconnect()
+    for (let map of observerMaps) map.delete(name)
+    onDisconnect?.()
+    if (logDisconnect && logObserverDisconnects) {
+      log(`disconnected ${name} observer`)
+    }
+  }
+
+  if (observerMaps[0].has(name)) {
+    if (logDisconnect) {
+      log(`disconnecting existing ${name} observer`)
+    }
+    logObserverDisconnects = false
+    observerMaps[0].get(name).disconnect()
+    logObserverDisconnects = true
+  }
+
+  for (let map of observerMaps) map.set(name, observer)
+  if (logObserve) {
+    if (logElement) {
+      log(`observing ${name}`, $target)
+    } else {
+      log(`observing ${name}`)
+    }
+  }
+  observer.observe($target, mutationObserverOptions)
+  if (leading) {
+    callback([], observer)
+  }
+  return observer
+}
+
+/**
+ * @template T
+ * @param {() => T} fn
+ */
+function run(fn) {
+  return fn()
+}
+
+/**
+ * @param {number} n
+ * @returns {string}
+ */
+function s(n) {
+  return n == 1 ? '' : 's'
+}
+
+/**
+ * @param {() => any} fn
+ * @param {string} name
+ * @param {{
+ *   interval?: number,
+ *   observers?: Map<string, import("./types").Disconnectable>
+ *   stopIf?: () => boolean
+ *   timeout?: number
+ * }} options
+ * @returns {Promise<boolean>}
+ */
+function waitFor(fn, name, {
+  interval = 100,
+  observers = pageObservers,
+  stopIf = null,
+  timeout = Infinity,
+} = {}) {
+  return new Promise((resolve) => {
+    let startTime = Date.now()
+    let timerId
+    let timeoutId
+    let resolved = false
+    let observerName = `waitFor: ${name}`
+    observers.get(observerName)?.disconnect()
+    function finish(ready) {
+      if (resolved) return
+      resolved = true
+      clearTimeout(timerId)
+      clearTimeout(timeoutId)
+      observers.delete(observerName)
+      if (ready) {
+        let elapsed = Date.now() - startTime
+        if (elapsed > 0) log(name, 'became available after', elapsed, 'ms')
+      } else {
+        log('stopped waiting for', name)
+      }
+      resolve(ready)
+    }
+    observers.set(observerName, {disconnect: () => finish(false)})
+    if (timeout !== Infinity) timeoutId = setTimeout(finish, timeout, false)
+    function check() {
+      if (stopIf?.()) return finish(false)
+      if (fn()) return finish(true)
+      timerId = setTimeout(check, interval)
+    }
+    check()
+  })
+}
+//#endregion
+
+//#region CSS
+const configureCss = (() => {
+  /** @type {HTMLStyleElement} */
+  let $style
+
+  return function configureCss() {
+    configureTranslationCss()
+    if (!config.enabled) {
+      log('removing main stylesheet')
+      $style?.remove()
+      $style = null
+      return
+    }
+
+    let cssRules = [`
+      html {
+        --cpfyt-additive-background: rgb(0,0,0,.1);
+        --cpfyt-outline: rgb(0,0,0,.2);
+        --cpfyt-text-primary: #0f0f0f;
+        --cpfyt-text-secondary: #606060;
+        --cpfyt-touch-response: #000;
+      }
+      html[dark] {
+        --cpfyt-additive-background: rgb(255,255,255,.1);
+        --cpfyt-outline: rgb(255,255,255,.2);
+        --cpfyt-text-primary: #f1f1f1;
+        --cpfyt-text-secondary: #aaa;
+        --cpfyt-touch-response: #fff;
+      }
+      .cpfyt-vanishing-flip {
+        transition: opacity ${ANIMATE_HIDE_DURATION_MS}ms ease-out, transform ${ANIMATE_HIDE_DURATION_MS}ms ease-out !important;
+        opacity: 0 !important;
+        transform: scale(0.6) !important;
+        transform-origin: center center !important;
+        pointer-events: none !important;
+        box-sizing: border-box !important;
+      }
+    `]
+    let hideCssSelectors = []
+    let manualHideRules = []
+
+    if (config.disableAmbientMode) {
+      if (desktop) {
+        hideCssSelectors.push('#cinematics, #cinematic-container.ytd-reel-video-renderer')
+      }
+      if (mobile) {
+        hideCssSelectors.push('.below-the-player-cinematic-container')
+      }
+    }
+
+    if (config.disableAutoplay) {
+      if (desktop) {
+        hideCssSelectors.push('button[data-tooltip-target-id="ytp-autonav-toggle-button"]')
+      }
+      if (mobile) {
+        hideCssSelectors.push('button.ytm-autonav-toggle-button-container, button.ytwAutonavToggleButtonHost')
+      }
+    }
+
+    if (config.disableHomeFeed && loggedIn) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Prevent flash of content while redirecting
+          'ytd-browse[page-subtype="home"]',
+          // Hide Home links
+          'ytd-guide-entry-renderer:has(> a[href="/"])',
+          'ytd-mini-guide-entry-renderer:has(> a[href="/"])',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Prevent flash of content while redirecting
+          '.tab-content[tab-identifier="FEwhat_to_watch"]',
+          // Bottom nav item
+          'ytm-pivot-bar-item-renderer:has(> div.pivot-w2w)',
+        )
+      }
+    }
+
+    if (config.hideAI) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Summary in Search and under video
+          // e.g. https://www.youtube.com/results?search_query=howtobasic+wedges
+          `#expandable-metadata:has(path[d="${Svgs.GEMINI_PATH_DESKTOP}"])`,
+          // Summary in video description
+          // e.g. https://www.youtube.com/watch?v=9AI8IBaWbTc
+          '#video-summary.ytd-structured-description-content-renderer',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(`ytm-expandable-metadata-renderer:has(path[d="${Svgs.GEMINI_PATH_MOBILE}"])`)
+      }
+    }
+
+    if (config.hideAskButton) {
+      // Requires certain regions, e.g. en-US
+      if (desktop) {
+        hideCssSelectors.push(`yt-button-view-model:has(path[d="${Svgs.GEMINI_PATH_DESKTOP}"])`)
+      }
+      if (mobile) {
+        hideCssSelectors.push(`button-view-model:has(path[d="${Svgs.GEMINI_PATH_MOBILE}"])`)
+      }
+    }
+
+    if (desktop && config.hideAskYouTubeSearch) {
+      cssRules.push(`
+        /* Hide Ask YouTube and its suggested prompts */
+        yt-searchbox [client-ve-type="307188"],
+        yt-searchbox .ytSearchboxComponentAiSuggestionsContainer {
+          display: none !important;
+        }
+        /* Move the search button up */
+        yt-searchbox.ytSearchboxComponentHostUnified:has([client-ve-type="307188"]) {
+          /* Keep the input, mic/clear buttons and Search on one row */
+          .ytSearchboxComponentInputContainerIsFocused.ytSearchboxComponentInputContainerUnified {
+            flex-direction: row;
+            padding-bottom: 0;
+          }
+          /* Remove space between input mic/clear buttons and Search */
+          .ytSearchboxComponentInputBoxVoiceSearchButtonFocused,
+          .ytSearchboxComponentClearButtonWrapper {
+            padding-right: 0 !important;
+          }
+          .ytSearchboxComponentActions {
+            /* Prevent search container expanding to take up space */
+            width: auto;
+            /* Allow Search to sit flush with the outer container */
+            margin-right: 0;
+            padding-right: 0;
+          }
+          /* Allow Search to sit flush with the outer container */
+          button-view-model.ytSearchboxComponentActionsButton {
+            padding-right: 0;
+          }
+          /* Round the bottom of the container when there are no suggestions below it */
+          &:has(input[name="search_query"]:placeholder-shown) {
+            .ytSearchboxComponentInputWrapperIsFocused {
+              border-radius: 28px;
+            }
+          }
+        }
+
+        /* Hide search suggestions when the search input is empty */
+        yt-searchbox:has(input[name="search_query"]:placeholder-shown) .ytSearchboxComponentSuggestionsContainer {
+          display: none !important;
+        }
+      `)
+    }
+
+    if (config.hideAutoDubbed) {
+      const autoDubbedSvgPath = 'path[d="M19.4.2a1 1 0 00-.2 1.4 9 9 0 01-.022 10.83 1 1 0 001.595 1.206A11 11 0 0020.8.4a1 1 0 00-1.4-.2ZM10 2a5 5 0 100 10 5 5 0 000-10Zm6.17.3a1 1 0 00-.028 1.414c.895.932 1.365 2.114 1.358 3.312-.006 1.199-.49 2.378-1.396 3.302a1.001 1.001 0 101.427 1.4c1.257-1.281 1.959-2.953 1.969-4.69.009-1.738-.673-3.416-1.916-4.71A1 1 0 0016.17 2.3ZM10 13a8 8 0 00-8 8 1 1 0 001 1h14l.102-.005A1 1 0 0018 21a8 8 0 00-8-8Z"]'
+      if (desktop) {
+        hideCssSelectors.push(
+          // Home
+          `ytd-browse[page-subtype="home"] ytd-rich-item-renderer:has(${autoDubbedSvgPath})`,
+          // Related
+          `#related yt-lockup-view-model:has(${autoDubbedSvgPath})`
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Home
+          `.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-item-renderer:has(${autoDubbedSvgPath})`,
+          // Related
+          `ytm-item-section-renderer[section-identifier="related-items"] ytm-video-with-context-renderer:has(${autoDubbedSvgPath})`,
+        )
+      }
+    }
+
+    if (config.hideChannelBanner) {
+      if (desktop) {
+        hideCssSelectors.push('ytd-browse[page-subtype="channels"] #page-header-banner')
+      }
+      if (mobile) {
+        hideCssSelectors.push('html[cpfyt-page="channel"] .ytPageHeaderViewModelBannerContainer')
+      }
+    }
+
+    if (config.hideChannelWatermark) {
+      if (desktop) {
+        hideCssSelectors.push(
+          '.annotation.iv-branding',
+          // Shorts
+          '#pivot-button.ytd-reel-player-overlay-renderer',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push('.reel-player-overlay-actions > pivot-button-view-model')
+      }
+    }
+
+    if (config.hideCollaborations) {
+      if (desktop) {
+        hideCssSelectors.push(
+          'ytd-browse[page-subtype="subscriptions"] ytd-rich-item-renderer:has(yt-avatar-stack-view-model)'
+        )
+      }
+      if (mobile) {
+        manualHideRules.push({
+          selector: `html[cpfyt-page="subscriptions"] .${Classes.COLLABORATION}`,
+          reason: 'collaboration',
+        })
+      }
+    }
+
+    if (config.hideHomeCategories) {
+      if (desktop) {
+        hideCssSelectors.push('ytd-browse[page-subtype="home"] #header')
+        // Remove the hidden header's height from the frosted glass element
+        cssRules.push(`
+          #frosted-glass.with-chipbar {
+            height: 56px !important;
+          }
+        `)
+      }
+      if (mobile) {
+        hideCssSelectors.push('.tab-content[tab-identifier="FEwhat_to_watch"] .rich-grid-sticky-header')
+      }
+    }
+
+    // We only hide channels in Home, Search and Related videos
+    if (config.hideChannels) {
+      if (config.hiddenChannels.length > 0) {
+        manualHideRules.push({selector: `.${Classes.HIDE_CHANNEL}`, reason: 'blocked channel'})
+      }
+      if (desktop) {
+        // Custom elements can't be cloned so we need to style our own menu items
+        cssRules.push(`
+          .cpfyt-menu-item {
+            align-items: center;
+            cursor: pointer;
+            display: flex !important;
+            min-height: 36px;
+            padding: 0 12px 0 16px;
+            color: var(--cpfyt-text-primary);
+          }
+          tp-yt-paper-listbox .cpfyt-menu-item {
+            -webkit-font-smoothing: antialiased;
+            border-radius: 8px;
+          }
+          tp-yt-paper-listbox .cpfyt-menu-item:hover {
+            background-color: var(--cpfyt-additive-background);
+          }
+          tp-yt-paper-listbox .cpfyt-menu-item:focus {
+            position: relative;
+            background-color: var(--cpfyt-additive-background);
+            outline: 2px solid currentColor;
+            outline-offset: -2px;
+          }
+          tp-yt-paper-listbox .cpfyt-menu-item:focus::before {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: var(--paper-item-focused-before-background, currentColor);
+            border-radius: var(--paper-item-focused-before-border-radius, 0);
+            content: var(--paper-item-focused-before-content, "");
+            opacity: var(--paper-item-focused-before-opacity, var(--dark-divider-opacity, .12));
+          }
+          yt-list-view-model .cpfyt-menu-item {
+            padding: 2px 16px;
+          }
+          yt-list-view-model .cpfyt-menu-item:focus {
+            outline: 2px solid currentColor;
+            outline-offset: -2px;
+            border-radius: 8px;
+          }
+          yt-list-view-model .cpfyt-menu-item:is(:hover, :focus) {
+            background-color: rgba(0, 0, 0, .05);
+          }
+          html[dark] yt-list-view-model .cpfyt-menu-item:is(:hover, :focus) {
+            background-color: rgba(255, 255, 255, .1);
+          }
+          .cpfyt-menu-icon {
+            color: var(--cpfyt-text-primary);
+            fill: currentColor;
+            height: 24px;
+            margin-right: 12px;
+            width: 24px;
+            flex-shrink: 0;
+          }
+          yt-list-view-model .cpfyt-menu-icon {
+            margin-right: 12px;
+          }
+          .cpfyt-menu-text {
+            color: var(--cpfyt-text-primary);
+            flex-basis: 0.000000001px;
+            flex: 1;
+            font-family: "Roboto","Arial",sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 2rem;
+            margin-right: 24px;
+            white-space: nowrap;
+          }
+        `)
+      }
+      if (mobile) {
+        cssRules.push(`
+          yt-list-view-model #cpfyt-hide-channel-menu-item:focus-within {
+            outline: 2px solid currentColor;
+            outline-offset: -2px;
+            border-radius: 8px;
+          }
+        `)
+      }
+    } else {
+      // Hide menu item if config is changed after it's added
+      hideCssSelectors.push('#cpfyt-hide-channel-menu-item')
+    }
+
+    if (config.hideCommentGifs) {
+      if (desktop) {
+        hideCssSelectors.push('ytd-comment-view-model ytw-comment-image-attachment-view-model')
+      }
+      if (mobile) {
+        hideCssSelectors.push('ytm-comment-renderer .YtmCommentRendererUnsupportedText')
+      }
+    }
+
+    if (config.hideComments) {
+      if (desktop) {
+        hideCssSelectors.push(
+          '#comments',
+          // Shorts button
+          '#comments-button.ytd-reel-player-overlay-renderer',
+          // Shorts button (new UI)
+          'reel-action-bar-view-model > button-view-model:nth-of-type(1)',
+          // Full screen panel
+          //'ytd-watch-flexy[engagement-panel-expanded] #panels-full-bleed-container:has(ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-comments-section"][visibility="ENGAGEMENT_PANEL_VISIBILITY_EXPANDED"])'
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          'ytm-slim-video-metadata-section-renderer + ytm-item-section-renderer',
+          // Shorts button (new UI)
+          'reel-action-bar-view-model > button-view-model:nth-of-type(1)',
+        )
+      }
+    }
+
+    if (config.hideHiddenVideos) {
+      cssRules.push(`
+        .cpfyt-pie {
+          --cpfyt-pie-delay: 0ms;
+          --cpfyt-pie-direction: normal;
+          --cpfyt-pie-duration: ${UNDO_HIDE_DELAY_MS}ms;
+          width: 1em;
+          height: 1em;
+          position: relative;
+          border-radius: 50%;
+          margin: 0.5em;
+          display: inline-block;
+          cursor: pointer;
+          flex-shrink: 0;
+        }
+        .cpfyt-pie:hover {
+          --cpfyt-pie-color: #f03 !important;
+        }
+        .cpfyt-pie::before,
+        .cpfyt-pie::after {
+          content: "";
+          width: 50%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          border-radius: 0.5em 0 0 0.5em;
+          transform-origin: center right;
+          animation-delay: var(--cpfyt-pie-delay);
+          animation-direction: var(--cpfyt-pie-direction);
+          animation-duration: var(--cpfyt-pie-duration);
+        }
+        .cpfyt-pie::before {
+          z-index: 1;
+          background-color: var(--cpfyt-pie-background-color);
+          animation-name: cpfyt-mask;
+          animation-timing-function: steps(1);
+        }
+        .cpfyt-pie::after {
+          background-color: var(--cpfyt-pie-color);
+          animation-name: cpfyt-rotate;
+          animation-timing-function: linear;
+        }
+        @keyframes cpfyt-rotate {
+          to { transform: rotate(1turn); }
+        }
+        @keyframes cpfyt-mask {
+          50%, 100% {
+            background-color: var(--cpfyt-pie-color);
+            transform: rotate(0.5turn);
+          }
+        }
+      `)
+      if (desktop) {
+        cssRules.push(`
+          #text.ytd-notification-multi-action-renderer {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+          }
+        `)
+      }
+      if (mobile) {
+        cssRules.push(`
+          ytm-notification-multi-action-renderer .notification-multi-action-text-wrapper {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+          }
+        `)
+      }
+      manualHideRules.push({selector: `.${Classes.HIDE_HIDDEN}`, reason: 'dismissed'})
+    }
+
+    if (config.hideInfoPanels) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Search
+          'ytd-clarification-renderer',
+          'ytd-info-panel-container-renderer',
+          // Below video
+          '#middle-row.ytd-watch-metadata:has(> ytd-info-panel-content-renderer:only-child)',
+          'ytd-info-panel-content-renderer',
+          '#clarify-box',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Search and below video
+          'ytm-clarification-renderer',
+          'ytm-info-panel-container-renderer',
+        )
+      }
+    }
+
+    if (config.hideLive) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Grid item (Home, Subscriptions)
+          'ytd-browse:not([page-subtype="channels"]) ytd-rich-item-renderer:has(ytd-thumbnail[is-live-video])',
+          'ytd-browse:not([page-subtype="channels"]) ytd-rich-item-renderer:has(.yt-badge-shape--thumbnail-live)',
+          'ytd-browse:not([page-subtype="channels"]) ytd-rich-item-renderer:has(.ytBadgeShapeThumbnailLive)',
+          // List item (Search)
+          'ytd-video-renderer:has(ytd-thumbnail[is-live-video])',
+          // Related
+          'ytd-compact-video-renderer:has(> .ytd-compact-video-renderer > ytd-thumbnail[is-live-video])',
+          '#related yt-lockup-view-model:has(.yt-badge-shape--thumbnail-live)',
+          '#related yt-lockup-view-model:has(.ytBadgeShapeThumbnailLive)',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Home & Subscriptions
+          '.tab-content:is([tab-identifier="FEwhat_to_watch"], [tab-identifier="FEsubscriptions"]) ytm-rich-item-renderer:has(ytm-thumbnail-overlay-time-status-renderer[data-style="LIVE"])',
+          // Search
+          'ytm-search ytm-video-with-context-renderer:has(ytm-thumbnail-overlay-time-status-renderer[data-style="LIVE"])',
+          // Large item in Related videos
+          'ytm-item-section-renderer[section-identifier="related-items"] > lazy-list > ytm-compact-autoplay-renderer:has(ytm-thumbnail-overlay-time-status-renderer[data-style="LIVE"])',
+          // Related
+          'ytm-item-section-renderer[section-identifier="related-items"] > lazy-list > ytm-video-with-context-renderer:has(ytm-thumbnail-overlay-time-status-renderer[data-style="LIVE"])',
+        )
+      }
+    }
+
+    if (config.hideLowViews) {
+      manualHideRules.push({selector: `.${Classes.HIDE_LOW_VIEWS}`, reason: 'low views'})
+    }
+
+    if (config.hideMembersOnly) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Grid item (Home, Subscriptions, Channel videos tab)
+          'ytd-rich-item-renderer:has(.badge-style-type-members-only)',
+          'ytd-rich-item-renderer:has(.yt-badge-shape--commerce > .yt-badge-shape__icon)',
+          'ytd-rich-item-renderer:has(.yt-badge-shape--membership)',
+          'ytd-rich-item-renderer:has(.ytBadgeShapeCommerce > .ytBadgeShapeIcon)', // Current
+          // List item (Search)
+          'ytd-video-renderer:has(.badge-style-type-members-only)',
+          'ytd-video-renderer:has(.yt-badge-shape--membership)',
+          'ytd-video-renderer:has(.ytBadgeShapeCommerce > .ytBadgeShapeIcon)', // Current?
+          // Related
+          'ytd-compact-video-renderer:has(.badge-style-type-members-only)',
+          '#related yt-lockup-view-model:has(.yt-badge-shape--commerce > .yt-badge-shape__icon)',
+          '#related yt-lockup-view-model:has(.yt-badge-shape--membership)',
+          '#related yt-lockup-view-model:has(.ytBadgeShapeCommerce > .ytBadgeShapeIcon)', // Current?
+          // Video endscreen
+          // TODO Hide by href based on any of the first 12 items in #related being members only videos
+        )
+        // In a channel's horizontal video lists
+        cssRules.push(`
+          html:not([cpfyt-channel-tab="membership"]) {
+            ytd-app {
+              ytd-item-section-renderer[page-subtype="channels"] ytd-grid-video-renderer:has(.badge-style-type-members-only),
+              ytd-item-section-renderer[page-subtype="channels"] ytd-grid-video-renderer:has(.yt-badge-shape--membership),
+              ytd-item-section-renderer[page-subtype="channels"] ytd-grid-video-renderer:has(.ytBadgeShapeCommerce > .ytBadgeShapeIcon) {
+                display: none !important;
+              }
+            }
+          }
+        `)
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Home & Subscriptions
+          '.tab-content:is([tab-identifier="FEwhat_to_watch"], [tab-identifier="FEsubscriptions"]) ytm-rich-item-renderer:has(ytm-badge[data-type="BADGE_STYLE_TYPE_MEMBERS_ONLY"])',
+          // Search
+          'ytm-search ytm-video-with-context-renderer:has(ytm-badge[data-type="BADGE_STYLE_TYPE_MEMBERS_ONLY"])',
+        )
+      }
+    }
+
+    if (config.hideMetadata) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Top-right controls which link to metadata
+          '#movie_player :is(.ytp-cards-button, .ytp-cards-teaser)',
+          // Channel name / Videos / About below video
+          '#structured-description .ytd-structured-description-content-renderer:not(#items, ytd-video-description-transcript-section-renderer)',
+          // Game below video
+          '#above-the-fold + ytd-metadata-row-container-renderer',
+          // Game / Infocards in full screen description panel
+          'ytd-structured-description-content-renderer[panel-target-id="engagement-panel-structured-description"] .ytd-structured-description-content-renderer:not(#items, ytd-video-description-header-renderer, ytd-expandable-video-description-body-renderer, ytd-video-description-transcript-section-renderer)',
+          // New metadata module (e.g. Game, People mentioned)
+          ':is(#above-the-fold, ytd-structured-description-content-renderer[panel-target-id="engagement-panel-structured-description"]) yt-video-attributes-section-view-model',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Game name and Gaming link
+          'ytm-structured-description-content-renderer yt-video-attributes-section-view-model',
+          'ytm-video-description-gaming-section-renderer',
+          // Channel name / Videos / About
+          'ytm-structured-description-content-renderer ytm-video-description-infocards-section-renderer',
+          // Music
+          'ytm-structured-description-content-renderer ytm-horizontal-card-list-renderer',
+        )
+      }
+    }
+
+    if (config.hideMixes) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Chip in Home
+          `yt-chip-cloud-chip-renderer:has(> #chip-container > yt-formatted-string[title="${getString('MIXES')}"])`,
+          // Grid item
+          'ytd-rich-item-renderer:has(a[href*="start_radio=1"])',
+          // List item
+          'ytd-radio-renderer',
+          // Related
+          'ytd-compact-radio-renderer',
+          // Search result and related video
+          'yt-lockup-view-model:has(a[href*="start_radio=1"])',
+          // Video endscreen item
+          '.ytp-videowall-still[data-is-mix="true"]',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Chip in Home
+          `ytm-chip-cloud-chip-renderer:has(> .chip-container[aria-label="${getString('MIXES')}"])`,
+          // Home
+          'ytm-rich-item-renderer:has(> ytm-radio-renderer)',
+          // Search result
+          'ytm-compact-radio-renderer',
+        )
+      }
+    }
+
+    if (config.hideMoviesAndTV) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Home
+          'ytd-rich-item-renderer.ytd-rich-grid-renderer:has(a[href*="&pp=sAQB"])',
+          // Search
+          'ytd-movie-renderer',
+          // Related
+          'ytd-compact-movie-renderer',
+          'yt-lockup-view-model:has(a[href*="&pp=sAQB"])',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Home
+          '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-item-renderer:has(a[href*="&pp=sAQB"])',
+          // Search
+          'ytm-search ytm-video-with-context-renderer:has(ytm-badge[data-type="BADGE_STYLE_TYPE_YPC"])',
+          // Related
+          'ytm-item-section-renderer[section-identifier="related-items"] ytm-video-with-context-renderer:has(a[href*="&pp=sAQB"])',
+        )
+      }
+    }
+
+    if (config.hideNextButton) {
+      if (desktop) {
+        // Hide the Next by default so it doesn't flash in and out of visibility
+        // Show Next if Previous is enabled (e.g. when viewing a playlist video)
+        cssRules.push(`
+          .ytp-chrome-controls .ytp-next-button {
+            display: none !important;
+          }
+          .ytp-chrome-controls .ytp-prev-button[aria-disabled="false"] ~ .ytp-next-button {
+            display: revert !important;
+          }
+        `)
+      }
+    }
+
+    if (config.hidePlaylists) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Home
+          'ytd-browse[page-subtype="home"] ytd-rich-item-renderer:has(a[href^="/playlist?"])',
+          // Search and Related
+          ':is(#related, ytd-search) yt-lockup-view-model:has(a[href^="/playlist?"])',
+          // Video endscreen
+          '.ytp-videowall-still[data-is-list="true"][data-is-mix="false"]',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Home
+          '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-item-renderer:has(a[href^="/playlist?"])',
+          // Search
+          'ytm-search ytm-compact-playlist-renderer',
+          // Related
+          'ytm-item-section-renderer[section-identifier="related-items"] ytm-compact-playlist-renderer',
+        )
+      }
+    }
+
+    if (config.hidePremiumUpsells) {
+      if (desktop && !isDesktopPremium()) {
+        hideCssSelectors.push(
+          // Sidebar item
+          '#endpoint.ytd-guide-entry-renderer[href="/premium"]',
+          // Download menu item
+          'ytd-menu-service-item-download-renderer',
+          'yt-download-list-item-view-model',
+          // 1080p Premium quality menu item
+          '.ytp-quality-menu .ytp-menuitem:has(.ytp-premium-label)',
+          // 4x Premium playback speed menu item
+          '.ytp-settings-menu .ytp-menuitem[role="menuitemradio"]:has(.ytp-menuitem-premium-badge)',
+          // Download button
+          'ytd-download-button-renderer',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Item in You page
+          '.tab-content[tab-identifier="FElibrary"] ytm-compact-link-renderer:has(> a[href="/premium"])',
+        )
+      }
+    }
+
+    if (config.hideRelated) {
+      if (desktop) {
+        hideCssSelectors.push(config.hideRelatedBelow ? '#below #related' : '#related')
+      }
+      if (mobile) {
+        hideCssSelectors.push('ytm-item-section-renderer[section-identifier="related-items"]')
+      }
+    }
+
+    if (config.hideShareThanksClip) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Video buttons
+          `ytd-menu-renderer yt-button-view-model:has(> button-view-model > button[aria-label="${getString('SHARE')}"])`,
+          `ytd-menu-renderer yt-button-view-model:has(> button-view-model > button[aria-label="${getString('THANKS')}"])`,
+          `ytd-menu-renderer yt-button-view-model:has(> button-view-model > button[aria-label="${getString('CLIP')}"])`,
+          // Share button in player
+          'button.ytp-share-button',
+          // Menu items
+          `.${Classes.HIDE_SHARE_THANKS_CLIP}`,
+          // Shorts button
+          '#share-button.ytd-reel-player-overlay-renderer',
+          // Shorts button (new UI)
+          'reel-action-bar-view-model > button-view-model:nth-of-type(2)',
+          // Full screen button
+          `yt-player-quick-action-buttons button[aria-label="${getString('SHARE')}"]`,
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Video button
+          `ytm-slim-video-action-bar-renderer button-view-model:has(button[aria-label="${getString('SHARE')}"])`,
+          // Menu items
+          `.${Classes.HIDE_SHARE_THANKS_CLIP}`,
+          // Shorts button (new UI)
+          `reel-action-bar-view-model button-view-model:has(path[d="${Svgs.SHARE_PATH_MOBILE}"])`,
+          // Full screen button
+          `player-fullscreen-action-menu ytm-slim-metadata-button-renderer:has(button[aria-label="${getString('SHARE')}"])`,
+        )
+      }
+    }
+
+    if (config.hideShorts) {
+      hideCssSelectors.push('.HideShorts')
+      if (desktop) {
+        hideCssSelectors.push(
+          // Side nav item
+          `ytd-guide-entry-renderer:has(> a[title="${getString('SHORTS')}"])`,
+          // Mini side nav item
+          `ytd-mini-guide-entry-renderer:has(> a[aria-label="${getString('SHORTS')}"])`,
+          // Grid shelf
+          'ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts])',
+          // Group of 3 Shorts in Home grid
+          'ytd-browse[page-subtype="home"] ytd-rich-grid-group',
+          // Individual Short in Home grid
+          'ytd-browse[page-subtype="home"] ytd-rich-item-renderer[is-slim-media][rendered-from-rich-grid]',
+          // Chips
+          `yt-chip-cloud-chip-renderer:has(> #chip-container > yt-formatted-string[title="${getString('SHORTS')}"])`,
+          // List shelf (except History, so watched Shorts can be removed)
+          'ytd-browse:not([page-subtype="history"]) ytd-reel-shelf-renderer',
+          'ytd-search ytd-reel-shelf-renderer',
+          'ytd-search grid-shelf-view-model',
+          // List item (except History, so watched Shorts can be removed)
+          'ytd-browse:not([page-subtype="history"]) ytd-video-renderer:has(a[href^="/shorts"])',
+          'ytd-search ytd-video-renderer:has(a[href^="/shorts"])',
+          // Under video
+          '#structured-description ytd-reel-shelf-renderer',
+          // Related
+          '#related ytd-reel-shelf-renderer',
+          '#related ytd-compact-video-renderer:has(a[href^="/shorts"])',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Bottom nav item
+          'ytm-pivot-bar-item-renderer:has(> div.pivot-shorts)',
+          // Home & Subscriptions shelf
+          '.tab-content:is([tab-identifier="FEwhat_to_watch"], [tab-identifier="FEsubscriptions"]) ytm-rich-section-renderer:has(ytm-reel-shelf-renderer)',
+          // Home shelf
+          '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-section-renderer:has(ytm-shorts-lockup-view-model)',
+          // Search shelf
+          'ytm-search lazy-list > ytm-reel-shelf-renderer',
+          // Search
+          'ytm-search ytm-video-with-context-renderer:has(a[href^="/shorts"])',
+          'ytm-search grid-shelf-view-model',
+          // Under video
+          'ytm-structured-description-content-renderer ytm-reel-shelf-renderer',
+          // Related
+          'ytm-item-section-renderer[section-identifier="related-items"] ytm-video-with-context-renderer:has(a[href^="/shorts"])',
+        )
+      }
+    }
+
+    if (config.hideShortsMusicLink) {
+      hideCssSelectors.push(`.ytReelMetapanelViewModelMetapanelItem:has(path[d="${Svgs.SHORTS_MUSIC_PATH}"])`)
+    }
+
+    if (config.hideShortsRelatedLink) {
+      hideCssSelectors.push('.ytReelMetapanelViewModelMetapanelItem:has(> :is(yt-reel-carousel-view-model, yt-reel-multi-format-link-view-model))')
+    }
+
+    if (config.hideShortsSuggestedActions) {
+      hideCssSelectors.push('yt-shorts-suggested-action-view-model')
+    }
+
+    if (config.hideSponsored) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Big ads and promos on Home screen
+          '#masthead-ad',
+          '#big-yoodle ytd-statement-banner-renderer',
+          'ytd-rich-section-renderer:has(> #content > ytd-statement-banner-renderer)',
+          'ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[has-paygated-featured-badge])',
+          'ytd-rich-section-renderer:has(> #content > ytd-brand-video-shelf-renderer)',
+          'ytd-rich-section-renderer:has(> #content > ytd-brand-video-singleton-renderer)',
+          'ytd-rich-section-renderer:has(> #content > ytd-inline-survey-renderer)',
+          // Bottom of screen promo
+          'tp-yt-paper-dialog:has(> #mealbar-promo-renderer)',
+          // Video listings
+          'ytd-rich-item-renderer:has(> .ytd-rich-item-renderer > ytd-ad-slot-renderer)',
+          // Search results
+          'ytd-search-pyv-renderer.ytd-item-section-renderer',
+          'ytd-ad-slot-renderer.ytd-item-section-renderer',
+          // When an ad is playing
+          'ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"]',
+          // Suggestd action buttons in player overlay
+          '#movie_player .ytp-suggested-action',
+          // Panels linked to those buttons
+          '#below #panels',
+          // After an ad
+          '.ytp-ad-action-interstitial',
+          // Paid content overlay
+          '.ytp-paid-content-overlay',
+          // Paid content overlay in video previews
+          'ytm-paid-content-overlay-renderer',
+          // Above Related
+          '#player-ads',
+          // Related
+          '#items > ytd-ad-slot-renderer',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Big promo on Home screen
+          'ytm-statement-banner-renderer',
+          // Home
+          '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-item-renderer:has(> ad-slot-renderer)',
+          // Bottom of screen promo
+          '.mealbar-promo-renderer',
+          // Search results
+          'ytm-search ytm-item-section-renderer:has(> lazy-list > ad-slot-renderer)',
+          // Paid content overlay
+          'ytm-paid-content-overlay-renderer',
+          // Directly under video
+          'ytm-companion-slot:has(> ytm-companion-ad-renderer)',
+          // Item sections which contain nothing but an ad
+          'ytm-item-section-renderer:has(> lazy-list > ad-slot-renderer:only-child)',
+          // Related (wide)
+          'ytm-item-section-renderer[section-identifier="related-items"] > lazy-list > ad-slot-renderer',
+        )
+      }
+    }
+
+    if (config.hideStreamed) {
+      manualHideRules.push({selector: `.${Classes.HIDE_STREAMED}`, reason: 'streamed'})
+    }
+
+    if (config.hideSuggestedSections) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Shelves in Home
+          'ytd-browse[page-subtype="home"] ytd-rich-section-renderer:not(:has(> #content > ytd-rich-shelf-renderer[is-shorts]))',
+          // Looking for something different? tile in Home
+          'ytd-browse[page-subtype="home"] ytd-rich-item-renderer:has(> #content > ytd-feed-nudge-renderer)',
+          // "Most relevant" shelf in Subscriptions
+          'ytd-browse[page-subtype="subscriptions"] ytd-rich-section-renderer:not(:first-child):not(:has(> #content > ytd-rich-shelf-renderer[is-shorts]))',
+          // Suggested content shelves in Search
+          `ytd-search #contents.ytd-item-section-renderer > ytd-shelf-renderer`,
+          // People also search for in Search
+          'ytd-search #contents.ytd-item-section-renderer > ytd-horizontal-card-list-renderer',
+          // Suggested content shelves in Related (e.g. Playables)
+          '#related ytd-horizontal-card-list-renderer',
+          // Recommended videos in a Playlist
+          'ytd-browse[page-subtype="playlist"] ytd-item-section-renderer[is-playlist-video-container]',
+          // Recommended playlists in a Playlist
+          'ytd-browse[page-subtype="playlist"] ytd-item-section-renderer[is-playlist-video-container] + ytd-item-section-renderer',
+        )
+      }
+      if (mobile) {
+        if (loggedIn) {
+          hideCssSelectors.push(
+            // Shelves in Home (except Posts)
+            '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-section-renderer:not(:has(> div > ytm-backstage-post-thread-renderer))',
+            // Looking for something different? tile in Home
+            'ytm-rich-item-renderer:has(> .feed-nudge-wrapper)',
+            // "Most relevant" shelf in Subscriptions
+            '.tab-content[tab-identifier="FEsubscriptions"] ytm-rich-section-renderer:has(ytm-rich-shelf-renderer)',
+          )
+        } else {
+          // Logged-out users can get "Try searching to get started" Home page
+          // sections we don't want to hide.
+          hideCssSelectors.push(
+            // Shelves in Home
+            '.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-section-renderer:not(:has(ytm-search-bar-entry-point-view-model, ytm-feed-nudge-renderer))',
+          )
+        }
+      }
+    }
+
+    if (config.hideThumbnailBadges) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Related
+          // Old: under metadata
+          '#related ytd-badge-supported-renderer',
+          // New: thumbnail overlay
+          '#related yt-thumbnail-overlay-badge-view-model',
+          // Search
+          'ytd-search ytd-badge-supported-renderer#badges',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Related
+          'ytm-item-section-renderer[section-identifier="related-items"] .ytmBadgeAndBylineRendererItemBadge',
+          // Search
+          'ytm-search .ytmBadgeAndBylineRendererItemBadge',
+        )
+      }
+    }
+
+    if (config.hideUpcoming) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Grid item
+          'ytd-browse:not([page-subtype="channels"]) ytd-rich-item-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="UPCOMING"])',
+          // Grid item with "Notify Me" button
+          'ytd-browse:not([page-subtype="channels"]) ytd-rich-item-renderer:has(lockup-attachments-view-model)',
+          // List item
+          'ytd-video-renderer:has(ytd-thumbnail-overlay-time-status-renderer[overlay-style="UPCOMING"])',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Subscriptions
+          '.tab-content[tab-identifier="FEsubscriptions"] ytm-rich-item-renderer:has(ytm-thumbnail-overlay-time-status-renderer[data-style="UPCOMING"])'
+        )
+      }
+    }
+
+    if (config.hideVoiceSearch) {
+      if (desktop) {
+        hideCssSelectors.push(
+          '#voice-search-button',
+          // Inside the search input with Ask YouTube
+          'yt-searchbox.ytSearchboxComponentHostUnified .ytSearchboxComponentInputBox > button-view-model',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push(
+          // Outside of Search
+          '.ytSearchboxComponentVoiceSearchWrapper',
+          // Search
+          '.mobile-topbar-header-voice-search-button',
+          // Logged out home page
+          '.search-bar-entry-point-voice-search-button',
+        )
+      }
+    }
+
+    if (config.hideWatched) {
+      manualHideRules.push({selector: `.${Classes.HIDE_WATCHED}`, reason: 'watched'})
+    }
+
+    if (config.playerHideFullScreenMoreActions) {
+      if (desktop) {
+        hideCssSelectors.push('yt-player-quick-action-buttons button:has([d="M6 10a2 2 0 100 4 2 2 0 000-4Zm6 0a2 2 0 100 4 2 2 0 000-4Zm6 0a2 2 0 100 4 2 2 0 000-4Z"])')
+      }
+    }
+
+    if (config.playerHideFullScreenMoreVideos) {
+      if (mobile) {
+        hideCssSelectors.push('.fullscreen-watch-next-entrypoint-wrapper')
+      }
+    }
+
+    if (config.playerHideFullScreenControls) {
+      if (desktop) {
+        hideCssSelectors.push(
+          // Top right
+          '#movie_player .ytp-overlay-top-right',
+          // Bottom right
+          '#movie_player .ytp-fullscreen-quick-actions',
+        )
+      }
+      if (mobile) {
+        hideCssSelectors.push('player-fullscreen-action-menu .action-menu-engagement-buttons-wrapper')
+      }
+    }
+
+    if (config.playerHideFullScreenControls && config.playerHideFullScreenMoreVideos) {
+      if (mobile) {
+        cssRules.push(`
+          /* Move full screen progress bar down when hiding all controls under it */
+          body[faux-fullscreen="true"] .enable-fullscreen-controls.fs-watch-system .watch-page-progress-bar {
+            bottom: 0 !important;
+          }
+          body[faux-fullscreen="true"] .enable-fullscreen-controls.fs-watch-system .player-controls-bottom {
+            bottom: 30px !important;
+          }
+        `)
+      }
+    }
+
+    if (config.playerHideFullScreenVoting) {
+      if (desktop) {
+         hideCssSelectors.push('yt-player-quick-action-buttons :is(like-button-view-model, dislike-button-view-model)')
+      }
+      if (mobile) {
+        hideCssSelectors.push('player-fullscreen-action-menu ytm-slim-metadata-toggle-button-renderer')
+      }
+    }
+
+    if (config.showFullVideoTitles) {
+      if (desktop) {
+        cssRules.push(`
+          #video-title,
+          .ytLockupMetadataViewModelTitle,
+          .ytPlayerOverlayVideoDetailsRendererTitle,
+          .ytp-modern-videowall-still-info-title,
+          .shortsLockupViewModelHostOutsideMetadataTitle,
+          .ytShortsVideoTitleViewModelShortsVideoTitle,
+          .ytShortsVideoTitleViewModelShortsVideoTitleLarge {
+            max-height: unset !important;
+            -webkit-line-clamp: unset !important;
+          }
+        `)
+      }
+      if (mobile) {
+        cssRules.push(`
+          .media-item-headline,
+          .video-card-title,
+          .YtmCompactMediaItemHeadline,
+          .shortsLockupViewModelHostMetadataTitle {
+            max-height: unset !important;
+            -webkit-line-clamp: unset !important;
+          }
+        `)
+      }
+    }
+
+    if (config.useSquareCorners) {
+      if (desktop) {
+        cssRules.push(`
+          /* Thumbnails */
+          .ytThumbnailViewModelSmall,
+          .ytThumbnailViewModelMedium,
+          .ytThumbnailViewModelLarge,
+          ytd-thumbnail:is([size=small], [size=medium], [size=large]) a.ytd-thumbnail,
+          ytd-thumbnail:is([size=small], [size=medium], [size=large])::before,
+          ytd-playlist-thumbnail:is([size=small], [size=medium], [size=large]) a.ytd-playlist-thumbnail,
+          ytd-playlist-thumbnail:is([size=small], [size=medium], [size=large])::before,
+          yt-lockup-view-model .ytSpecTouchFeedbackShapeHost:not(.ytSpecTouchFeedbackShapeCircular) :is(.ytSpecTouchFeedbackShapeStroke, .ytSpecTouchFeedbackShapeFill, .ytSpecTouchFeedbackShapeHoverEffect),
+          .ytp-videowall-still-image,
+          .ytp-modern-videowall-still-image,
+          .ytp-modern-videowall-still:hover,
+          ytd-universal-watch-card-renderer[rounded] :is(#header, #hero),
+          #thumbnail.ytd-macro-markers-list-item-renderer,
+          .ytCollectionsStackCollectionStack1,
+          .ytCollectionsStackCollectionStack2,
+          .rich-thumbnail.ytd-ghost-grid-renderer,
+          /* Players */
+          ytd-watch-flexy[rounded-player] #ytd-player.ytd-watch-flexy,
+          ytd-channel-video-player-renderer[rounded] #player.ytd-channel-video-player-renderer,
+          .ytdMiniplayerComponentContent,
+          .ytp-miniplayer-scrim,
+          /* Under video */
+          #description.ytd-watch-metadata,
+          yt-interaction:not(.circular) :is(.fill.yt-interaction, .stroke.yt-interaction),
+          ytd-rich-metadata-renderer[rounded],
+          ytd-expandable-metadata-renderer,
+          #header.ytd-expandable-metadata-renderer:hover,
+          .ytVideoMetadataCarouselViewModelHost,
+          #container.ytd-playlist-panel-renderer,
+          ytd-engagement-panel-section-list-renderer:not([live-chat-engagement-panel]),
+          ytd-live-chat-frame[rounded-container],
+          /* Shorts */
+          .shortsLockupViewModelHostThumbnailParentContainerRounded,
+          .player-container.ytd-reel-video-renderer,
+          .reel-video-in-sequence-thumbnail.ytd-shorts,
+          .anchored-panel.ytd-shorts,
+          /* Misc */
+          .immersive-header-container.ytd-playlist-header-renderer,
+          .ytImageBannerViewModelInset,
+          .ytImageBannerViewModelSmallInset {
+            border-radius: 0 !important;
+          }
+        `)
+      }
+      if (mobile) {
+        cssRules.push(`
+          /* Thumbnails */
+          .rounded-thumbnail,
+          .thumbnail-cover-rounded,
+          .video-thumbnail-container-compact-rounded,
+          .video-thumbnail-container-large,
+          .ytCollectionsStackCollectionStack1,
+          .ytContentPreviewImageViewModelHost:not(.ytContentPreviewImageViewModelCircleImage),
+          .ytmFullscreenRelatedVideosEntryPointViewModelThumbnailContainer,
+          .ytmFullscreenRelatedVideosEntryPointViewModelFadedThumbnail,
+          .ytmBackstageImageRendererHost,
+          .ghost-video-thumbnail-container-large,
+          /* Under video */
+          .ytVideoMetadataCarouselViewModelHost,
+          ytm-factoid-renderer .factoid,
+          .expandable-video-description-body-main,
+          .YtmCommentSimpleboxRendererPlaceholder,
+          /* Shorts */
+          .shortsLockupViewModelHostThumbnailParentContainerRounded,
+          .shortsLockupViewModelHostMetadataRounded {
+            border-radius: 0 !important;
+          }
+        `)
+      }
+    }
+
+    //#region Desktop-only
+    if (desktop) {
+      // Fix spaces & gaps caused by left gutter margin on first column items
+      // when we hide videos in grids.
+      let gridPagesToFix = [
+        !config.displayHomeGridAsList && 'home',
+        !config.displaySubscriptionsGridAsList && 'subscriptions',
+      ].filter(Boolean)
+      cssRules.push(`
+        ${gridPagesToFix.length > 0 ? `ytd-browse:is(${gridPagesToFix.map(page => `[page-subtype="${page}"]`).join(', ')}),` : ''}
+        ytd-browse[page-subtype="channels"] {
+          /* Adjust non-grid items so they don't double the gutter */
+          #contents.ytd-rich-grid-renderer > :not(ytd-rich-item-renderer, ytd-continuation-item-renderer) {
+            margin-left: calc(var(--ytd-rich-grid-gutter-margin, 16px) * -1) !important;
+          }
+        }
+        ytd-browse[page-subtype="channels"] {
+          /* Remove left gutter margin from first column items */
+          ytd-rich-item-renderer[rendered-from-rich-grid][is-in-first-column] {
+            margin-left: calc(var(--ytd-rich-grid-item-margin, 16px) / 2) !important;
+          }
+        }
+      `)
+
+      let gridPagesNeedingGhostCardFix = getGridPagesNeedingGhostCardFix()
+      if (config.fixGhostCards && gridPagesNeedingGhostCardFix.length > 0) {
+        let pageSelector = `ytd-browse:is(${gridPagesNeedingGhostCardFix.map(page => `[page-subtype="${page}"]`).join(', ')})`
+        cssRules.push(`
+          ${pageSelector} {
+            /* Make continuation item renderer retain position but take up no space */
+            ytd-continuation-item-renderer {
+              height: 1px;
+              margin-left: -1px;
+              max-width: 1px;
+              opacity: 0;
+              overflow: hidden;
+              pointer-events: none;
+            }
+            .cpfyt-ghost-cards {
+              display: contents;
+            }
+            .ghost-card {
+              --ytd-rich-item-row-usable-width: calc(100% - var(--ytd-rich-grid-gutter-margin, 16px) * 2);
+              margin-bottom: var(--ytd-rich-grid-row-margin);
+              width: calc(var(--ytd-rich-item-row-usable-width)/var(--ytd-rich-grid-items-per-row) - var(--ytd-rich-grid-item-margin, 16px) - .01px);
+            }
+          }
+          /* Container for cloned loading spinner */
+          .cpfyt-grid-spinner {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+          }
+        `)
+        // XXX Revert CSS from the "Youtube-shorts block" extension which breaks loading
+        //     https://github.com/insin/control-panel-for-youtube/issues/223
+        cssRules.push(`
+          ${pageSelector} {
+            ytd-continuation-item-renderer:not(:last-child):not(#comments *):not([style*="display: none"]) {
+              display: flex !important;
+            }
+          }
+        `)
+      }
+
+      if (!config.addTakeSnapshot) {
+        hideCssSelectors.push('#cpfyt-snaphot-menu-item')
+      }
+      if (config.disableThemedHover) {
+        cssRules.push(`
+          /* Videos */
+          .ytLockupViewModelHost {
+            --yt-lockup-metadata-themed-menu-button-additive-background: var(--cpfyt-additive-background) !important;
+          }
+          .ytSpecTouchFeedbackShapeHoverEffect {
+            display: none !important;
+          }
+          .ytSpecTouchFeedbackShapeStroke {
+            border-color: var(--cpfyt-touch-response) !important;
+          }
+          .ytSpecTouchFeedbackShapeFill {
+            background-color: var(--cpfyt-touch-response) !important;
+          }
+          .ytLockupMetadataViewModelTitle {
+            color: var(--cpfyt-text-primary) !important;
+          }
+          .ytLockupMetadataViewModelMetadata {
+            color: var(--cpfyt-text-secondary) !important;
+          }
+          /* Shorts */
+          ytd-rich-item-renderer[rich-grid-hover-highlight] {
+            background: none !important;
+            box-shadow: none !important;
+          }
+        `)
+      }
+      let gridsToList = [
+        config.displayHomeGridAsList && 'home',
+        config.displaySubscriptionsGridAsList && 'subscriptions',
+      ].filter(Boolean)
+      if (gridsToList.length > 0) {
+        let gridAsListPageSelector = `ytd-browse:is(${gridsToList.map(page => `[page-subtype="${page}"]`).join(', ')})`
+        // Turn Grid view into a List-like view
+        cssRules.push(`
+          ${gridAsListPageSelector} {
+            ytd-two-column-browse-results-renderer {
+              max-width: var(--ytd-grid-max-width, 1284px);
+            }
+            #contents.ytd-rich-grid-renderer {
+              padding-left: 0 !important;
+              padding-top: 0 !important;
+            }
+            ytd-rich-item-renderer.ytd-rich-grid-renderer {
+              width: 100%;
+              border-bottom: 1px solid var(--cpfyt-outline);
+              /* For <ytd-rich-grid-media> */
+              border-radius: 0 !important;
+              margin-left: 12px;
+              margin-right: 12px;
+              margin-bottom: 0;
+            }
+            ytd-rich-item-renderer.ytd-rich-grid-renderer #content.ytd-rich-item-renderer {
+              max-width: 862px;
+              /* <yt-lockup-view-model> */
+              &:not(:has(> ytd-rich-grid-media)) {
+                padding-bottom: 20px;
+                padding-top: 20px;
+              }
+              .ytLockupViewModelHost {
+                flex-direction: row;
+              }
+              .ytLockupViewModelContentImage {
+                flex: none;
+                width: 246px;
+                height: 138px;
+                margin-right: 16px;
+                padding-bottom: 0;
+              }
+              .ytLockupViewModelMetadata {
+                width: 100%;
+                max-width: 600px;
+              }
+              yt-content-metadata-view-model {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+              }
+              .ytDismissibleItemAspectRatio16By9 {
+                padding-top: 0;
+                min-height: 138px;
+              }
+              /* Shrink "Notify me" button */
+              .ytLockupAttachmentsViewModelHost {
+                flex-direction: row;
+              }
+              /* Movies & TV still uses <ytd-rich-grid-media> */
+              ytd-rich-grid-media.ytd-rich-item-renderer {
+                max-width: unset;
+                padding-bottom: 20px;
+                padding-top: 20px;
+              }
+              #dismissible.ytd-rich-grid-media {
+                flex-direction: row !important;
+              }
+              #thumbnail.ytd-rich-grid-media {
+                flex: none;
+                width: 246px;
+                height: 138px;
+                margin-right: 16px;
+                padding-bottom: 0;
+              }
+              h3.ytd-rich-grid-media {
+                margin-top: 0 !important;
+              }
+              #attached-survey.ytd-rich-grid-media {
+                display: none;
+              }
+              #dismissed.ytd-rich-grid-media {
+                padding-bottom: 0;
+                min-height: 136px;
+              }
+            }
+            /* Shorts shelf */
+            #dismissible.ytd-rich-shelf-renderer {
+              padding-top: 10px;
+            }
+            #dismissible.ytd-rich-shelf-renderer:not(:has(.button-container:not([hidden]) > .expand-collapse-button)) {
+              margin-bottom: 0 !important;
+              padding-bottom: 20px;
+              border-bottom: 1px solid var(--cpfyt-outline);
+            }
+            #dismissible.ytd-rich-shelf-renderer:has(.button-container:not([hidden]) > .expand-collapse-button) {
+              margin-bottom: 10px !important;
+              padding-bottom: 20px;
+            }
+            /* Only display the spinner when loading new content */
+            #ghost-cards, .cpfyt-ghost-cards {
+              display: none;
+            }
+          }
+        `)
+        if (config.displayHomeGridAsList) {
+          // Align chips with list items
+          cssRules.push(`
+            ytd-browse:is([page-subtype="home"]) {
+              #chips-content {
+                padding-left: 8px;
+              }
+            }
+          `)
+        }
+        if (config.showChannelHeadersInListView) {
+          // Move channel avatar and name up above the thumbnail
+          cssRules.push(`
+            ${gridAsListPageSelector} {
+              ytd-rich-item-renderer.ytd-rich-grid-renderer:not(.${Classes.COLLABORATION}) {
+                position: relative;
+              }
+              ytd-rich-item-renderer.ytd-rich-grid-renderer:not(.${Classes.COLLABORATION}) #content.ytd-rich-item-renderer:not(:has(> ytd-rich-grid-media)) {
+                &:not(:has(.ytDismissibleItemReplacedContent)) {
+                  padding-top: 60px;
+                }
+                .ytLockupViewModelMetadata,
+                .ytLockupMetadataViewModelHost {
+                  position: static;
+                }
+                /* Channel avatar */
+                .ytLockupMetadataViewModelAvatar {
+                  position: absolute;
+                  top: -50px;
+                  left: 0;
+                }
+                /* Channel name */
+                /* Old - "views" layout */
+                .ytContentMetadataViewModelMetadataRow:first-child:not(:has(> .ytContentMetadataViewModelLeadingIcon)) {
+                  position: absolute;
+                  top: -48px;
+                  left: 50px;
+                  /* #title.ytd-shelf-renderer styles */
+                  a, span {
+                    color: var(--cpfyt-text-primary);
+                    font-family: "Roboto","Arial",sans-serif;
+                    font-size: 2rem;
+                    line-height: 2.8rem;
+                    font-weight: 700;
+                    max-height: 2.8rem;
+                  }
+                }
+                &:not(:has(.ytLockupMetadataViewModelAvatar)) .ytContentMetadataViewModelMetadataRow:first-child:not(:has(> .ytContentMetadataViewModelLeadingIcon)) {
+                  left: 0;
+                }
+                /* New - play icon layout */
+                .ytContentMetadataViewModelMetadataRow:first-child:has(> .ytContentMetadataViewModelLeadingIcon) > :first-child {
+                  position: absolute;
+                  top: -48px;
+                  left: 50px;
+                  /* #title.ytd-shelf-renderer styles */
+                  a, span {
+                    color: var(--cpfyt-text-primary);
+                    font-family: "Roboto","Arial",sans-serif;
+                    font-size: 2rem;
+                    line-height: 2.8rem;
+                    font-weight: 700;
+                    max-height: 2.8rem;
+                  }
+                  /* Hide spacer between the channel name and views */
+                  & + .ytContentMetadataViewModelDelimiter {
+                    display: none;
+                  }
+                }
+                &:not(:has(.ytLockupMetadataViewModelAvatar)) .ytContentMetadataViewModelMetadataRow:first-child:has(> .ytContentMetadataViewModelLeadingIcon) > :first-child {
+                  left: 0;
+                }
+                /* Adjust for header height */
+                .ytDismissibleItemAspectRatio16By9 {
+                  min-height: 178px;
+                }
+                ${config.showViewsOnSeparateLine ? `
+                /* Hide verified badge when displaying views on a separate line */
+                .ytContentMetadataViewModelMetadataRow:first-child:has(> .ytContentMetadataViewModelLeadingIcon) > .ytContentMetadataViewModelIcon {
+                  display: none;
+                }
+                ` : ''}
+              }
+            }
+          `)
+        } else {
+          // Move channel avatar below metadata
+          cssRules.push(`
+            ${gridAsListPageSelector} {
+              yt-lockup-metadata-view-model {
+                display: grid !important;
+                .ytLockupMetadataViewModelAvatar {
+                  grid-row: 2;
+                  margin-right: 0;
+                  margin-top: 12px;
+                }
+              }
+            }
+          `)
+        }
+      }
+      if (config.fullSizeTheaterMode) {
+        // TODO Observe current theater mode state to get rid of these :has()
+        if (config.fullSizeTheaterModeHideHeader) {
+          cssRules.push(`
+            #content.ytd-app:has(> #page-manager > ytd-watch-flexy[role="main"][theater]:not([fullscreen])) {
+              /* Lower the container - allow's Vivaldi's PiP control to be used */
+              #masthead-container {
+                z-index: 1 !important;
+              }
+              /* Hide header */
+              #masthead-container #masthead {
+                transform: translateY(-100%);
+                transition: transform .15s ease-in !important;
+              }
+              /* Slide out after a short delay on hover */
+              #masthead-container:hover #masthead {
+                transform: translateY(0);
+                transition: transform .3s ease-out .35s !important;
+              }
+              /* Appear instantly when focused (e.g. press / to search) */
+              #masthead-container:focus-within #masthead {
+                transform: translateY(0);
+                transition: none !important;
+              }
+              /* Reclaim header space */
+              #page-manager {
+                margin-top: 0 !important;
+              }
+              /* Hide overlays which would display under the header */
+              #movie_player .ytp-overlay-top-left,
+              #movie_player .ytp-overlay-top-right {
+                display: none;
+              }
+            }
+            /* Make theater mode full view height */
+            ytd-watch-flexy[theater]:not([fullscreen]) #full-bleed-container.ytd-watch-flexy {
+              max-height: 100vh !important;
+              height: 100vh !important;
+            }
+          `)
+        } else {
+          // 56px is the height of #container.ytd-masthead
+          cssRules.push(`
+            ytd-watch-flexy[theater]:not([fullscreen]) #full-bleed-container {
+              max-height: calc(100vh - 56px) !important;
+              height: calc(100vh - 56px) !important;
+            }
+          `)
+        }
+      }
+      if (config.fullWidthChannelPage) {
+        cssRules.push(`
+          ytd-browse[page-subtype="channels"] {
+            #page-header.ytd-tabbed-page-header {
+              padding-left: var(--ytd-rich-grid-gutter-margin, 16px);
+              padding-right: var(--ytd-rich-grid-gutter-margin, 16px);
+            }
+            #tabs.ytd-tabbed-page-header {
+              margin-left: var(--ytd-rich-grid-gutter-margin, 16px);
+              margin-right: var(--ytd-rich-grid-gutter-margin, 16px);
+            }
+            ytd-two-column-browse-results-renderer {
+              max-width: none !important;
+              width: 100% !important;
+              #primary.ytd-two-column-browse-results-renderer {
+                padding-left: var(--ytd-rich-grid-gutter-margin, 16px);
+                padding-right: var(--ytd-rich-grid-gutter-margin, 16px);
+              }
+              /* Video grids */
+              #contents.ytd-rich-grid-renderer {
+                max-width: none !important;
+                width: 100% !important;
+              }
+              ytd-rich-grid-media.ytd-rich-item-renderer {
+                max-width: none !important;
+              }
+            }
+          }
+        `)
+      }
+      if (config.hideChat) {
+        // Full screen button
+        hideCssSelectors.push(`yt-player-quick-action-buttons > toggle-button-view-model:has(path[d="${Svgs.CHAT_PATH}"])`)
+        if (config.hideChatFullScreen) {
+          // Only hide full screen side panel when chat is open
+          hideCssSelectors.push('ytd-watch-flexy[fullscreen][live-chat-present-and-expanded] #panels-full-bleed-container')
+        } else {
+          hideCssSelectors.push(
+            // Live chat / Chat replay
+            '#chat-container',
+            // "Live chat replay" panel in video metadata
+            '#teaser-carousel.ytd-watch-metadata',
+            // Side panel when chat is open
+            'ytd-watch-flexy[live-chat-present-and-expanded] #panels-full-bleed-container',
+          )
+        }
+      }
+      if (config.hideEndCards) {
+        hideCssSelectors.push(
+          '#movie_player .ytp-ce-element',
+          // Hide YouTube's own new Hide button
+          '#movie_player .ytp-ce-hide-button-container',
+        )
+      }
+      if (config.hideEndVideos) {
+        hideCssSelectors.push(
+          '#movie_player .ytp-endscreen-content',
+          '#movie_player .ytp-endscreen-previous',
+          '#movie_player .ytp-endscreen-next',
+          '#movie_player.ended-mode .ytp-fullscreen-grid-stills-container',
+        )
+      }
+      if (config.hideExperiencingInterruptions) {
+        hideCssSelectors.push('.ExperiencingInterruptions')
+      } else {
+        // Hide "Find out why" link
+        hideCssSelectors.push('.ExperiencingInterruptions #action-button')
+      }
+      if (config.hideJumpAheadButton) {
+        hideCssSelectors.push('#movie_player .ytp-timely-actions-content')
+      }
+      if (config.hideMerchEtc) {
+        hideCssSelectors.push(
+          // Tickets
+          '#ticket-shelf',
+          // Merch
+          'ytd-merch-shelf-renderer',
+          // Offers
+          '#offer-module',
+        )
+      }
+      if (config.hideNotifications) {
+        hideCssSelectors.push('ytd-notification-topbar-button-renderer')
+      }
+      if (config.hideSidebarWhenEmpty) {
+        cssRules.push(`
+          #secondary:has(> #secondary-inner.cpfyt-empty) {
+            width: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            padding-right: 0 !important;
+          }
+        `)
+      }
+      if (config.hideShortsMetadataUntilHover) {
+        cssRules.push(`
+          .reel-video-in-sequence-new:not([extract-overlay]) {
+            yt-reel-player-overlay-view-model > .ytReelPlayerOverlayViewModelMetadataContainer {
+              opacity: 0;
+              transition: opacity .25s cubic-bezier(0,0,.2,1);
+            }
+            #reel-video-renderer:hover yt-reel-player-overlay-view-model > .ytReelPlayerOverlayViewModelMetadataContainer {
+              opacity: 100;
+              transition: opacity .1s cubic-bezier(.4,0,1,1);
+            }
+          }
+        `)
+      }
+      if (config.hideShortsRemixButton) {
+        hideCssSelectors.push(
+          '#remix-button.ytd-reel-player-overlay-renderer',
+          // New UI
+          'reel-action-bar-view-model > button-view-model:nth-of-type(3)',
+        )
+      }
+      if (config.hideSubscriptionsLatestBar) {
+        hideCssSelectors.push(
+          'ytd-browse[page-subtype="subscriptions"] ytd-rich-grid-renderer > #contents > ytd-rich-section-renderer:first-child'
+        )
+      }
+      if (!config.hideShorts && config.minimumShortsPerRow != 'auto') {
+        let shortsPerRow = Number(config.minimumShortsPerRow)
+        // Don't override the number of items if YouTube wants to show more
+        let exclude = []
+        for (let i = 6; i > shortsPerRow; i--) {
+          exclude.push(`[style*="--ytd-rich-grid-items-per-row: ${i}"]`)
+        }
+        let excludeSelector = exclude.length > 0 ? `:not(${exclude.join(', ')})` : ''
+        cssRules.push(`
+          ytd-browse[page-subtype="home"] ytd-rich-shelf-renderer[is-shorts]${excludeSelector},
+          ytd-browse[page-subtype="subscriptions"] ytd-rich-shelf-renderer[is-shorts]${excludeSelector},
+          ytd-browse[page-subtype="filteredsubscriptions"] ytd-rich-grid-renderer[is-shorts-grid]${excludeSelector} {
+            --ytd-rich-grid-slim-items-per-row: ${shortsPerRow} !important;
+            --ytd-rich-grid-items-per-row: ${shortsPerRow} !important;
+          }
+          /* Show Shorts beyond the ones YouTube thinks should be visible */
+          ytd-browse[page-subtype="home"] ytd-rich-item-renderer[is-slim-media]:nth-child(-n+${shortsPerRow}),
+          ytd-browse[page-subtype="subscriptions"] ytd-rich-item-renderer[is-slim-media]:nth-child(-n+${shortsPerRow}) {
+            display: block !important;
+          }
+        `)
+        // TODO Add a count of the shorts in a shelf to the ytd-rich-shelf-renderer for this
+        // if (shortsPerRow >= 6) {
+        //   // Hide the Show more/Show less button if we're showing everything
+        //   hideCssSelectors.push('ytd-browse[page-subtype="subscriptions"] ytd-rich-shelf-renderer[is-shorts] .expand-collapse-button')
+        // }
+      }
+      if (config.hideViewsIcon) {
+        hideCssSelectors.push(`.ytContentMetadataViewModelLeadingIcon:has(path[d="${Svgs.VIEWS_ICON_PATH}"])`)
+      }
+      if (config.revertWatchLayout) {
+        cssRules.push(`
+          ytd-watch-flexy {
+            --ytd-watch-flexy-fixed-side-menu-width: 0 !important;
+          }
+        `)
+        hideCssSelectors.push('#fixed-side-menu')
+      }
+      if (config.playerControlsBg == 'transparent') {
+        cssRules.push(`
+          .ytp-delhi-modern {
+            .ytp-left-controls > :is(button, a, .ytp-volume-area),
+            .ytp-time-wrapper,
+            .ytp-chapter-title,
+            .ytp-right-controls {
+              background: transparent !important;
+            }
+          }
+          .ytp-big-mode .ytp-fullscreen-grid-expand-button {
+            background: transparent !important;
+          }
+          .ytPlayerQuickActionButtonsHost {
+            background: transparent !important;
+          }
+        `)
+      }
+      if (config.playerControlsBg == 'blur') {
+        cssRules.push(`
+          #movie_player {
+            --yt-frosted-glass-backdrop-filter-override: unset !important;
+          }
+          .ytPlayerQuickActionButtonsHost {
+            backdrop-filter: blur(16px) !important;
+          }
+        `)
+      }
+      if (config.playerFixFullScreenButton) {
+        cssRules.push(`
+          .ytp-delhi-modern {
+            /* Make overflow area clickable */
+            .ytp-fullscreen-button {
+              overflow: visible;
+            }
+            /* Extend overflow area from top-left of the button to the corner */
+            .ytp-fullscreen-button::after {
+              top: 0;
+              left: 0;
+              width: 84px;
+              height: 76px;
+            }
+          }
+        `)
+      }
+      if (config.playerHideFullScreenTitle) {
+        hideCssSelectors.push('.ytp-fullscreen-metadata')
+      }
+      if (config.removePink) {
+        cssRules.push(`
+          .ytp-play-progress,
+          #progress.ytd-thumbnail-overlay-resume-playback-renderer,
+          .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment,
+          .ytChapteredProgressBarChapteredPlayerBarChapterSeen,
+          .ytChapteredProgressBarChapteredPlayerBarFill,
+          .ytFocusedChapterProgressBarLineProgressBarPlayed,
+          .ytProgressBarLineProgressBarPlayed,
+          .ytwThumbnailOverlayResumePlaybackRendererThumbnailOverlayResumePlaybackProgress,
+          #progress.yt-page-navigation-progress,
+          .progress-bar-played.ytd-progress-bar-line {
+            background: #f03 !important;
+          }
+        `)
+      }
+      if (config.restoreMiniplayerButton) {
+        hideCssSelectors.push('ytd-watch-flexy[fullscreen] #cpfyt-miniplayer-button')
+        cssRules.push(`
+          #cpfyt-miniplayer-button {
+            display: inline-block !important;
+            anchor-name: --cpfyt-miniplayer-anchor;
+          }
+          #cpfyt-miniplayer-button + .ytp-tooltip {
+            display: block !important;
+            position: fixed;
+            position-anchor: --cpfyt-miniplayer-anchor;
+            bottom: anchor(top);
+            left: anchor(center);
+            translate: -50% -14px;
+            opacity: 0;
+          }
+          #cpfyt-miniplayer-button + .ytp-tooltip .ytp-tooltip-text {
+            font-size: 13px;
+            white-space: pre;
+          }
+          .ytp-delhi-modern #cpfyt-miniplayer-button + .ytp-tooltip {
+            translate: -50% -22px;
+          }
+          #cpfyt-miniplayer-button:hover + .ytp-tooltip {
+            opacity: 1;
+          }
+        `)
+      } else {
+        hideCssSelectors.push('#cpfyt-miniplayer-button')
+      }
+      if (config.revertGiantRelated) {
+        cssRules.push(`
+          /* Reduce width of secondary sidebar (from 550px when 2 column grid is being used) */
+          ytd-watch-flexy #secondary {
+            --ytd-watch-flexy-sidebar-width: 402px;
+            --ytd-watch-flexy-sidebar-min-width: 300px;
+            max-width: var(--ytd-watch-flexy-sidebar-width);
+          }
+          #secondary #related {
+            /* Apply .ytLockupViewModelHorizontal styles when .ytLockupViewModelVertical is used */
+            .ytLockupViewModelVertical {
+              -moz-box-orient:vertical;
+              -moz-box-direction:normal;
+              flex-direction:row;
+              height:inherit
+            }
+            .ytLockupViewModelVertical .ytLockupViewModelContentImage {
+              display:-moz-box;
+              display:flex;
+              -moz-box-flex:0;
+              flex:none;
+              padding-right:16px;
+              -moz-box-pack:center;
+              justify-content:center;
+              max-width:500px
+            }
+            .ytLockupViewModelVertical .ytLockupViewModelMetadata {
+              -moz-box-flex:1;
+              flex:1
+            }
+            .ytLockupViewModelVertical.ytLockupViewModelCollectionStack1 {
+              position:relative;
+              margin-top:6px
+            }
+            .ytLockupViewModelVertical.ytLockupViewModelCollectionStack2 {
+              position:relative;
+              margin-top:10px
+            }
+            .ytLockupViewModelHorizontal.ytLockupViewModelCompact .ytLockupViewModelContentImage  {
+              padding-right:8px
+            }
+            .ytLockupViewModelVertical .ytLockupMetadataViewModelAvatar {
+              display:none;
+            }
+
+            /* Fix --vertical version images */
+            .ytLockupViewModelVertical .ytLockupViewModelContentImage {
+              width:168px;
+              padding-bottom:0;
+            }
+
+            /* Constrain width of wide % width version */
+            .ytLockupViewModelContentImage {
+              max-width:168px;
+            }
+
+            /* When 2 column grid is being used, force it to be 1 column */
+            ytd-watch-next-secondary-results-renderer[use-dynamic-secondary-columns]:not(:has(ytd-item-section-renderer)) #items.ytd-watch-next-secondary-results-renderer,
+            ytd-watch-next-secondary-results-renderer[use-dynamic-secondary-columns] #contents.ytd-item-section-renderer {
+              grid-template-columns:1fr;
+            }
+            ytd-watch-next-secondary-results-renderer[use-dynamic-secondary-columns] .lockup.ytd-watch-next-secondary-results-renderer {
+              margin-bottom:0;
+            }
+          }
+        `)
+      }
+      if (config.revertSidebarOrder) {
+        cssRules.push(`
+          #sections.ytd-guide-renderer[cpfyt-subscriptions-first] {
+            display: flex;
+            flex-direction: column;
+          }
+          /* Keep the top section where it is */
+          #sections.ytd-guide-renderer[cpfyt-subscriptions-first] > :nth-child(1) {
+            order: -3;
+          }
+          /* Move You up */
+          #sections.ytd-guide-renderer[cpfyt-subscriptions-first] > ytd-guide-section-renderer[cpfyt-section="you"] {
+            order: -2;
+          }
+          /* Move Subscriptions down */
+          #sections.ytd-guide-renderer[cpfyt-subscriptions-first] > ytd-guide-section-renderer[cpfyt-section="subscriptions"] {
+            order: -1;
+          }
+        `)
+      }
+      if (config.searchThumbnailSize != 'large') {
+        cssRules.push(`
+          ytd-search ytd-video-renderer ytd-thumbnail.ytd-video-renderer,
+          ytd-search ytd-movie-renderer .thumbnail-container.ytd-movie-renderer,
+          ytd-search yt-lockup-view-model .ytLockupViewModelContentImage,
+          ytd-search ytd-channel-renderer #avatar-section {
+            max-width: ${{
+              medium: 420,
+              small: 360,
+              xsmall: 280,
+            }[config.searchThumbnailSize]}px !important;
+          }
+        `)
+      }
+      if (config.showViewsOnSeparateLine) {
+        cssRules.push(`
+          ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-item-renderer:not([is-slim-media]) {
+            /* Show views on a separate line */
+            .ytContentMetadataViewModelMetadataRow:has(> .ytContentMetadataViewModelLeadingIcon) {
+              display: block !important;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+            .ytContentMetadataViewModelMetadataRow:has(> .ytContentMetadataViewModelLeadingIcon) > span {
+              vertical-align: middle;
+            }
+            .ytContentMetadataViewModelDelimiter:has(+ .ytContentMetadataViewModelLeadingIcon) {
+              display: block !important;
+              height: 0;
+            }
+            /* Adjust bullet spacing when the delimiter contains whitespace */
+            .ytContentMetadataViewModelDelimiter:not(:empty):has(+ .ytContentMetadataViewModelMetadataTextLastPart) {
+              margin-left: 2px;
+            }
+          }
+          yt-lockup-view-model .ytContentMetadataViewModelDelimiter:has(+ .ytContentMetadataViewModelMetadataTextLastPart) {
+            /* Restore the bullet between views and date */
+            &::after {
+              content: "•";
+            }
+          }
+        `)
+      }
+      if (loggedIn && config.tidyGuideSidebar) {
+        hideCssSelectors.push(
+          // Explore / More from YouTube / Report History
+          '#sections.ytd-guide-renderer :is([cpfyt-section="explore"], [cpfyt-section="more-from-youtube"], [cpfyt-section="report-history"])',
+          // Footer
+          '#footer.ytd-guide-renderer',
+        )
+        if (config.hideSidebarSubscriptions) {
+          if (config.restoreSidebarSubscriptionsLink) {
+            // Hide the entire section if we moved the Subscriptions header up
+            hideCssSelectors.push('#sections.ytd-guide-renderer [cpfyt-section="subscriptions"]')
+          } else {
+            // Hide channels under the Subscriptions header
+            hideCssSelectors.push(
+              '#sections.ytd-guide-renderer[cpfyt-subscriptions-first] > ytd-guide-section-renderer[cpfyt-section="subscriptions"] #items.ytd-guide-section-renderer > :not(:first-child)',
+            )
+          }
+        }
+        // Remove the bottom botder on the last visible section
+        let lastVisibleSection = (!config.revertSidebarOrder || config.hideSidebarSubscriptions && config.restoreSidebarSubscriptionsLink) ? 'you' : 'subscriptions'
+        cssRules.push(`#sections.ytd-guide-renderer > .ytd-guide-renderer[cpfyt-section="${lastVisibleSection}"] { border-bottom: none; }`)
+      }
+    }
+    //#endregion
+
+    //#region Mobile-only
+    if (mobile) {
+      if (config.hideExploreButton) {
+        // Explore button on Home screen
+        hideCssSelectors.push('ytm-chip-cloud-chip-renderer[chip-style="STYLE_EXPLORE_LAUNCHER_CHIP"]')
+      }
+      if (config.hideHomePosts) {
+        hideCssSelectors.push('.tab-content[tab-identifier="FEwhat_to_watch"] ytm-rich-section-renderer:has(> div > ytm-backstage-post-thread-renderer)')
+      }
+      if (config.hideOpenApp) {
+        hideCssSelectors.push(
+          // The user menu is replaced with "Open App" on videos when logged out
+          'html.watch-scroll .mobile-topbar-header-sign-in-button',
+          // Video and Short menus have an Open App menu item we'll add this class to
+          `.${Classes.HIDE_OPEN_APP}`,
+          // The last item in the full screen menu is Open App
+          '#menu .multi-page-menu-system-link-list:has(+ ytm-privacy-tos-footer-renderer)',
+        )
+        if (!config.redirectShorts) {
+          hideCssSelectors.push(
+            // Open in App menu item in Shorts
+            'ytm-menu-navigation-item-renderer:has(path[d="M21 21H3V3h9v1H4v16h16v-8h1v9zM15 3v1h4.32l-8.03 8.03.71.71 8-8V9h1V3h-6z"])',
+          )
+        }
+      }
+      if (config.hideSubscriptionsChannelList) {
+        // Channel list at top of Subscriptions
+        hideCssSelectors.push('.tab-content[tab-identifier="FEsubscriptions"] ytm-channel-list-sub-menu-renderer')
+      }
+      if (config.mobileGridView) {
+        // Based on the Home grid layout
+        // Subscriptions
+        cssRules.push(`
+          @media (min-width: 550px) and (orientation: portrait) {
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-section-list-renderer {
+              margin: 0 16px;
+            }
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-section-list-renderer > lazy-list {
+              margin: 16px -8px 0 -8px;
+            }
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-item-section-renderer {
+              width: calc(50% - 16px);
+              display: inline-block;
+              vertical-align: top;
+              border-bottom: none !important;
+              margin-bottom: 16px;
+              margin-left: 8px;
+              margin-right: 8px;
+            }
+            .tab-content[tab-identifier="FEsubscriptions"] lazy-list ytm-media-item {
+              margin-top: 0 !important;
+              padding: 0 !important;
+            }
+            /* Fix shorts if they're not being hidden */
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-item-section-renderer:has(ytm-reel-shelf-renderer) {
+              width: calc(100% - 16px);
+              display: block;
+            }
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-item-section-renderer:has(ytm-reel-shelf-renderer) > lazy-list {
+              margin-left: -16px;
+              margin-right: -16px;
+            }
+            /* Fix the channel list bar if it's not being hidden */
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-channel-list-sub-menu-renderer {
+              margin-left: -16px;
+              margin-right: -16px;
+            }
+          }
+          @media (min-width: 874px) and (orientation: portrait) {
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-item-section-renderer {
+              width: calc(33.3% - 16px);
+            }
+          }
+          /* The page will probably switch to the list view before it ever hits this */
+          @media (min-width: 1160px) and (orientation: portrait) {
+            .tab-content[tab-identifier="FEsubscriptions"] ytm-item-section-renderer {
+              width: calc(25% - 16px);
+            }
+          }
+        `)
+        // Search
+        cssRules.push(`
+          @media (min-width: 550px) and (orientation: portrait) {
+            ytm-search ytm-item-section-renderer {
+              margin: 0 16px;
+            }
+            ytm-search ytm-item-section-renderer > lazy-list {
+              margin: 16px -8px 0 -8px;
+            }
+            ytm-search .adaptive-feed-item {
+              width: calc(50% - 16px);
+              display: inline-block;
+              vertical-align: top;
+              border-bottom: none !important;
+              margin-bottom: 16px;
+              margin-left: 8px;
+              margin-right: 8px;
+            }
+            ytm-search lazy-list ytm-media-item {
+              margin-top: 0 !important;
+              padding: 0 !important;
+            }
+          }
+          @media (min-width: 874px) and (orientation: portrait) {
+            ytm-search .adaptive-feed-item {
+              width: calc(33.3% - 16px);
+            }
+          }
+          @media (min-width: 1160px) and (orientation: portrait) {
+            ytm-search .adaptive-feed-item {
+              width: calc(25% - 16px);
+            }
+          }
+        `)
+      }
+      if (config.removePink) {
+        cssRules.push(`
+          .ytp-play-progress,
+          .thumbnail-overlay-resume-playback-progress,
+          .ytChapteredProgressBarChapteredPlayerBarChapterSeen,
+          .ytChapteredProgressBarChapteredPlayerBarFill,
+          .ytProgressBarLineProgressBarPlayed,
+          .ytwThumbnailOverlayResumePlaybackRendererThumbnailOverlayResumePlaybackProgress,
+          .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
+            background: #f03 !important;
+          }
+        `)
+      }
+    }
+    //#endregion
+
+    if (debugManualHiding && manualHideRules.length > 0) {
+      let selector = `:where(${manualHideRules.map(rule => rule.selector).join(', ')})`
+      cssRules.push(`
+        ${selector} {
+          /* Reset inherited reasons when tagged containers are nested */
+          ${manualHideRules.map((_, i) => `--cpfyt-debug-hide-${i}: "";`).join('\n')}
+          /* Keep overlays below the sticky player and other page UI */
+          isolation: isolate;
+        }
+        /* Endscreen tiles are already absolutely positioned */
+        ${selector}:not(.ytp-videowall-still) {
+          position: relative !important;
+        }
+        ${selector}::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          /* Desktop Search channel names use z-index: 300 */
+          z-index: 301;
+          pointer-events: none;
+          background: rgba(255, 0, 51, .16);
+          border: 2px solid #f03;
+          border-radius: 12px;
+          box-sizing: border-box;
+        }
+        ${selector}::after {
+          content: ${manualHideRules.map((_, i) => `var(--cpfyt-debug-hide-${i})`).join(' ')};
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: max-content;
+          max-width: calc(100% - 16px);
+          box-sizing: border-box;
+          z-index: 302;
+          pointer-events: none;
+          padding: 6px 10px;
+          border: 1px solid rgba(255, 255, 255, .2);
+          border-radius: 8px;
+          background: #e1002d;
+          color: #fff;
+          font: 600 14px/1.4 Roboto, Arial, sans-serif;
+          text-align: center;
+          white-space: normal;
+        }
+      `)
+      for (let [i, rule] of manualHideRules.entries()) {
+        cssRules.push(`${rule.selector} { --cpfyt-debug-hide-${i}: "${rule.reason}"; }`)
+        if (i > 0) {
+          let previousSelectors = manualHideRules.slice(0, i).map(rule => rule.selector).join(', ')
+          cssRules.push(`${rule.selector}:is(${previousSelectors}) { --cpfyt-debug-hide-${i}: " · ${rule.reason}"; }`)
+        }
+      }
+    } else {
+      hideCssSelectors.push(...manualHideRules.map(rule => rule.selector))
+    }
+
+    if (hideCssSelectors.length > 0) {
+      let hideCssRule = `${hideCssSelectors.join(',\n')} { display: none !important; }`
+      if (desktop) hideCssRule = `ytd-app { ${hideCssRule} }`
+      cssRules.push(hideCssRule)
+    }
+
+    let css = cssRules.map(dedent).join('\n')
+    if ($style == null) {
+      $style = addStyle(css)
+    } else {
+      $style.textContent = css
+    }
+  }
+})()
+
+//#region Grid CSS
+const configureGridCss = (() => {
+  /** @type {HTMLStyleElement} */
+  let $style
+  /** @type {boolean} */
+  let fixingGhostCards
+  return function configureGridCss() {
+    if (!config.enabled) {
+      log('removing grid stylesheet')
+      $style?.remove()
+      $style = null
+      effectiveGridItemsPerRow = null
+      effectiveGridMode = null
+      return
+    }
+
+    /** @type {typeof effectiveGridItemsPerRow} */
+    let gridItemsPerRow
+    /** @type {typeof effectiveGridMode} */
+    let gridMode
+
+    if (config.minimumGridItemsPerRow == 'auto') {
+      gridMode = 'auto'
+      if (lastElementsPerRow) {
+        gridItemsPerRow = lastElementsPerRow
+      }
+    }
+    else if (!config.minimumGridItemsPerRow.startsWith('+')) {
+      gridMode = 'minimum'
+      gridItemsPerRow = Number(config.minimumGridItemsPerRow)
+    }
+    else {
+      gridMode = 'relative'
+      if (lastElementsPerRow) {
+        if (lastElementsPerRow > 2) {
+          gridItemsPerRow = lastElementsPerRow + Number(config.minimumGridItemsPerRow)
+        } else {
+          gridItemsPerRow = lastElementsPerRow + 1
+        }
+      }
+    }
+
+    if (gridItemsPerRow == effectiveGridItemsPerRow &&
+        gridMode == effectiveGridMode &&
+        config.fixGhostCards == fixingGhostCards) {
+      return
+    }
+
+    effectiveGridItemsPerRow = gridItemsPerRow
+    effectiveGridMode = gridMode
+    fixingGhostCards = config.fixGhostCards
+
+    if (gridMode == 'auto')
+      log(`gridItemsPerRow: auto`)
+    else if (gridMode == 'minimum')
+      log(`gridItemsPerRow: minimum of ${gridItemsPerRow}`)
+    else if (gridMode == 'relative' && lastElementsPerRow)
+      log(`gridItemsPerRow: ${config.minimumGridItemsPerRow} (${lastElementsPerRow} → ${gridItemsPerRow})`)
+
+    let cssRules = []
+
+    if (gridMode != 'auto' && gridItemsPerRow) {
+      let ytOverMinimum = gridMode == 'minimum' && lastElementsPerRow && lastElementsPerRow > gridItemsPerRow
+      if (!ytOverMinimum) {
+        cssRules.push(`
+          ytd-browse:is([page-subtype="channels"], [page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-grid-renderer {
+            --ytd-rich-grid-items-per-row: ${gridItemsPerRow} !important;
+          }
+        `)
+      }
+      if (!config.hideSuggestedSections) {
+        if (!ytOverMinimum) {
+          cssRules.push(`
+            ytd-browse[page-subtype="subscriptions"] ytd-rich-shelf-renderer:not([is-shorts]) {
+              --ytd-rich-grid-items-per-row: ${gridItemsPerRow} !important;
+            }
+          `)
+        }
+        // Show "Most relevant" thumbnails beyond the ones YouTube thinks should be visible
+        cssRules.push(`
+          ytd-browse[page-subtype="subscriptions"] ytd-rich-shelf-renderer:not([is-shorts]) ytd-rich-item-renderer:nth-child(-n+${gridItemsPerRow}) {
+            display: block !important;
+          }
+        `)
+      }
+    }
+
+    if (gridItemsPerRow) {
+      let gridPagesNeedingGhostCardFix = getGridPagesNeedingGhostCardFix()
+      if (config.fixGhostCards && gridPagesNeedingGhostCardFix.length > 0) {
+        cssRules.push(`
+          ytd-browse:is(${gridPagesNeedingGhostCardFix.map(page => `[page-subtype="${page}"]`).join(', ')}) {
+            /* Only show one row's worth of ghost cards */
+            .ghost-card:nth-child(n+${gridItemsPerRow + 1}) {
+              display: none;
+            }
+          }
+        `)
+      }
+    }
+
+    let css = cssRules.map(dedent).join('\n')
+    if ($style == null) {
+      $style = addStyle(css)
+    } else {
+      $style.textContent = css
+    }
+  }
+})()
+//#endregion
+
+//#region Translation CSS
+const configureTranslationCss = (() => {
+  /** @type {HTMLStyleElement} */
+  let $style
+
+  return function configureTranslationCss() {
+    let hideCssSelectors = []
+
+    // @ts-expect-error
+    if (config.enabled && window.ytcfg?.msgs) {
+      if (desktop && config.hideComments) {
+        hideCssSelectors.push(
+          `yt-player-quick-action-buttons > toggle-button-view-model:has(button[aria-label="${getYtString('COMMENTS')}"])`,
+        )
+      }
+      if (mobile && config.hideMembersOnly) {
+        hideCssSelectors.push(
+          `ytm-browse .tab-content[tab-title="${getYtString('HOME')}"] ytm-shelf-renderer:has(ytm-badge[data-type="BADGE_STYLE_TYPE_MEMBERS_ONLY"])`,
+        )
+      }
+      if (mobile && config.hideNextButton) {
+        hideCssSelectors.push(
+          // Hide disabled Previous and always hide Next, which plays a random video
+          `.player-controls-middle-core-buttons button[aria-label="${getYtString('PREVIOUS_VIDEO')}"][aria-disabled="true"]`,
+          `.player-controls-middle-core-buttons button[aria-label="${getYtString('NEXT_VIDEO')}"]`,
+        )
+      }
+    }
+
+    if (hideCssSelectors.length == 0) {
+      $style?.remove()
+      $style = null
+      return
+    }
+
+    let css = `${hideCssSelectors.join(',\n')} { display: none !important; }`
+    if (desktop) css = `ytd-app { ${css} }`
+    if ($style == null) {
+      $style = addStyle(css)
+    } else {
+      $style.textContent = css
+    }
+  }
+})()
+//#endregion
+//#endregion
+
+function isHomePage() {
+  return location.pathname == '/'
+}
+
+function isChannelPage() {
+  return URL_CHANNEL_RE.test(location.pathname)
+}
+
+function isDesktopPremium() {
+  // @ts-expect-error
+  return typeof ytInitialData == 'object' && ytInitialData?.topbar?.desktopTopbarRenderer?.logo?.topbarLogoRenderer?.iconImage?.iconType == 'YOUTUBE_PREMIUM_LOGO'
+}
+
+function isSearchPage() {
+  return location.pathname == '/results'
+}
+
+function isShortsPage() {
+  return location.pathname.startsWith('/shorts/')
+}
+
+function isSubscriptionsPage() {
+  return location.pathname == '/feed/subscriptions'
+}
+
+function isVideoPage() {
+  return location.pathname == '/watch'
+}
+
+//#region Tweak functions
+function allowBackgroundPlay() {
+  realDocumentHidden = document.hidden
+  Object.defineProperties(document, {
+    hidden: {value: false},
+    visibilityState: {value: 'visible'},
+  })
+  let activityTimeout = null
+  document.addEventListener('visibilitychange', async (e) => {
+    e.stopImmediatePropagation()
+    realDocumentHidden = !realDocumentHidden
+    if (!realDocumentHidden) {
+      if (activityTimeout) {
+        log('allowBackgroundPlay: stopping activity simulation')
+        clearTimeout(activityTimeout)
+        activityTimeout = null
+      }
+      return
+    }
+    if (!isVideoPage()) return
+    let $player = document.querySelector('#movie_player')
+    if (!$player) return
+    // @ts-expect-error
+    let playerState = $player.getPlayerState?.()
+    if (!playerState || playerState < 1 || playerState == 2) return
+    function activity() {
+      if (!realDocumentHidden) return
+      let keyCode = [16, 17, 18][Math.floor(Math.random() * 3)]
+      for (let type of ['keydown', 'keyup']) {
+        document.dispatchEvent(new KeyboardEvent(type, {
+          bubbles: true,
+          cancelable: true,
+          keyCode,
+          which: keyCode,
+        }))
+      }
+      activityTimeout = setTimeout(activity, 45_000 + Math.random() * 25_000)
+    }
+    log('allowBackgroundPlay: starting activity simulation')
+    activity()
+  }, true)
+}
+
+/**
+ * @param {string} playerSelector
+ * @param {HTMLElement} [$player]
+ */
+async function alwaysUseOriginalAudio(playerSelector, $player = null) {
+  if (!$player) {
+    $player = await getElement(playerSelector, {
+      name: `${playerSelector} (alwaysUseOriginalAudio)`,
+      stopIf: currentUrlChanges(),
+    })
+  }
+  if (!$player) return
+  // @ts-expect-error
+  let playerState = $player.getPlayerState?.()
+  if (playerState != null && playerState != 1) {
+    log('alwaysUseOriginalAudio: waiting for video to start playing')
+    await new Promise((resolve) => {
+      function onStateChange(playerState) {
+        if (playerState == 1) {
+          log('alwaysUseOriginalAudio: video started playing')
+          $player.removeEventListener('onStateChange', onStateChange)
+          resolve(undefined)
+        }
+      }
+      $player.addEventListener('onStateChange', onStateChange)
+    })
+  }
+  // @ts-expect-error
+  let tracks = $player?.getAvailableAudioTracks?.()
+  if (!tracks || tracks.length <= 1) {
+    log('alwaysUseOriginalAudio: no alternative tracks available')
+    return
+  }
+
+  let originalTrackName
+  let originalTrack = tracks.find((track) => {
+    for (let prop in track) {
+      if (Object.prototype.toString.call(track[prop]) == '[object Object]' &&
+          track[prop].id &&
+          track[prop].name &&
+          track[prop].name.includes(getString('ORIGINAL'))) {
+        originalTrackName = track[prop].name
+        return true
+      }
+    }
+  })
+  if (!originalTrack) {
+    warn('alwaysUseOriginalAudio: could not find original track', tracks)
+    return
+  }
+
+  // @ts-expect-error
+  let activeTrack = $player.getAudioTrack?.()
+  if (activeTrack && activeTrack.id == originalTrack.id) {
+    log('alwaysUseOriginalAudio: already using original track')
+    return
+  }
+
+  log('alwaysUseOriginalAudio: switching to original audio track', originalTrackName)
+  // @ts-expect-error
+  $player.setAudioTrack?.(originalTrack)
+}
+
+/**@param {HTMLElement} $player */
+function alwaysUseTheaterMode($player) {
+  if (!$player.closest('#player-full-bleed-container')) {
+    let $sizeButton = /** @type {HTMLButtonElement} */ ($player.querySelector('button.ytp-size-button'))
+    if ($sizeButton) {
+      log('alwaysUseTheaterMode: clicking size button')
+      $sizeButton.click()
+    } else {
+      warn('alwaysUseTheaterMode: size button not found')
+    }
+  } else {
+    log('alwaysUseTheaterMode: already using theater mode')
+  }
+}
+
+function animateHidingHiddenItems(itemsToHide) {
+  function hideItem(item) {
+    item.classList.remove('cpfyt-vanishing-flip')
+    item.classList.add(Classes.HIDE_HIDDEN)
+    item.style.position = ''
+    item.style.top = ''
+    item.style.left = ''
+    item.style.width = ''
+    item.style.height = ''
+    item.style.margin = ''
+  }
+
+  let parent = itemsToHide[0].parentElement
+  let itemsToHideSet = new Set(itemsToHide)
+
+  // First
+  let initialSiblingPositions = new Map()
+  let visibleSiblings = []
+  for (let child of parent.children) {
+    if (!itemsToHideSet.has(child) && child.offsetParent != null) {
+      visibleSiblings.push(child);
+      initialSiblingPositions.set(child, child.getBoundingClientRect())
+    }
+  }
+
+  let itemGeometries = new Map()
+  let parentRect = parent.getBoundingClientRect()
+  for (let item of itemsToHide) {
+    itemGeometries.set(item, item.getBoundingClientRect())
+  }
+
+  let parentPosition = window.getComputedStyle(parent).position
+  if (parentPosition == 'static') {
+    parent.style.position = 'relative'
+  }
+  for (let item of itemsToHide) {
+    let itemRect = itemGeometries.get(item)
+    if (!itemRect) continue
+    item.style.position = 'absolute'
+    item.style.top = `${itemRect.top - parentRect.top}px`
+    item.style.left = `${itemRect.left - parentRect.left}px`
+    item.style.width = `${itemRect.width}px`
+    item.style.height = `${itemRect.height}px`
+    item.style.margin = '0'
+    item.classList.add('cpfyt-vanishing-flip')
+  }
+
+  // Force reflow
+  parent.offsetHeight
+
+  let siblingCleanupTimeout = null
+  let siblingsToAnimate = []
+  let siblingTransitionCss = `transform ${ANIMATE_HIDE_DURATION_MS}ms cubic-bezier(0.25, 0.8, 0.25, 1)`
+  requestAnimationFrame(() => {
+    // Last
+    let finalSiblingPositions = new Map()
+    let currentVisibleSiblings = []
+    for (let sibling of visibleSiblings) {
+      if (sibling.offsetParent != null) {
+        finalSiblingPositions.set(sibling, sibling.getBoundingClientRect())
+        currentVisibleSiblings.push(sibling)
+      } else {
+        initialSiblingPositions.delete(sibling)
+      }
+    }
+
+    // Invert
+    for (let sibling of currentVisibleSiblings) {
+      let initial = initialSiblingPositions.get(sibling)
+      let final = finalSiblingPositions.get(sibling)
+      if (!initial || !final) continue
+      let deltaX = initial.left - final.left
+      let deltaY = initial.top - final.top
+      if (Math.abs(deltaX) > 0.5 || Math.abs(deltaY) > 0.5) {
+        siblingsToAnimate.push({ element: sibling, deltaX, deltaY })
+        sibling.style.transition = 'none'
+        sibling.style.transform = `translate(${deltaX}px, ${deltaY}px)`
+      }
+    }
+
+    // Play
+    requestAnimationFrame(() => {
+      for (let anim of siblingsToAnimate) {
+        anim.element.style.transition = siblingTransitionCss
+        anim.element.style.transform = ''
+      }
+
+      if (siblingsToAnimate.length > 0) {
+        siblingCleanupTimeout = setTimeout(() => {
+          for (let anim of siblingsToAnimate) {
+            if (anim.element.style.transform == '' && anim.element.style.transition == siblingTransitionCss) {
+              anim.element.style.transition = ''
+            }
+          }
+          siblingCleanupTimeout = null
+        }, ANIMATE_HIDE_DURATION_MS + 50)
+      }
+    })
+  })
+
+  let itemCleanupTimeout = setTimeout(() => {
+    for (let item of itemsToHide) {
+      hideItem(item)
+    }
+    itemCleanupTimeout = null
+  }, ANIMATE_HIDE_DURATION_MS)
+
+  return function cleanup() {
+    if (itemCleanupTimeout) {
+      clearTimeout(itemCleanupTimeout)
+      for (let item of itemsToHide) {
+        hideItem(item)
+      }
+    }
+
+    if (siblingCleanupTimeout) {
+      clearTimeout(siblingCleanupTimeout)
+      for (let anim of siblingsToAnimate) {
+        anim.element.style.transition = ''
+        anim.element.style.transform = ''
+      }
+    }
+  }
+}
+
+async function configureSearchPlaceholder() {
+  let $input = /** @type {HTMLInputElement} */ (await getElement('ytd-masthead yt-searchbox input[name="search_query"]', {
+    name: 'hideAskYouTubeSearch: search placeholder',
+    stopIf: currentUrlChanges(),
+  }))
+  if (!$input || !config.enabled || !config.hideAskYouTubeSearch) return
+
+  let original = $input.placeholder
+  let replacement = getString('SEARCH')
+  if (original == replacement) return
+
+  // YouTube can reapply the AI placeholder without navigating
+  observeElement($input, () => {
+    if (!$input.placeholder || $input.placeholder == replacement) return
+    original = $input.placeholder
+    $input.placeholder = replacement
+  }, {
+    leading: true,
+    name: 'hideAskYouTubeSearch: search placeholder',
+    observers: pageObservers,
+    onDisconnect() {
+      if ($input.placeholder == replacement) $input.placeholder = original
+    },
+  }, {
+    attributes: true,
+    attributeFilter: ['placeholder'],
+  })
+}
+
+async function disableAutoplay() {
+  if (desktop) {
+    let $autoplayButton = await getElement('button[data-tooltip-target-id="ytp-autonav-toggle-button"]', {
+      name: 'Autoplay button',
+      stopIf: currentUrlChanges(),
+    })
+    if (!$autoplayButton) return
+
+    // On desktop, initial Autoplay button HTML has style="display: none" and is
+    // always checked on. Once it's displayed, we can determine its real state
+    // and take action if needed.
+    observeElement($autoplayButton, (_, observer) => {
+      if ($autoplayButton.style.display == 'none') return
+      if ($autoplayButton.querySelector('.ytp-autonav-toggle-button[aria-checked="true"]')) {
+        log('turning Autoplay off')
+        $autoplayButton.click()
+      } else {
+        log('Autoplay is already off')
+      }
+      observer.disconnect()
+    }, {
+      leading: true,
+      name: 'Autoplay button style (for button being displayed)',
+      observers: pageObservers,
+    }, {
+      attributes: true,
+      attributeFilter: ['style'],
+    })
+  }
+
+  if (mobile) {
+    // Appearance of the Autoplay button may be delayed until interaction
+    let $customControl = await getElement('#player-control-container > ytm-custom-control', {
+      name: 'Autoplay <ytm-custom-control>',
+      stopIf: currentUrlChanges(),
+    })
+    if (!$customControl) return
+
+    observeElement($customControl, (_, observer) => {
+      if ($customControl.childElementCount == 0) return
+
+      let $autoplayButton = /** @type {HTMLElement} */ ($customControl.querySelector('button.ytm-autonav-toggle-button-container, button.ytwAutonavToggleButtonHost'))
+      if (!$autoplayButton) return
+
+      if ($autoplayButton.getAttribute('aria-pressed') == 'true') {
+        log('turning Autoplay off')
+        $autoplayButton.click()
+      } else {
+        log('Autoplay is already off')
+      }
+      observer.disconnect()
+    }, {
+      leading: true,
+      name: 'Autoplay <ytm-custom-control> (for Autoplay button being added)',
+      observers: pageObservers,
+    })
+  }
+}
+
+async function disableContinueWatching() {
+  let stopIf = currentUrlChanges()
+  let $watch = await getElement('ytd-watch-flexy, ytd-watch-grid', {
+    name: 'disableContinueWatching: watch element',
+    stopIf,
+  })
+  if (!$watch) return
+
+  let ready = await waitFor(() => {
+    // @ts-expect-error
+    return typeof $watch.youthereDataChanged_ == 'function'
+  }, 'disableContinueWatching: watch controller', {
+    stopIf,
+  })
+  if (!ready) return
+
+  // @ts-expect-error
+  let youthereDataChanged = $watch.youthereDataChanged_
+  function onYouthereDataChanged(messages) {
+    let hits = messages?.filter(message => message?.youThereRenderer)
+    if (hits?.length) {
+      log('disableContinueWatching: filtered messages', hits)
+    }
+    return youthereDataChanged.call(this, messages?.filter(message => !message?.youThereRenderer))
+  }
+
+  // @ts-expect-error
+  $watch.youThereManager_?.reset?.()
+  log('disableContinueWatching: patching youthereDataChanged_')
+  // @ts-expect-error
+  $watch.youthereDataChanged_ = onYouthereDataChanged
+
+  pageObservers.set('disable continue watching', {
+    disconnect() {
+      // @ts-expect-error
+      if ($watch.youthereDataChanged_ == onYouthereDataChanged) {
+        // @ts-expect-error
+        $watch.youthereDataChanged_ = youthereDataChanged
+      }
+    }
+  })
+}
+
+/** @param {HTMLElement} $player */
+function hideFullScreenMoreVideos($player) {
+  observeElement($player, () => {
+    let remove = false
+    if ($player.classList.contains('ytp-fullscreen-grid-peeking')) {
+      log('playerHideFullScreenMoreVideos: removing .ytp-fullscreen-grid-peeking from player')
+      remove = true
+    }
+    if ($player.classList.contains('ytp-fullscreen-grid-active')) {
+      log('playerHideFullScreenMoreVideos: removing .ytp-fullscreen-grid-active from player')
+      remove = true
+    }
+    if (remove) {
+      $player.classList.remove('ytp-fullscreen-grid-peeking', 'ytp-fullscreen-grid-active')
+    }
+  }, {
+    leading: true,
+    name: 'playerHideFullScreenMoreVideos: player class',
+    observers: pageObservers,
+  }, {
+    attributes: true,
+    attributeFilter: ['class'],
+  })
+}
+
+function downloadTranscript() {
+  // TODO Check if the transcript is still loading
+  let $segments = document.querySelector('.ytd-transcript-search-panel-renderer #segments-container')
+  let sections = []
+  let parts = []
+
+  for (let $el of $segments.children) {
+    if ($el.tagName == 'YTD-TRANSCRIPT-SECTION-HEADER-RENDERER') {
+      if (parts.length > 0) {
+        sections.push(parts.join(' '))
+        parts = []
+      }
+      sections.push(/** @type {HTMLElement} */ ($el).innerText.trim())
+    } else {
+      parts.push(/** @type {HTMLElement} */ ($el.querySelector('.segment-text')).innerText.trim())
+    }
+  }
+  if (parts.length > 0) {
+    sections.push(parts.join(' '))
+  }
+
+  let $link = document.createElement('a')
+  let url = URL.createObjectURL(new Blob([sections.join('\n\n')], {type: "text/plain"}))
+  let title = /** @type {HTMLElement} */ (document.querySelector('#above-the-fold #title'))?.innerText ?? 'transcript'
+  $link.setAttribute('href', url)
+  $link.setAttribute('download', `${title}.txt`)
+  $link.click()
+  URL.revokeObjectURL(url)
+}
+
+async function enforceTheme() {
+  let ytdApp = await getElement('ytd-app', {name: 'ytd-app', observers: globalObservers})
+  log('enforceTheme: enforcing', config.enforceTheme)
+  ytdApp?.[`handleSignalActionToggleDark${{
+    device: 'ThemeDevice',
+    dark: 'ThemeOn',
+    light: 'ThemeOff',
+  }[config.enforceTheme]}`]?.()
+}
+
+function handleCurrentUrl() {
+  log('handling', getCurrentUrl())
+  disconnectObservers(pageObservers, 'page')
+
+  if (desktop && config.enabled && config.hideAskYouTubeSearch) {
+    configureSearchPlaceholder()
+  }
+
+  let page = ''
+  let channelTab = ''
+  if (isHomePage()) {
+    tweakHomePage()
+  }
+  else if (isSubscriptionsPage()) {
+    tweakSubscriptionsPage()
+  }
+  else if (isVideoPage()) {
+    tweakVideoPage()
+  }
+  else if (isSearchPage()) {
+    tweakSearchPage()
+  }
+  else if (isShortsPage()) {
+    tweakShortsPage()
+  }
+  else if (isChannelPage()) {
+    page = 'channel'
+    channelTab = location.pathname.match(URL_CHANNEL_TAB_RE)?.[1] ?? 'featured'
+    tweakChannelPage()
+  }
+  // Add a current page indicator to html[cpfyt-page] when we need a CSS hook
+  if (mobile && document.documentElement.getAttribute('cpfyt-page') != page) {
+    document.documentElement.setAttribute('cpfyt-page', page)
+  }
+  if (desktop) {
+    if (channelTab) {
+      document.documentElement.setAttribute('cpfyt-channel-tab', channelTab)
+    }
+    else if (document.documentElement.hasAttribute('cpfyt-channel-tab')) {
+      document.documentElement.removeAttribute('cpfyt-channel-tab')
+    }
+  }
+
+  if (location.pathname.startsWith('/shorts/')) {
+    if (config.redirectShorts) {
+      redirectShort()
+    }
+  }
+}
+
+/** @param {HTMLElement} $menu */
+function addDownloadTranscriptToDesktopMenu($menu) {
+  if (!isVideoPage()) return
+
+  let $transcript = $lastClickedElement?.closest('[target-id="engagement-panel-searchable-transcript"]')
+  if (!$transcript) return
+
+  if ($menu.querySelector('.cpfyt-menu-item')) return
+
+  let $menuItems = $menu.querySelector('#items')
+  if (!$menuItems) {
+    warn('menu #items not found')
+    return
+  }
+  $menuItems.insertAdjacentHTML('beforeend', html`
+<div class="cpfyt-menu-item" tabindex="0" style="display: none">
+  <div class="cpfyt-menu-text">
+    ${getYtString('DOWNLOAD')}
+  </div>
+</div>
+  `)
+  let $item = $menuItems.lastElementChild
+  function download() {
+    downloadTranscript()
+    // Dismiss the menu
+    // @ts-expect-error
+    document.querySelector('#content')?.click()
+  }
+  $item.addEventListener('click', download)
+  $item.addEventListener('keydown', /** @param {KeyboardEvent} e */ (e) => {
+    if (e.key == ' ' || e.key == 'Enter') {
+      e.preventDefault()
+      download()
+    }
+  })
+}
+
+/** @param {HTMLElement} $menu */
+function handleDesktopWatchChannelMenu($menu) {
+  if (!isVideoPage()) return
+
+  let $channelMenuRenderer = $lastClickedElement?.closest('ytd-menu-renderer.ytd-watch-metadata')
+  if (!$channelMenuRenderer) return
+
+  // Other menus can be displayed from the menu renderer, e.g. Save
+  let $menuItems = $menu.querySelector('#items')
+  if (!$menuItems) return
+
+  let $channelLink = /** @type {HTMLAnchorElement} */ (document.querySelector('ytd-watch-flexy #channel-name a'))
+  if (!$channelLink) {
+    warn('channel link not found in video page')
+    return
+  }
+
+  let channel = {
+    name: $channelLink.textContent,
+    url: $channelLink.pathname,
+  }
+  lastClickedChannel = channel
+
+  let $item = $menu.querySelector('#cpfyt-hide-channel-menu-item')
+
+  function configureMenuItem(channel) {
+    let hidden = isChannelHidden(channel)
+    $item.querySelector('.cpfyt-menu-icon').innerHTML = /** @type {string} */ (policy.createHTML(hidden ? Svgs.RESTORE : Svgs.DELETE))
+    $item.querySelector('.cpfyt-menu-text').textContent = getString(hidden ? 'UNHIDE_CHANNEL' : 'HIDE_CHANNEL')
+  }
+
+  // The same menu can be reused, so we reconfigure it if it exists. If the
+  // menu item is reused, we're just changing [lastClickedChannel], which is
+  // why [toggleHideChannel] uses it.
+  if (!$item) {
+    let hidden = isChannelHidden(channel)
+
+    function toggleHideChannel() {
+      toggleHiddenChannel(lastClickedChannel)
+      configureMenuItem(lastClickedChannel)
+      storeConfigChanges({hiddenChannels: config.hiddenChannels})
+      configureCss()
+      handleCurrentUrl()
+      // Dismiss the menu
+      let $popupContainer = /** @type {HTMLElement} */ ($menu.closest('ytd-popup-container'))
+      $popupContainer.click()
+      // XXX Menu isn't dismissing on iPad Safari
+      if ($menu.style.display != 'none') {
+        $menu.style.display = 'none'
+        $menu.setAttribute('aria-hidden', 'true')
+      }
+    }
+
+    $menuItems.insertAdjacentHTML('beforeend', html`
+<div class="cpfyt-menu-item" tabindex="0" id="cpfyt-hide-channel-menu-item" style="display: none">
+  <div class="cpfyt-menu-icon">
+    ${hidden ? Svgs.RESTORE : Svgs.DELETE}
+  </div>
+  <div class="cpfyt-menu-text">
+    ${getString(hidden ? 'UNHIDE_CHANNEL' : 'HIDE_CHANNEL')}
+  </div>
+</div>
+    `)
+    $item = $menuItems.lastElementChild
+    $item.addEventListener('click', toggleHideChannel)
+    $item.addEventListener('keydown', /** @param {KeyboardEvent} e */ (e) => {
+      if (e.key == ' ' || e.key == 'Enter') {
+        e.preventDefault()
+        toggleHideChannel()
+      }
+    })
+  } else {
+    configureMenuItem(channel)
+  }
+}
+
+/** @param {HTMLElement} $menu */
+function addHideChannelToDesktopVideoMenu($menu) {
+  $menu.querySelector('#cpfyt-hide-channel-menu-item')?.remove()
+
+  let videoContainerElementSelector
+  if (isSearchPage()) {
+    videoContainerElementSelector = 'ytd-video-renderer'
+  }
+  else if (isVideoPage()) {
+    // TODO Remove ytd-compact-video-renderer after confirming all Related videos have moved to yt-lockup-view-model
+    videoContainerElementSelector = 'ytd-compact-video-renderer, yt-lockup-view-model'
+  }
+  else if (isHomePage()) {
+    videoContainerElementSelector = 'ytd-rich-item-renderer, yt-lockup-view-model'
+  }
+
+  if (!videoContainerElementSelector) return
+
+  let $video = /** @type {HTMLElement} */ ($lastClickedElement?.closest(videoContainerElementSelector))
+  if (!$video) return
+
+  log('found clicked video')
+  let channel = getChannelDetailsFromVideo($video)
+  if (!channel) return
+  lastClickedChannel = channel
+  log('channel for clicked video', lastClickedChannel)
+
+  let $menuItems = $menu.querySelector([
+    'tp-yt-paper-listbox',
+    'yt-list-view-model',
+  ].join(', '))
+  if (!$menuItems) {
+    warn('menu items not found')
+    return
+  }
+  // Insert before last menu item, which should be Report
+  $menuItems.lastElementChild.insertAdjacentHTML('beforebegin', html`
+<div class="cpfyt-menu-item" tabindex="0" id="cpfyt-hide-channel-menu-item" style="display: none">
+  <div class="cpfyt-menu-icon">
+    ${Svgs.DELETE}
+  </div>
+  <div class="cpfyt-menu-text">
+    ${getString('HIDE_CHANNEL')}
+  </div>
+</div>
+  `)
+  let $item = $menuItems.querySelector('#cpfyt-hide-channel-menu-item')
+  function toggleHideChannel() {
+    toggleHiddenChannel(lastClickedChannel)
+    storeConfigChanges({hiddenChannels: config.hiddenChannels})
+    configureCss()
+    handleCurrentUrl()
+    // Dismiss the menu
+    let $popupContainer = /** @type {HTMLElement} */ ($menu.closest('ytd-popup-container'))
+    $popupContainer.click()
+    // XXX Menu isn't dismissing on iPad Safari
+    if ($menu.style.display != 'none') {
+      $menu.style.display = 'none'
+      $menu.setAttribute('aria-hidden', 'true')
+    }
+  }
+  $item.addEventListener('click', toggleHideChannel)
+  $item.addEventListener('keydown', /** @param {KeyboardEvent} e */ (e) => {
+    if (e.key == ' ' || e.key == 'Enter') {
+      e.preventDefault()
+      toggleHideChannel()
+    }
+  })
+}
+
+/** @param {HTMLElement} $menu */
+async function addHideChannelToMobileVideoMenu($menu) {
+  if (!(isHomePage() || isSearchPage() || isVideoPage())) return
+
+  /** @type {HTMLElement} */
+  let $video = $lastClickedElement?.closest('ytm-video-with-context-renderer, yt-lockup-view-model')
+  if (!$video) return
+
+  log('found clicked video')
+  let channel = getChannelDetailsFromVideo($video)
+  if (!channel) return
+  lastClickedChannel = channel
+
+  if ($menu.querySelector('#cpfyt-hide-channel-menu-item')) return
+
+  // Old menus: <ytm-menu-item> in a centred menu (.menu-content) or bottom sheet
+  // New menus: <yt-list-view-model> with <yt-list-item-view-model>
+  let $menuItems = $menu.querySelector('.menu-content, .bottom-sheet-media-menu-item, yt-list-view-model')
+  if (!$menuItems) return
+
+  // Old centred menus don't show icons but can have them in the DOM
+  let hasIcon = Boolean($menuItems.querySelector('c3-icon'))
+  let hideChannelMenuItemHTML = $menuItems.tagName == 'YT-LIST-VIEW-MODEL' ? html`
+    <yt-list-item-view-model id="cpfyt-hide-channel-menu-item" class="ytListItemViewModelHost" role="presentation">
+      <div class="ytListItemViewModelLayoutWrapper ytListItemViewModelContainer ytListItemViewModelTappable ytListItemViewModelInPopup ytListItemViewModelNoTrailingText">
+        <div class="ytListItemViewModelMainContainer">
+          ${hasIcon ? `<div class="ytListItemViewModelImageContainer ytListItemViewModelLeading" aria-hidden="true">
+            <c3-icon class="ytListItemViewModelAccessory ytListItemViewModelImage" fill-icon="false">
+              <div style="width: 100%; height: 100%; fill: currentcolor;">
+                ${Svgs.DELETE}
+              </div>
+            </c3-icon>
+          </div>` : ''}
+          <button type="button" class="ytButtonOrAnchorHost ytButtonOrAnchorButton ytListItemViewModelButtonOrAnchor ytListItemViewModelTextWrapper" role="menuitem">
+            <div>
+              <div class="ytListItemViewModelTitleWrapper">
+                <span class="ytAttributedStringHost ytListItemViewModelTitle ytAttributedStringWhiteSpacePreWrap" role="text">${getString('HIDE_CHANNEL')}</span>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </yt-list-item-view-model>
+  ` : html`
+    <ytm-menu-item id="cpfyt-hide-channel-menu-item">
+      <button type="button" class="menu-item-button">
+        ${hasIcon ? `<c3-icon aria-hidden="true">
+          <div style="width: 100%; height: 100%; fill: currentcolor;">
+            ${Svgs.DELETE}
+          </div>
+        </c3-icon>` : ''}
+        <span role="text">
+          ${getString('HIDE_CHANNEL')}
+        </span>
+      </button>
+    </ytm-menu-item>
+  `
+
+  // Old centred menus end with a Cancel item our item should display before
+  let $cancelMenuItem = $menu.querySelector('ytm-menu-item:has(.menu-cancel-button)')
+  if ($cancelMenuItem) {
+    $cancelMenuItem.insertAdjacentHTML('beforebegin', hideChannelMenuItemHTML)
+  } else {
+    $menuItems.insertAdjacentHTML('beforeend', hideChannelMenuItemHTML)
+  }
+
+  let $item = $menuItems.querySelector('#cpfyt-hide-channel-menu-item')
+  $item.addEventListener('click', () => {
+    toggleHiddenChannel(lastClickedChannel)
+    storeConfigChanges({hiddenChannels: config.hiddenChannels})
+    configureCss()
+    handleCurrentUrl()
+  })
+}
+
+/**
+ * @param {Element} $video video container element
+ * @returns {import("./types").Channel}
+ */
+function getChannelDetailsFromVideo($video) {
+  if (desktop) {
+    if ($video.tagName == 'YTD-RICH-ITEM-RENDERER' || $video.tagName == 'YTD-VIDEO-RENDERER') {
+      let $link = /** @type {HTMLAnchorElement} */ ($video.querySelector('#text.ytd-channel-name a'))
+      if ($link) {
+        return {
+          name: $link.textContent,
+          url: $link.pathname,
+        }
+      }
+      if ($video.tagName == 'YTD-RICH-ITEM-RENDERER') {
+        // Home nests a yt-lockup-view-model inside - fall back to checking it
+        $video = $video.querySelector('yt-lockup-view-model')
+        if (!$video) return
+      }
+    }
+    // TODO Remove after confirming all Related videos have moved to yt-lockup-view-model
+    else if ($video.tagName == 'YTD-COMPACT-VIDEO-RENDERER') {
+      let $link = /** @type {HTMLElement} */ ($video.querySelector('#text.ytd-channel-name'))
+      if ($link) {
+        return {
+          name: $link.getAttribute('title')
+        }
+      }
+    }
+  }
+
+  if (mobile && $video.tagName == 'YTM-RICH-ITEM-RENDERER') {
+    $video = $video.querySelector('yt-lockup-view-model') || $video
+  }
+
+  if ($video.tagName == 'YT-LOCKUP-VIEW-MODEL') {
+    let $link = /** @type {HTMLAnchorElement} */ ($video.querySelector('yt-content-metadata-view-model a'))
+    if ($link) {
+      return {
+        name: $link.textContent,
+        url: $link.pathname,
+      }
+    }
+    // Assumption: channel name is always the first text in this element
+    let $name = $video.querySelector('yt-content-metadata-view-model [role="text"]')
+    if ($name) {
+      return {
+        name: $name.textContent,
+      }
+    }
+  }
+
+  if (mobile) {
+    let $thumbnailLink = /** @type {HTMLAnchorElement} */ ($video.querySelector(`:is(
+      ytm-channel-thumbnail-with-link-renderer,
+      ytw-channel-thumbnail-with-link-renderer
+    ) > a`))
+    let $name = /** @type {HTMLElement} */ ($video.querySelector('ytm-badge-and-byline-renderer .ytAttributedStringHost'))
+    if ($name) {
+      return {
+        name: $name.textContent,
+        url: $thumbnailLink?.pathname,
+      }
+    }
+  }
+  // warn('unable to get channel details from video container', $video)
+}
+
+async function observeDesktopEndscreenVideos() {
+  let stopIf = currentUrlChanges()
+  let $player = await getElement('#movie_player', {
+    name: 'endscreen player',
+    stopIf,
+  })
+  if (!$player) return
+
+  let $endscreenContent = await getElement('.ytp-endscreen-content', {
+    name: 'endscreen content',
+    context: $player,
+    stopIf,
+  })
+  if (!$endscreenContent) return
+
+  /** @type {import("./types").Disconnectable} */
+  let firstItemObserver
+
+  function processItems() {
+    for (let $item of $endscreenContent.children) {
+      let $channelInfo = /** @type {HTMLElement} */ ($item.querySelector('.ytp-videowall-still-info-author'))
+      let name = $channelInfo?.innerText?.split('•')?.[0]?.trim()
+      $item.classList.toggle(Classes.HIDE_CHANNEL, isChannelHidden({name}))
+    }
+  }
+
+  observeElement($endscreenContent, () => {
+    processItems()
+    if (!firstItemObserver && $endscreenContent.firstElementChild) {
+      firstItemObserver = observeElement($endscreenContent.firstElementChild, () => {
+        processItems()
+      }, {
+        name: 'endscreen item changes',
+        observers: pageObservers,
+      }, {
+        attributes: true,
+        attributeFilter: ['href'],
+      })
+    }
+    else if (firstItemObserver && $endscreenContent.childElementCount == 0) {
+      firstItemObserver?.disconnect()
+      firstItemObserver = null
+    }
+  }, {
+    name: 'endscreen content',
+    observers: pageObservers,
+    leading: true,
+  })
+}
+
+async function observeDesktopRelatedVideos() {
+  /** @type {Element} */
+  let $renderer
+  /** @type {Element} */
+  let $contents
+  /** @type {Element} */
+  let $canShowMoreElement
+  let itemCount = 0
+
+  function init() {
+    observeRelatedCanShowMoreAttribute()
+    observeRelatedContents()
+    processCurrentItems()
+  }
+
+  function observeRelatedCanShowMoreAttribute() {
+    // A can-show-more attribute is added when related items are refreshed
+    observeElement($canShowMoreElement, () => {
+      if ($canShowMoreElement.getAttribute('can-show-more') == null) {
+        log('can-show-more attribute removed - reprocessing refreshed items')
+        processCurrentItems()
+      }
+    }, {
+      name: '#related can-show-more attribute',
+      observers: pageObservers,
+    }, {
+      attributes: true,
+      attributeFilter: ['can-show-more'],
+    })
+  }
+
+  function observeRelatedContents() {
+    observeElement($contents, (mutations) => {
+      let newItemCount = 0
+      for (let mutation of mutations) {
+        for (let $addedNode of mutation.addedNodes) {
+          if (!($addedNode instanceof HTMLElement)) continue
+          // TODO Remove YTD-COMPACT-VIDEO-RENDERER if all Related videos move to YT-LOCKUP-VIEW-MODEL
+          if ($addedNode.nodeName == 'YTD-COMPACT-VIDEO-RENDERER' || $addedNode.nodeName == 'YT-LOCKUP-VIEW-MODEL') {
+            processRelatedItem($addedNode)
+            newItemCount++
+          }
+        }
+      }
+      if (newItemCount > 0) log(newItemCount, `related item${s(newItemCount)} added`)
+    }, {
+      name: '#related contents (for new items being added)',
+      observers: pageObservers,
+    })
+  }
+
+  async function observeRelatedSection() {
+    $renderer = await getElement('#related.ytd-watch-flexy ytd-watch-next-secondary-results-renderer', {
+      name: '#related renderer',
+      stopIf: currentUrlChanges(),
+    })
+    if (!$renderer) return
+
+    let $items = $renderer.querySelector(':scope > #items')
+    if (!$items) {
+      warn('related #items not found')
+      return
+    }
+
+    // When categories are available, items are rendered in a ytd-item-section-renderer
+    let $itemSectionRenderer = $items.querySelector(':scope > ytd-item-section-renderer')
+    if ($itemSectionRenderer) {
+      $canShowMoreElement = $itemSectionRenderer
+      $contents = $itemSectionRenderer.querySelector('#contents')
+    } else {
+      $canShowMoreElement = $renderer
+      $contents = $items
+    }
+
+    // Categories can be added or removed after navigating between videos
+    observeElement($items, (mutations) => {
+      for (let mutation of mutations) {
+        for (let $addedNode of mutation.addedNodes) {
+          if (!($addedNode instanceof HTMLElement)) continue
+          if ($addedNode.nodeName === 'YTD-ITEM-SECTION-RENDERER') {
+            log('#related categories appeared')
+            $canShowMoreElement = $addedNode
+            $contents = $addedNode.querySelector('#contents')
+            if (!$contents) {
+              warn('#contents not found in <ytd-item-section-renderer>')
+              return
+            }
+            init()
+          }
+        }
+        for (let $removedNode of mutation.removedNodes) {
+          if (!($removedNode instanceof HTMLElement)) continue
+          if ($removedNode.nodeName === 'YTD-ITEM-SECTION-RENDERER') {
+            log('#related categories disappeared')
+            $canShowMoreElement = $renderer
+            $contents = $items
+            init()
+          }
+        }
+      }
+    }, {
+      name: '#related #items',
+      observers: pageObservers,
+    })
+
+    init()
+  }
+
+  function processCurrentItems() {
+    itemCount = 0
+    for (let $item of $contents.children) {
+      // TODO Remove YTD-COMPACT-VIDEO-RENDERER if all Related videos moved to YT-LOCKUP-VIEW-MODEL
+      if ($item.nodeName == 'YTD-COMPACT-VIDEO-RENDERER' || $item.nodeName == 'YT-LOCKUP-VIEW-MODEL') {
+        processRelatedItem($item)
+      }
+    }
+  }
+
+  /** @param {Element} $item  */
+  function processRelatedItem($item) {
+    let itemNumber = ++itemCount
+    manuallyTagVideo($item, {hideDismissed: $item.nodeName == 'YT-LOCKUP-VIEW-MODEL'})
+    if ($item.nodeName == 'YTD-COMPACT-VIDEO-RENDERER') {
+      waitForDesktopVideoOverlay($item, `related item ${itemNumber}`)
+    }
+  }
+
+  observeRelatedSection()
+
+  // In the new layout, #related appears as a child of #secondary-inner or
+  // #below and will be moved as the viewport width changes.
+  for (let selector of ['#secondary-inner', '#below']) {
+    run(async () => {
+      let $el = await getElement(selector, {name: selector, stopIf: currentUrlChanges()})
+      if (!$el) return
+      observeElement($el, (mutations) => {
+        for (let mutation of mutations) {
+          for (let $addedNode of mutation.addedNodes) {
+            if (!($addedNode instanceof HTMLElement)) continue
+            if ($addedNode.id == 'related') {
+              log('#related moved to', selector)
+              // TODO hideHiddenVideos: re-hide videos which were hidden with "Not interested"
+              observeRelatedSection()
+            }
+          }
+        }
+      }, {
+        name: `${selector} (for #related being added)`,
+        observers: pageObservers,
+      })
+    })
+  }
+}
+
+/**
+ * Re-apply manual hiding when Home or Subscriptions grid items re-render.
+ *
+ * yt-lockup-view-model seems to be re-rendered from scratch, even if the same
+ * video will end up in the same grid item. The element also seems to be empty
+ * on initial render.
+ * @param {Element} $gridItem
+ * @param {string} uniqueId
+ */
+function observeDesktopYtLockupViewModelItemContent($gridItem, uniqueId) {
+  let $content = $gridItem.querySelector(':scope > #content')
+  if (!$content) {
+    warn('#content not found in <yt-lockup-view-model>', $gridItem)
+    return
+  }
+  observeElement($content, (mutations) => {
+    if (mutations.length == 0) {
+      let $lockupViewModel = $gridItem.querySelector('yt-lockup-view-model')
+      if ($lockupViewModel) {
+        requestAnimationFrame(() => manuallyTagVideo($gridItem, {hideDismissed: true}))
+      }
+      return
+    }
+
+    for (let mutation of mutations) {
+      for (let $addedNode of mutation.addedNodes) {
+        if (!($addedNode instanceof HTMLElement)) continue
+        if ($addedNode.nodeName == 'YT-LOCKUP-VIEW-MODEL') {
+          if (debugLogGridObservers) {
+            log('yt-lockup-view-model added to', uniqueId)
+          }
+          // Let the new thumbnail finish rendering
+          requestAnimationFrame(() => manuallyTagVideo($gridItem, {hideDismissed: true}))
+        }
+      }
+    }
+  }, {
+    leading: true,
+    logObserve: debugLogGridObservers,
+    name: `${uniqueId} #content`,
+    observers: pageObservers,
+  })
+}
+
+/** @param {{page: 'channels' | 'home' | 'subscriptions'}} options */
+async function observeDesktopRichGridItems(options) {
+  let {page} = options
+  let itemCount = 0
+
+  let $renderer = await getElement(`ytd-browse[page-subtype="${page}"] ytd-rich-grid-renderer`, {
+    name: `${page} <ytd-rich-grid-renderer>`,
+    stopIf: currentUrlChanges(),
+  })
+  if (!$renderer) return
+
+  observeElement($renderer, () => {
+    let elementsPerRowValue = $renderer.getAttribute('elements-per-row')
+    if (!elementsPerRowValue) return
+    let elementsPerRow = Number(elementsPerRowValue)
+    if (!Number.isNaN(elementsPerRow) && elementsPerRow != lastElementsPerRow) {
+      lastElementsPerRow = elementsPerRow
+      configureGridCss()
+    }
+  }, {
+    leading: true,
+    name: '<ytd-rich-grid-renderer> elements-per-row',
+    observers: pageObservers,
+  }, {
+    attributes: true,
+    attributeFilter: ['elements-per-row'],
+  })
+
+  // We don't need to observe videos on channel tabs
+  if (page == 'channels') return
+
+  let $gridContents = $renderer.querySelector(':scope > #contents')
+
+  /**
+   * @param {Element} $gridItem
+   * @param {string} $gridItem
+   */
+  function processGridItem($gridItem, uniqueId) {
+    manuallyTagVideo($gridItem, {hideDismissed: page === 'home'})
+    observeDesktopYtLockupViewModelItemContent($gridItem, uniqueId)
+  }
+
+  function processAllVideos() {
+    let $videos = $gridContents.querySelectorAll('ytd-rich-item-renderer.ytd-rich-grid-renderer')
+    if ($videos.length > 0) {
+      log('processing', $videos.length, `${page} video${s($videos.length)}`)
+    }
+    for (let $video of $videos) {
+      processGridItem($video, `grid item ${++itemCount}`)
+    }
+  }
+
+  let fixGhostCards = config.fixGhostCards && {
+    home: !config.displayHomeGridAsList,
+    subscriptions: !config.displaySubscriptionsGridAsList,
+  }[page]
+  /** @type {HTMLElement} */
+  let $lastGhostGridClone = null
+  /** @type {HTMLElement} */
+  let $lastSpinnerClone = null
+  /** @type {WeakMap<HTMLElement, HTMLElement>} */
+  let ghostGridClones = new WeakMap()
+  /** @type {WeakMap<HTMLElement, HTMLElement>} */
+  let spinnerClones = new WeakMap()
+
+  /** @param {HTMLElement} $continuationRenderer */
+  function onContinuationRendererAdded($continuationRenderer) {
+    if ($lastGhostGridClone?.isConnected) $lastGhostGridClone.remove()
+    if ($lastSpinnerClone?.isConnected) $lastSpinnerClone.remove()
+    $lastGhostGridClone = document.createElement('div')
+    $lastGhostGridClone.className = 'cpfyt-ghost-cards'
+    let $cards = $continuationRenderer.querySelectorAll('.ghost-grid .ghost-card')
+    if ($cards.length > 0) {
+      $lastGhostGridClone.append(...$cards)
+      // Add more cards if YouTube didn't generate enough
+      if (effectiveGridItemsPerRow && effectiveGridItemsPerRow > $lastGhostGridClone.childElementCount) {
+        let extra = effectiveGridItemsPerRow - $lastGhostGridClone.childElementCount
+        log('fixGhostCards: adding', extra, `ghost card${s(extra)}`)
+        for (let i = 0; i < extra; i++) {
+          $lastGhostGridClone.append($lastGhostGridClone.lastElementChild.cloneNode(true))
+        }
+      }
+      // YouTube can remove the continuation renderer before we move ghost cards
+      if ($continuationRenderer.isConnected) {
+        $continuationRenderer.insertAdjacentElement('afterend', $lastGhostGridClone)
+        ghostGridClones.set($continuationRenderer, $lastGhostGridClone)
+      }
+    } else {
+      warn('fixGhostCards: no ghost cards found in continuation renderer')
+    }
+    let $spinner = $continuationRenderer.querySelector('tp-yt-paper-spinner')
+    if ($spinner) {
+      observeElement($spinner, (_, observer) => {
+        if (!$spinner.hasAttribute('active')) return
+        observer.disconnect()
+        if (!$continuationRenderer.isConnected) return
+        $lastSpinnerClone = document.createElement('div')
+        $lastSpinnerClone.className = 'cpfyt-grid-spinner'
+        log('fixGhostCards: moving active loading spinner')
+        $lastSpinnerClone.append($spinner.cloneNode(true))
+        $gridContents.append($lastSpinnerClone)
+        spinnerClones.set($continuationRenderer, $lastSpinnerClone)
+      }, {
+        leading: true,
+        logObserve: debugLogGridObservers,
+        logDisconnect: debugLogGridObservers,
+        name: 'fixGhostCards: loading spinner',
+        observers: pageObservers,
+      }, {
+        attributes: true,
+        attributeFilter: ['active'],
+      })
+    } else {
+      warn('fixGhostCards: loading spinner not found in ghost cards')
+    }
+  }
+
+  /** @param {HTMLElement} $continuationRenderer */
+  function onContinuationRendererRemoved($continuationRenderer) {
+    let $ghostGridClone = ghostGridClones.get($continuationRenderer)
+    if ($ghostGridClone) {
+      ghostGridClones.delete($continuationRenderer)
+      if ($ghostGridClone.isConnected) $ghostGridClone.remove()
+      if ($ghostGridClone === $lastGhostGridClone) $lastGhostGridClone = null
+    }
+    let $spinnerClone = spinnerClones.get($continuationRenderer)
+    if ($spinnerClone) {
+      spinnerClones.delete($continuationRenderer)
+      if ($spinnerClone.isConnected) $spinnerClone.remove()
+      if ($spinnerClone === $lastSpinnerClone) $lastSpinnerClone = null
+    }
+  }
+
+  observeElement($gridContents, (mutations) => {
+    let videosAdded = 0
+    for (let mutation of mutations) {
+      if (fixGhostCards) {
+        for (let $removedNode of mutation.removedNodes) {
+          if (!($removedNode instanceof HTMLElement)) continue
+          if ($removedNode.nodeName == 'YTD-CONTINUATION-ITEM-RENDERER') {
+            onContinuationRendererRemoved($removedNode)
+          }
+        }
+      }
+      for (let $addedNode of mutation.addedNodes) {
+        if (!($addedNode instanceof HTMLElement)) continue
+        if ($addedNode.nodeName == 'YTD-RICH-ITEM-RENDERER') {
+          requestAnimationFrame(() => processGridItem($addedNode, `grid item ${++itemCount}`))
+          videosAdded++
+        }
+        if (fixGhostCards && $addedNode.nodeName == 'YTD-CONTINUATION-ITEM-RENDERER') {
+          onContinuationRendererAdded($addedNode)
+        }
+      }
+    }
+    if (videosAdded > 0) {
+      log(videosAdded, `video${s(videosAdded)} added`)
+    }
+  }, {
+    name: `${page} <ytd-rich-grid-renderer> #contents (for new videos being added)`,
+    observers: pageObservers,
+  })
+
+  if (fixGhostCards) {
+    pageObservers.set('grid loading placeholder clones', {
+      disconnect() {
+        if ($lastGhostGridClone?.isConnected) $lastGhostGridClone.remove()
+        if ($lastSpinnerClone?.isConnected) $lastSpinnerClone.remove()
+      }
+    })
+  }
+
+  processAllVideos()
+}
+
+/** @param {HTMLElement} $dropdown */
+async function onDesktopMenuAppeared($dropdown) {
+  log('menu appeared', $dropdown)
+
+  // YouTube currently has 2 menu components: <tp-yt-paper-listbox> and <yt-list-item-view-model>
+  let $menu = $dropdown.querySelector('tp-yt-paper-listbox, yt-list-item-view-model')
+  if (!$menu) {
+    await frame()
+    $menu = $dropdown.querySelector('tp-yt-paper-listbox, yt-list-item-view-model')
+    if (!$menu) {
+      warn('menu not found in', $dropdown)
+      return
+    }
+  }
+
+  let menuConfig = MenuConfigs[$menu.tagName]
+
+  if (config.hideShareThanksClip) {
+    let $menuItems = /** @type {NodeListOf<HTMLElement>} */ ($dropdown.querySelectorAll(menuConfig.itemSelector))
+    let testLabels = new Set([getString('SHARE'), getString('THANKS'), getString('CLIP')])
+    for (let $menuItem of $menuItems) {
+      let menuItemText = $menuItem.querySelector(menuConfig.itemTextSelector)?.textContent
+      if (testLabels.has(menuItemText)) {
+        log('hideShareThanksClip: tagging', menuItemText, 'menu item')
+        $menuItem.classList.add(Classes.HIDE_SHARE_THANKS_CLIP)
+        // Separator on the Download item is <tp-yt-paper-listbox> menu-specific
+        if ($menuItem.hasAttribute('has-separator')) {
+          let $newSeparatorItem = $menuItem.previousElementSibling
+          if (config.hidePremiumUpsells && !isDesktopPremium() && $newSeparatorItem.tagName == 'YTD-MENU-SERVICE-ITEM-DOWNLOAD-RENDERER') {
+            $newSeparatorItem = $newSeparatorItem.previousElementSibling
+          }
+          log('hideShareThanksClip: moving has-separator to', $newSeparatorItem)
+          $newSeparatorItem.setAttribute('has-separator', '')
+        }
+      }
+      else if ($menuItem.classList.contains(Classes.HIDE_SHARE_THANKS_CLIP)) {
+        log('hideShareThanksClip: un-tagging', menuItemText, 'menu item')
+        $menuItem.classList.remove(Classes.HIDE_SHARE_THANKS_CLIP)
+      }
+    }
+  }
+  if (config.downloadTranscript) {
+    addDownloadTranscriptToDesktopMenu($dropdown)
+  }
+  if (config.hideChannels) {
+    addHideChannelToDesktopVideoMenu($dropdown)
+    // XXX This menu re-renders async if another menu was previously displayed
+    handleDesktopWatchChannelMenu($dropdown)
+  }
+  if (config.hideHiddenVideos) {
+    observeVideoHiddenState()
+  }
+}
+
+/** @param {HTMLElement} $popupContainer */
+function observeDesktopContextMenu($popupContainer) {
+  let $contextMenu = /** @type {HTMLElement} */ ($popupContainer.querySelector('.ytp-popup.ytp-contextmenu'))
+
+  function addTakeShapshotMenuItem() {
+    let $insertAfter = $contextMenu.querySelector('.ytp-menuitem:last-child')
+    if (!$insertAfter) {
+      warn('addTakeSnapshot: menu item to insert after not found')
+      return
+    }
+    $insertAfter.insertAdjacentHTML('afterend', html`
+<div id="cpfyt-snaphot-menu-item" class="ytp-menuitem" role="menuitem" tabindex="0">
+  <div class="ytp-menuitem-icon">
+    <svg fill="#fff" height="24px" viewBox="0 -960 960 960" width="24px">
+      <path d="M480-400q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0 80q66 0 113-47t47-113q0-66-47-113t-113-47q-66 0-113 47t-47 113q0 66 47 113t113 47ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z"/>
+    </svg>
+  </div>
+  <div class="ytp-menuitem-label">${getString('TAKE_SNAPSHOT')}</div>
+  <div class="ytp-menuitem-content"></div>
+</div>
+    `)
+    $contextMenu.querySelector('#cpfyt-snaphot-menu-item').addEventListener('click', takeSnapshot)
+    // Adjust context menu height for new item
+    let height = `${parseInt($contextMenu.style.height) + 40}px`
+    $contextMenu.style.height = height
+    let $panel = /** @type {HTMLElement} */ ($contextMenu.querySelector('.ytp-panel'))
+    if ($panel) {
+      $panel.style.height = height
+    }
+  }
+
+  function processContextMenu() {
+    if (config.addTakeSnapshot) addTakeShapshotMenuItem()
+  }
+
+  if ($contextMenu) {
+    processContextMenu()
+  } else {
+    // Context menu not added yet - wait for it to appear
+    observeElement(document.body, (mutations, observer) => {
+      for (let mutation of mutations) {
+        for (let $el of mutation.addedNodes) {
+          if ($el instanceof HTMLElement && $el.classList.contains('ytp-contextmenu')) {
+            $contextMenu = $el
+            observer.disconnect()
+            processContextMenu()
+            return
+          }
+        }
+      }
+    }, {
+      name: '<body> (for player context menu being added)',
+      observers: globalObservers,
+    })
+  }
+}
+
+async function observePopups() {
+  if (desktop) {
+    /** @param {HTMLElement} $dialog */
+    function observeDialog($dialog) {
+      observeElement($dialog, () => {
+        if ($dialog.getAttribute('aria-hidden') == 'true') {
+          log('dialog closed')
+          if (onDialogClosed) {
+            onDialogClosed()
+            onDialogClosed = null
+          }
+        } else {
+          log('dialog opened')
+        }
+      }, {
+        name: '<tp-yt-paper-dialog> (for [aria-hidden] being added)',
+        observers: globalObservers,
+      }, {
+        attributes: true,
+        attributeFilter: ['aria-hidden'],
+      })
+    }
+
+    let dropdownCount = 1
+    /** @param {HTMLElement} $dropdown */
+    function observeDropdown($dropdown) {
+      observeElement($dropdown, () => {
+        if ($dropdown.getAttribute('aria-hidden') != 'true') {
+          onDesktopMenuAppeared($dropdown)
+        }
+      }, {
+        leading: true,
+        name: `<tp-yt-iron-dropdown> ${dropdownCount++} (for [aria-hidden] being removed)`,
+        observers: globalObservers,
+      }, {
+        attributes: true,
+        attributeFilter: ['aria-hidden'],
+      })
+    }
+
+    function observeNotificationRenderer($notificationRenderer) {
+      observeElement($notificationRenderer, (_, observer)  => {
+        let $toast = $notificationRenderer.querySelector('tp-yt-paper-toast')
+        if (!$toast) return
+        observer.disconnect()
+        observeElement($toast, () => {
+          if ($toast.getAttribute('aria-hidden') == 'true') return
+          let $text = $toast.querySelector('#text-container #text')
+          if (!(
+            $toast.querySelector('a[href^="https://support.google.com/youtube/answer/3037019"]') ||
+            $text?.textContent == getString('EXPERIENCING_INTERRUPTIONS')
+          )) return
+          $toast.classList.add('ExperiencingInterruptions')
+          if (config.hideExperiencingInterruptions) {
+            log('hideExperiencingInterruptions: hiding toast')
+          } else {
+            if ($text) {
+              log('hideExperiencingInterruptions: making message more accurate')
+              $text.textContent = getString('ADS_BLOCKED')
+            }
+          }
+        }, {
+          name: '<tp-yt-paper-toast> (for "Experiencing interruptions?" message)',
+          observers: globalObservers,
+        },{
+          attributes: true,
+          attributeFilter: ['aria-hidden'] ,
+          childList: true,
+        })
+      }, {
+        leading: true,
+        name: '<yt-notification-action-renderer> (for <tp-yt-paper-toast> being added)',
+        observers: globalObservers,
+      })
+    }
+
+    // Desktop dialogs and menus appear in <ytd-popup-container>. Once created,
+    // the same elements are reused.
+    let $popupContainer = await getElement('ytd-popup-container', {name: 'popup container', observers: globalObservers})
+    if (!$popupContainer) return
+    let $dialog = /** @type {HTMLElement} */ ($popupContainer.querySelector('tp-yt-paper-dialog'))
+    // YouTube currently has multiple dropdown styles, with one element each
+    let $dropdowns = /** @type {NodeListOf<HTMLElement>} */ ($popupContainer.querySelectorAll('tp-yt-iron-dropdown'))
+    if ($dialog) observeDialog($dialog)
+    if ($dropdowns.length > 0) {
+      for (let $dropdown of $dropdowns) {
+        observeDropdown($dropdown)
+      }
+    }
+    let $notificationRenderer = $popupContainer.querySelector('yt-notification-action-renderer')
+    if ($notificationRenderer) observeNotificationRenderer($notificationRenderer)
+
+    observeElement($popupContainer, (mutations) => {
+      for (let mutation of mutations) {
+        for (let $el of mutation.addedNodes) {
+          if (!($el instanceof HTMLElement)) continue
+          switch($el.nodeName) {
+            case 'TP-YT-IRON-DROPDOWN':
+              observeDropdown($el)
+              break
+            case 'TP-YT-PAPER-DIALOG':
+              observeDialog($el)
+              break
+            case 'YT-NOTIFICATION-ACTION-RENDERER':
+              observeNotificationRenderer($el)
+              break
+          }
+        }
+      }
+    }, {
+      name: '<ytd-popup-container> (for popup elements being added)',
+      observers: globalObservers,
+    })
+
+    observeDesktopContextMenu($popupContainer)
+  }
+
+  if (mobile) {
+    // Old menus switch between <bottom-sheet-container> and body > #menu by resolution
+    // New menus always use use bottom sheets
+    let $body = await getElement('body', {
+      name: '<body>',
+      context: document.documentElement,
+      mutationObserverOptions: {childList: true},
+      observers: globalObservers,
+    })
+    if (!$body) return
+
+    let $menu = /** @type {HTMLElement} */ (document.querySelector('body > #menu'))
+    if ($menu) {
+      onMobileMenuAppeared($menu)
+    }
+
+    observeElement($body, (mutations) => {
+      for (let mutation of mutations) {
+        for (let $el of mutation.addedNodes) {
+          if ($el instanceof HTMLElement && $el.id == 'menu') {
+            onMobileMenuAppeared($el)
+            return
+          }
+        }
+      }
+    }, {
+      name: '<body> (for #menu being added)',
+      observers: globalObservers,
+    })
+
+    // When switching between screens, <bottom-sheet-container> is replaced
+    let $app = await getElement('ytm-app', {name: '<ytm-app>', observers: globalObservers})
+    if (!$app) return
+
+    let $bottomSheet = /** @type {HTMLElement} */ ($app.querySelector('bottom-sheet-container'))
+
+    function observeBottomSheet() {
+      observeElement($bottomSheet, () => {
+        if ($bottomSheet.childElementCount > 0) {
+          onMobileMenuAppeared($bottomSheet)
+        }
+      }, {
+        leading: true,
+        name: '<bottom-sheet-container> (for content being added)',
+        observers: globalObservers,
+      })
+    }
+
+    if ($bottomSheet) observeBottomSheet()
+
+    observeElement($app, (mutations) => {
+      for (let mutation of mutations) {
+        for (let $el of mutation.addedNodes) {
+          if ($el.nodeName == 'BOTTOM-SHEET-CONTAINER') {
+            log('new bottom sheet appeared')
+            $bottomSheet = /** @type {HTMLElement} */ ($el)
+            observeBottomSheet()
+            return
+          }
+        }
+      }
+    }, {
+      name: '<ytm-app> (for <bottom-sheet-container> being replaced)',
+      observers: globalObservers,
+    })
+  }
+}
+
+/**
+ * Search pages are a list of sections, which can have video items added to them
+ * after they're added, so we watch for new section contents as well as for new
+ * sections. When the search is changed, additional sections are removed and the
+ * first section is refreshed - it gets a can-show-more attribute while this is
+ * happening.
+ * @param {{
+ *   name: string
+ *   selector: string
+ *   sectionContentsSelector: string
+ *   sectionElement: string
+ *   suggestedSectionElement?: string
+ *   videoElement: string
+ * }} options
+ */
+async function observeSearchResultSections(options) {
+  let {name, selector, sectionContentsSelector, sectionElement, suggestedSectionElement = null, videoElement} = options
+  let sectionNodeName = sectionElement.toUpperCase()
+  let suggestedSectionNodeName = suggestedSectionElement?.toUpperCase()
+  let videoNodeName = videoElement.toUpperCase()
+
+  let $sections = await getElement(selector, {
+    name,
+    stopIf: currentUrlChanges(),
+  })
+  if (!$sections) return
+
+  /** @type {WeakMap<Element, Map<string, import("./types").Disconnectable>>} */
+  let sectionObservers = new WeakMap()
+  /** @type {WeakMap<Element, Map<string, import("./types").Disconnectable>>} */
+  let sectionItemObservers = new WeakMap()
+  let sectionCount = 0
+
+  /**
+   * Initial items in a previously-rendered mobile search may be placeholders,
+   * e.g. Search → Click a video → Go back
+   * @param {Element} $item
+   * @param {number} itemNumber
+   */
+  function waitForMobileVideoToRender($item, itemNumber) {
+    let $videoLink = /** @type {HTMLAnchorElement} */ ($item.querySelector('ytm-media-item > a'))
+    if ($videoLink && !$videoLink.href) {
+      observeElement($videoLink, (_, observer) => {
+        if ($videoLink.href) {
+          manuallyTagVideo($item)
+          observer.disconnect()
+        }
+      }, {
+        name: `mobile search result placeholder ${itemNumber}`,
+        observers: pageObservers,
+      }, {
+        attributes: true,
+        attributeFilter: ['href'],
+      })
+    }
+  }
+
+  /**
+   * @param {HTMLElement} $section
+   * @param {number} sectionNum
+   */
+  function processSection($section, sectionNum, isInitialSection = false) {
+    let $contents = /** @type {HTMLElement} */ ($section.querySelector(sectionContentsSelector))
+    if (!$contents) {
+      warn(sectionContentsSelector, 'not found in search results section', sectionNum, $section)
+      return
+    }
+
+    let itemCount = 0
+    let suggestedSectionCount = 0
+    /** @type {Map<string, import("./types").Disconnectable>} */
+    let observers = new Map()
+    /** @type {Map<string, import("./types").Disconnectable>} */
+    let itemObservers = new Map()
+    sectionObservers.set($section, observers)
+    sectionItemObservers.set($section, itemObservers)
+
+    function processCurrentItems() {
+      itemCount = 0
+      suggestedSectionCount = 0
+      for (let $item of $contents.children) {
+        if ($item.nodeName == videoNodeName) {
+          manuallyTagVideo($item)
+          if (mobile && isInitialSection) {
+            waitForMobileVideoToRender($item, ++itemCount)
+          }
+        }
+        if (!config.hideSuggestedSections && suggestedSectionNodeName != null && $item.nodeName == suggestedSectionNodeName) {
+          processSuggestedSection($item)
+        }
+      }
+    }
+
+    /**
+     * If suggested sections (Latest from, People also watched, For you, etc.)
+     * aren't being hidden, we need to process their videos and watch for more
+     * being loaded.
+     * @param {Element} $suggestedSection
+     */
+    function processSuggestedSection($suggestedSection) {
+      let uniqueId = `section ${sectionNum} suggested section ${++suggestedSectionCount}`
+      let $items = $suggestedSection.querySelector('#items')
+      if (!$items) {
+        warn('#items not found in suggested section')
+        return
+      }
+      for (let $video of $items.children) {
+        if ($video.nodeName == videoNodeName) {
+          manuallyTagVideo($video)
+        }
+      }
+      // More videos are added if the "More" control is used
+      observeElement($items, (mutations, observer) => {
+        let moreVideosAdded = false
+        for (let mutation of mutations) {
+          for (let $addedNode of mutation.addedNodes) {
+            if (!($addedNode instanceof HTMLElement)) continue
+            if ($addedNode.nodeName == videoNodeName) {
+              if (!moreVideosAdded) moreVideosAdded = true
+              manuallyTagVideo($addedNode)
+            }
+          }
+        }
+        if (moreVideosAdded) {
+          observer.disconnect()
+        }
+      }, {
+        name: `${uniqueId} videos (for more being added)`,
+        observers: [itemObservers, pageObservers],
+      })
+    }
+
+    if (desktop) {
+      observeElement($section, () => {
+        if ($section.getAttribute('can-show-more') == null) {
+          log('can-show-more attribute removed - reprocessing refreshed items')
+          for (let observer of itemObservers.values()) {
+            observer.disconnect()
+          }
+          processCurrentItems()
+        }
+      }, {
+        name: `section ${sectionNum} can-show-more attribute`,
+        observers: [observers, pageObservers],
+      }, {
+        attributes: true,
+        attributeFilter: ['can-show-more'],
+      })
+    }
+
+    observeElement($contents, (mutations) => {
+      for (let mutation of mutations) {
+        for (let $addedNode of mutation.addedNodes) {
+          if (!($addedNode instanceof HTMLElement)) continue
+          if ($addedNode.nodeName == videoNodeName) {
+            manuallyTagVideo($addedNode)
+            if (mobile && isInitialSection) {
+              waitForMobileVideoToRender($addedNode, ++itemCount)
+            }
+          }
+          if (!config.hideSuggestedSections && suggestedSectionNodeName != null && $addedNode.nodeName == suggestedSectionNodeName) {
+            processSuggestedSection($addedNode)
+          }
+        }
+      }
+    }, {
+      name: `section ${sectionNum} contents`,
+      observers: [observers, pageObservers],
+    })
+
+    processCurrentItems()
+  }
+
+  observeElement($sections, (mutations) => {
+    for (let mutation of mutations) {
+      // New sections are added when more results are loaded
+      for (let $addedNode of mutation.addedNodes) {
+        if (!($addedNode instanceof HTMLElement)) continue
+        if ($addedNode.nodeName == sectionNodeName) {
+          let sectionNum = ++sectionCount
+          log('search result section', sectionNum, 'added')
+          processSection($addedNode, sectionNum)
+        }
+      }
+      // Additional sections are removed when the search is changed
+      for (let $removedNode of mutation.removedNodes) {
+        if (!($removedNode instanceof HTMLElement)) continue
+        if ($removedNode.nodeName == sectionNodeName && sectionObservers.has($removedNode)) {
+          log('disconnecting removed section observers')
+          for (let observer of sectionObservers.get($removedNode).values()) {
+            observer.disconnect()
+          }
+          sectionObservers.delete($removedNode)
+          for (let observer of sectionItemObservers.get($removedNode).values()) {
+            observer.disconnect()
+          }
+          sectionObservers.delete($removedNode)
+          sectionItemObservers.delete($removedNode)
+          sectionCount--
+        }
+      }
+    }
+  }, {
+    name: `search <${sectionElement}> contents (for new sections being added)`,
+    observers: pageObservers,
+  })
+
+  let $initialSections = /** @type {NodeListOf<HTMLElement>} */ ($sections.querySelectorAll(sectionElement))
+  log($initialSections.length, `initial search result section${s($initialSections.length)}`)
+  for (let $initialSection of $initialSections) {
+    processSection($initialSection, ++sectionCount, true)
+  }
+}
+
+/**
+ * Detect navigation between pages for features which apply to specific pages.
+ */
+async function observeTitle() {
+  let $title = await getElement('title', {
+    name: '<title>',
+    context: document,
+    observers: globalObservers,
+  })
+  if (!$title) return
+  let seenUrl
+  observeElement($title, () => {
+    let currentUrl = getCurrentUrl()
+    if (seenUrl != null && seenUrl == currentUrl) {
+      return
+    }
+    seenUrl = currentUrl
+    handleCurrentUrl()
+  }, {
+    leading: true,
+    name: '<title> (for title changes)',
+    observers: globalObservers,
+  })
+}
+
+/**
+ * If a video's action menu was opened, watch for that video being dismissed.
+ * When dismissed, display a timer and hide the dismissed video when it elapses.
+ */
+function observeVideoHiddenState() {
+  let animateHiding
+  /** @type {Element} */
+  let $elementToHide
+  /** @type {HTMLElement} */
+  let $pie
+  /** @type {HTMLButtonElement} */
+  let $tellUsWhyButton
+  /** @type {HTMLButtonElement} */
+  let $undoButton
+  /** @type {{$container: Element}} */
+  let pieConfig
+  let startTime
+  let timeout
+
+  function cleanup() {
+    stopTimer()
+    $undoButton?.removeEventListener('click', cleanup)
+    $tellUsWhyButton?.removeEventListener('click', onTellUsWhyClick)
+    $pie?.remove()
+  }
+
+  /**
+   * @param {{
+   *   delay?: number
+   *   direction?: string
+   *   duration?: number
+   * }} [options]
+   */
+  function displayPie({delay, direction, duration} = {}) {
+    $pie?.remove()
+    $pie = document.createElement('div')
+    $pie.classList.add('cpfyt-pie')
+    // The mobile version doesn't have a hook in its HTML to use for styling, so
+    // style manually based on the current backgroundColor.
+    let bgColor = getComputedStyle(document.documentElement).backgroundColor
+    $pie.style.setProperty('--cpfyt-pie-background-color', bgColor)
+    $pie.style.setProperty('--cpfyt-pie-color', bgColor == 'rgb(255, 255, 255)' ? '#065fd4' : '#3ea6ff')
+    if (delay) $pie.style.setProperty('--cpfyt-pie-delay', `${delay}ms`)
+    if (direction) $pie.style.setProperty('--cpfyt-pie-direction', direction)
+    if (duration) $pie.style.setProperty('--cpfyt-pie-duration', `${duration}ms`)
+    $pie.addEventListener('click', cleanup)
+    pieConfig.$container?.append($pie)
+  }
+
+  function onTellUsWhyClick() {
+    let elapsedTime = Date.now() - startTime
+    stopTimer()
+    // Rapidly unwind the pie timer from its current time
+    displayPie({
+      direction: 'reverse',
+      delay: Math.round((elapsedTime - UNDO_HIDE_DELAY_MS) / 4),
+      duration: UNDO_HIDE_DELAY_MS / 4,
+    })
+    // Restart the timer when the Tell us why dialog is closed
+    onDialogClosed = () => {
+      startTimer()
+      displayPie()
+    }
+  }
+
+  function setup() {
+    animateHiding = desktop && config.animateHiding && hideAnimationController != null
+    $undoButton?.addEventListener('click', cleanup)
+    $tellUsWhyButton?.addEventListener('click', onTellUsWhyClick)
+    startTimer()
+    displayPie()
+  }
+
+  function startTimer() {
+    startTime = Date.now()
+    if (animateHiding) {
+      hideAnimationController?.enqueue($elementToHide)
+    }
+    timeout = setTimeout(() => {
+      timeout = null
+      cleanup()
+      if (animateHiding && hideAnimationController) {
+        hideAnimationController.expire()
+      } else {
+        $elementToHide?.classList.add(Classes.HIDE_HIDDEN)
+      }
+      $undoButton?.addEventListener('click', () => {
+        // Don't hide the video if Undo is clicked after its timer expires but
+        // before it's hidden (due to other videos being hidden).
+        hideAnimationController?.remove($elementToHide)
+        // Remove the class if Undo is clicked later, e.g. if this feature is
+        // disabled after hiding a video.
+        $elementToHide?.classList.remove(Classes.HIDE_HIDDEN)
+      })
+    }, UNDO_HIDE_DELAY_MS)
+  }
+
+  function stopTimer() {
+    if (timeout) {
+      if (animateHiding) {
+        hideAnimationController?.dequeue($elementToHide)
+      }
+      clearTimeout(timeout)
+    }
+  }
+
+  if (desktop) {
+    let $video = $lastClickedElement?.closest('ytd-rich-grid-media, yt-lockup-view-model')
+    if (!$video) return
+
+    observeElement($video, () => {
+      // ytd-rich-grid-media gets an is-dismissed attribute
+      let isDismissed = $video.hasAttribute('is-dismissed')
+      // yt-lockup-view-model gets its contents replaced
+      let $ytLockupDismissedContent = $video.querySelector('.ytDismissibleItemReplacedContent')
+      if (!isDismissed && !$ytLockupDismissedContent) return
+
+      log('hideHiddenVideos: video hidden, showing timer')
+      // Hide the video element itself when not in a grid item (Related)
+      $elementToHide = $video.closest('ytd-rich-item-renderer') || $video
+      let $actions = /** @type {HTMLElement} */ ($video.querySelector(
+        'ytd-notification-multi-action-renderer, notification-multi-action-renderer'
+      ))
+      let $buttons = $actions.querySelectorAll('button')
+      $undoButton = $buttons[0]
+      $tellUsWhyButton = $buttons[1]
+      // Display a small pie timer after "Video removed"
+      pieConfig = {
+        $container: $actions.querySelector('.ytNotificationMultiActionRendererTextContainer, #text') || $actions,
+      }
+      setup()
+    }, {
+      name: `context menu video (hideHiddenVideos)`,
+      observers: pageObservers,
+    }, {
+      // ytd-rich-grid-media
+      attributes: true,
+      attributeFilter: ['is-dismissed'],
+      // yt-lockup-view-model
+      childList: true,
+    })
+  }
+
+  if (mobile) {
+    /** @type {HTMLElement} */
+    let $video
+    if (isHomePage() || isSubscriptionsPage()) {
+      $video = $lastClickedElement?.closest('ytm-rich-item-renderer')
+    }
+    // TODO ytm-notification-multi-action-renderer replaces hidden Related videos
+    // else if (isVideoPage()) {
+    //   $video = $lastClickedElement?.closest('ytm-video-with-context-renderer')
+    // }
+    if (!$video) return
+
+    observeElement($video, () => {
+      let $dismissedContent = $video.querySelector('ytm-notification-multi-action-renderer')
+      if (!$dismissedContent) return
+
+      log('hideHiddenVideos: video hidden, showing timer')
+      $elementToHide = $video
+      $undoButton = $dismissedContent.querySelector('button')
+      pieConfig = {
+        $container: $dismissedContent.querySelector('ytm-notification-multi-action-renderer .notification-multi-action-text-wrapper') || $dismissedContent.firstElementChild,
+      }
+      setup()
+    }, {
+      name: `context menu video (hideHiddenVideos)`,
+      observers: pageObservers,
+    })
+  }
+}
+
+/**
+ * Processes initial videos in a list element, and new videos as they're added.
+ * @param {{
+ *   name: string
+ *   selector: string
+ *   stopIf?: () => boolean
+ *   page: string
+ *   videoElements: Set<string>
+ * }} options
+ */
+async function observeMobileVideoList(options) {
+  let {name, selector, stopIf = currentUrlChanges(), page, videoElements} = options
+  let videoNodeNames = new Set(Array.from(videoElements, (name) => name.toUpperCase()))
+
+  let $list = await getElement(selector, {name, stopIf})
+  if (!$list) return
+
+  observeElement($list, (mutations) => {
+    let newItemCount = 0
+    for (let mutation of mutations) {
+      for (let $addedNode of mutation.addedNodes) {
+        if (!($addedNode instanceof HTMLElement)) continue
+        if (videoNodeNames.has($addedNode.nodeName)) {
+          requestAnimationFrame(() => manuallyTagVideo($addedNode))
+          newItemCount++
+        }
+      }
+    }
+    if (newItemCount > 0) {
+      log(newItemCount, `${page} video${s(newItemCount)} added`)
+    }
+  }, {
+    name: `${name} (for new items being added)`,
+    observers: pageObservers,
+  })
+
+  let initialItemCount = 0
+  for (let $initialItem of $list.children) {
+    if (videoNodeNames.has($initialItem.nodeName)) {
+      requestAnimationFrame(() => manuallyTagVideo($initialItem))
+      initialItemCount++
+    }
+  }
+  log(initialItemCount, `initial ${page} video${s(initialItemCount)}`)
+}
+
+/** @param {MouseEvent} e */
+function onDocumentClick(e) {
+  $lastClickedElement = /** @type {HTMLElement} */ (e.target)
+  if (desktop && loggedIn && (config.disableHomeFeed || config.redirectLogoToSubscriptions)) {
+    let $logoLink = $lastClickedElement?.closest('a#logo')
+    if ($logoLink) {
+      // @ts-expect-error
+      let browseEndpoint = $logoLink.data?.browseEndpoint
+      // @ts-expect-error
+      let webCommandMetadata = $logoLink.data?.commandMetadata?.webCommandMetadata
+      if (browseEndpoint && webCommandMetadata) {
+        log('redirecting YouTube logo click to Subscriptions')
+        browseEndpoint.browseId = 'FEsubscriptions'
+        webCommandMetadata.url = '/feed/subscriptions'
+        return
+      }
+    }
+  }
+  if (desktop && config.redirectChannelToVideos) {
+    let $link = /** @type {HTMLAnchorElement} */ ($lastClickedElement?.closest('a'))
+    if ($link) {
+      // @ts-expect-error
+      let linkData = $link.data || $link._data
+      let browseEndpoint = linkData?.browseEndpoint
+      let webCommandMetadata = linkData?.commandMetadata?.webCommandMetadata
+      if (browseEndpoint && webCommandMetadata?.webPageType == 'WEB_PAGE_TYPE_CHANNEL') {
+        let channelUrl = browseEndpoint.canonicalBaseUrl || (
+          browseEndpoint.browseId ? `/channel/${browseEndpoint.browseId}` : null
+        )
+        if (channelUrl) {
+          log('redirecting channel click to Videos')
+          browseEndpoint.params = 'EgZ2aWRlb3PyBgQKAjoA'
+          webCommandMetadata.url = $link.href = `${channelUrl}/videos`
+          return
+        }
+      }
+    }
+  }
+  if (desktop && config.redirectShorts) {
+    let $shortsLink = /** @type {HTMLAnchorElement} */ ($lastClickedElement?.closest('a[href^="/shorts/"]'))
+    if ($shortsLink) {
+      let videoId = $shortsLink.pathname.split('/')[2]
+      if (!videoId) return
+      // @ts-expect-error
+      let linkData = $shortsLink.data || $shortsLink._data
+      if (!linkData) {
+        // Shorts view models keep the click command on the card instead of the link
+        // @ts-expect-error
+        linkData = $shortsLink.closest('ytm-shorts-lockup-view-model')?.data?.onTap?.innertubeCommand
+      }
+      let webCommandMetadata = linkData?.commandMetadata?.webCommandMetadata
+      if (webCommandMetadata) {
+        log('redirecting Shorts video click to normal player')
+        webCommandMetadata.url = $shortsLink.href = `/watch?v=${videoId}${$shortsLink.search.replace('?', '&')}`
+        webCommandMetadata.webPageType = 'WEB_PAGE_TYPE_WATCH'
+        webCommandMetadata.rootVe = 3832
+        // Keeping this loads a Shorts response without comments or related videos
+        delete linkData.reelWatchEndpoint
+        linkData.watchEndpoint = {videoId}
+        return
+      }
+    }
+  }
+}
+
+/** @param {HTMLElement} $menu */
+function onMobileMenuAppeared($menu) {
+  log('menu appeared')
+
+  if (config.hideOpenApp || config.hideShareThanksClip) {
+    requestAnimationFrame(() => {
+      // YouTube currently has 2 menu item variants
+      let menuItems = $menu.querySelectorAll('ytm-menu-item, yt-list-item-view-model')
+      for (let $menuItem of menuItems) {
+        let itemText = $menuItem.textContent
+        if (config.hideOpenApp) {
+          if (itemText == getYtString('OPEN_APP')) {
+            log('tagging Open App menu item by text')
+            $menuItem.classList.add(Classes.HIDE_OPEN_APP)
+            continue
+          }
+          else if ($menuItem.querySelector('path[d="M19 5H8a1 1 0 000 2h7.586L5.293 17.293a1 1 0 101.414 1.414L17 8.414V16a1 1 0 002 0V5Z"]')) {
+            log('tagging Open App menu item by icon')
+            $menuItem.classList.add(Classes.HIDE_OPEN_APP)
+            continue
+          }
+        }
+        if (config.hideShareThanksClip) {
+          if (itemText == getString('SHARE')) {
+            log('tagging Share menu item by text')
+            $menuItem.classList.add(Classes.HIDE_SHARE_THANKS_CLIP)
+            continue
+          }
+          else if (config.hideShareThanksClip && $menuItem.querySelector(`path[d="${Svgs.SHARE_PATH_MOBILE}"]`)) {
+            log('tagging Share menu item by icon')
+            $menuItem.classList.add(Classes.HIDE_SHARE_THANKS_CLIP)
+            continue
+          }
+        }
+      }
+    })
+  }
+
+  if (config.hideChannels) {
+    addHideChannelToMobileVideoMenu($menu)
+  }
+  if (config.hideHiddenVideos) {
+    observeVideoHiddenState()
+  }
+}
+
+/** @param {Element} $video */
+function hideWatched($video) {
+  if (!config.hideWatched || isSearchPage()) return
+  // Watch % is obtained from progress bar width when a video has one
+  let $progressBar
+  if (desktop) {
+    // TODO Remove #progress after confirming all videos have moved to yt-lockup-view-model
+    $progressBar = $video.querySelector('#progress, .ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment')
+  }
+  if (mobile) {
+    $progressBar = $video.querySelector(`
+      .YtmThumbnailOverlayResumePlaybackRendererThumbnailOverlayResumePlaybackProgress,
+      .ytwThumbnailOverlayResumePlaybackRendererThumbnailOverlayResumePlaybackProgress
+    `)
+  }
+  let hide = false
+  if ($progressBar) {
+    let progress = parseInt(/** @type {HTMLElement} */ ($progressBar).style.width)
+    if (!Number.isNaN(progress)) {
+      hide = progress >= Number(config.hideWatchedThreshold)
+    }
+  }
+  $video.classList.toggle(Classes.HIDE_WATCHED, hide)
+  return hide
+}
+
+/**
+ * Tag individual video elements with hook classes which would need too-complex
+ * or broad CSS :has() relative selectors.
+ * @param {Element} $video video container element
+ * @param {{hideDismissed?: boolean}} [options]
+ */
+function manuallyTagVideo($video, {hideDismissed = false} = {}) {
+  if (hideDismissed) {
+    // This option is only used for yt-lockup-view-model videos
+    let $dismissedContent = $video.querySelector('.ytDismissibleItemReplacedContent')
+    let isDismissed = Boolean($dismissedContent)
+    $video.classList.toggle(Classes.HIDE_HIDDEN, isDismissed)
+    if (isDismissed) {
+      let $undoButton = $dismissedContent.querySelector('button')
+      $undoButton?.addEventListener('click', () => {
+        $video.classList.remove(Classes.HIDE_HIDDEN)
+      })
+    }
+  }
+
+  hideWatched($video)
+
+  // Streamed videos are identified using the video title's aria-label
+  if (config.hideStreamed) {
+    let hide = false
+    if (desktop) {
+      let $metadata = /** @type {HTMLElement} */ ($video.querySelector(
+        // TODO Remove #metadata-line after confirming all videos have moved to yt-lockup-view-model
+        '#metadata-line, yt-content-metadata-view-model .ytContentMetadataViewModelDelimiter + .ytContentMetadataViewModelMetadataText'
+      ))
+      if ($metadata) {
+        hide = Boolean($metadata.innerText.match(getString('STREAMED_METADATA_INNERTEXT_RE')))
+      }
+    }
+    if (mobile) {
+      let $videoTitleWithLabel = $video.querySelector(`
+        .media-item-headline [aria-label],
+        .ytLockupMetadataViewModelTitle[aria-label]
+      `)
+      if ($videoTitleWithLabel) {
+        hide = Boolean($videoTitleWithLabel.getAttribute('aria-label').match(getString('STREAMED_TITLE_ARIA_LABEL_RE')))
+      }
+    }
+    $video.classList.toggle(Classes.HIDE_STREAMED, hide)
+  }
+
+  if (config.hideChannels && config.hiddenChannels.length > 0 && !isSubscriptionsPage()) {
+    let channel = getChannelDetailsFromVideo($video)
+    let hide = false
+    if (channel) {
+      hide = isChannelHidden(channel)
+    }
+    $video.classList.toggle(Classes.HIDE_CHANNEL, hide)
+  }
+
+  if (isHomePage() || isSubscriptionsPage()) {
+    let collaboration = false
+    if (desktop) {
+      collaboration = Boolean($video.querySelector('yt-avatar-stack-view-model'))
+    }
+    if (mobile) {
+      // @ts-expect-error
+      collaboration = $video.querySelector('ytm-video-with-context-renderer')?.data?.shortBylineText?.runs?.[0]?.navigationEndpoint?.showSheetCommand?.panelLoadingStrategy?.inlineContent?.sheetViewModel?.header?.panelHeaderViewModel?.title?.content == getString('COLLABORATORS')
+    }
+    $video.classList.toggle(Classes.COLLABORATION, collaboration)
+  }
+
+  if (config.hideLowViews && isVideoPage()) {
+    let hide = false
+    let $views
+    if (desktop) {
+      $views = $video.querySelector('.ytContentMetadataViewModelMetadataRow:nth-of-type(2) .ytContentMetadataViewModelMetadataText')
+    }
+    if (mobile) {
+      $views = $video.querySelector('ytm-badge-and-byline-renderer [role="text"][aria-label]')
+    }
+    if ($views) {
+      hide = Boolean(
+        $views.textContent.match(getString('LOW_VIEWS_RE')) ||
+        $views.textContent.trim().match(/^\d{1,3}$/)
+      )
+    }
+    $video.classList.toggle(Classes.HIDE_LOW_VIEWS, hide)
+  }
+}
+
+async function redirectFromHome() {
+  let selector = desktop ? 'a[href="/feed/subscriptions"]' : 'ytm-pivot-bar-item-renderer div.pivot-subs'
+  let $subscriptionsLink = await getElement(selector, {
+    name: 'Subscriptions link',
+    stopIf: currentUrlChanges(),
+  })
+  if (!$subscriptionsLink) return
+  log('redirecting from Home to Subscriptions')
+  $subscriptionsLink.click()
+}
+
+function redirectShort() {
+  let videoId = location.pathname.split('/').at(-1)
+  let search = location.search ? location.search.replace('?', '&') : ''
+  log('redirecting Short to normal player')
+  location.replace(`/watch?v=${videoId}${search}`)
+}
+
+async function restoreMiniplayerButton() {
+  if (document.querySelector('#cpfyt-miniplayer-button, .ytp-chrome-bottom .ytp-miniplayer-button')) return
+
+  let $sizeButton = await getElement('.ytp-chrome-bottom .ytp-size-button', {
+    name: 'restoreMiniplayerButton: player size button',
+    stopIf: currentUrlChanges(),
+  })
+  if (!$sizeButton) return
+
+  let supportsAnchorPositioning = 'anchorName' in document.documentElement.style
+  let style = $sizeButton.parentElement.classList.contains('ytp-right-controls-right') ? 'new' : 'old'
+  log('restoreMiniplayerButton:', style, 'style')
+  $sizeButton.insertAdjacentHTML('beforebegin', html`
+<button id="cpfyt-miniplayer-button" class="ytp-button" style="display: none" aria-keyshortcuts="i"${!supportsAnchorPositioning ? ` title="${getString('MINIPLAYER')} (i)"` : ''}>
+  ${style == 'new' ? `
+    <svg fill="none" height="24" viewBox="0 0 24 24" width="24">
+      <path d="${Svgs.MINIPLAYER_NEW_PATH}" fill="white"></path>
+    </svg>
+  ` : `
+    <svg height="100%" version="1.1" viewBox="0 0 36 36" width="100%">
+      <use xlink:href="#cpfyt-id-1" class="ytp-svg-shadow"></use>
+      <path id="cpfyt-id-1" d="${Svgs.MINIPLAYER_OLD_PATH}" fill="#fff" fill-rule="evenodd"></path>
+    </svg>
+  `}
+</button>
+${supportsAnchorPositioning ? `
+<div class="ytp-tooltip ytp-bottom" style="display: none">
+  <div class="ytp-tooltip-text-wrapper" aria-hidden="true">
+    <div class="ytp-tooltip-bottom-text${style == 'old' ? ' ytp-tooltip-text-no-title' : ''}">
+      <span class="ytp-tooltip-text">${getString('MINIPLAYER')}${style == 'old' ? ' (i)' : ''}</span>
+      ${style == 'new' ? '<div class="ytp-tooltip-keyboard-shortcut">I</div>' : ''}
+    </div>
+  </div>
+</div>
+` : ''}
+  `)
+  document.querySelector('#cpfyt-miniplayer-button')?.addEventListener('click', (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    document.dispatchEvent(new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      code: 'KeyI',
+      key: 'i',
+      keyCode: 73,
+      which: 73,
+    }))
+  })
+}
+
+async function handleDesktopGuideBar() {
+  let $sidebarSectionsContainer = await getElement('ytd-guide-renderer > #sections', {
+    name: 'sidebar sections container',
+    observers: globalObservers,
+  })
+  if (!$sidebarSectionsContainer) return
+
+  /**
+   * @param {HTMLElement} $section
+   */
+  function processSection($section) {
+    let sectionName
+    let $header = $section.querySelector('#header ytd-guide-entry-renderer')
+    if ($header) {
+      let $endpoint = /** @type {HTMLAnchorElement} */ ($header.querySelector('a#endpoint'))
+      sectionName = $endpoint?.href.split('/').pop()
+    }
+    else if ($section.querySelector('a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"]')) {
+      sectionName = 'explore'
+    }
+    else if ($section.querySelector('a[href^="https://www.youtubekids.com"]')) {
+      sectionName = 'more-from-youtube'
+    }
+    else if ($section.querySelector('a[href="/reporthistory"]')) {
+      sectionName = 'report-history'
+    }
+    if (!sectionName) return
+    $section.setAttribute('cpfyt-section', sectionName)
+    if (sectionName == 'subscriptions' && $section.parentElement.children[1] === $section) {
+      $sidebarSectionsContainer.setAttribute('cpfyt-subscriptions-first', '')
+      if (config.restoreSidebarSubscriptionsLink) {
+        run(() => {
+          let $firstSection = $section.parentElement.children[0]
+          if ($firstSection.querySelector('a[href="/feed/subscriptions"]')) return
+          let $items = $firstSection.querySelector('#items')
+          if (!$items) return
+          $header.removeAttribute('is-header')
+          $items.appendChild($header)
+          log ('restoreSidebarSubscriptionsLink: restored Subscriptions link')
+        })
+      }
+    }
+    return sectionName
+  }
+
+  let $initialSections = $sidebarSectionsContainer.querySelectorAll('#sections.ytd-guide-renderer > ytd-guide-section-renderer')
+  if (Array.from($initialSections, processSection).includes('report-history')) {
+    return
+  }
+
+  observeElement($sidebarSectionsContainer, (mutations, observer) => {
+    for (let mutation of mutations) {
+      for (let $addedNode of mutation.addedNodes) {
+        if (!($addedNode instanceof HTMLElement)) continue
+        if (processSection($addedNode) == 'report-history') {
+          observer.disconnect()
+        }
+      }
+    }
+  }, {
+    name: 'sidebar sections container (for sections being added)',
+    observers: globalObservers,
+  })
+}
+
+function takeSnapshot() {
+  /** @type {HTMLVideoElement} */
+  let $video
+  /** @type {string} */
+  let channel
+  /** @type {string} */
+  let title
+  if (isVideoPage()) {
+    $video = /** @type {HTMLVideoElement} */ (document.querySelector('#movie_player video'))
+    channel = document.querySelector('ytd-watch-flexy #text.ytd-channel-name')?.getAttribute('title')
+    title = document.querySelector('ytd-watch-flexy #title.ytd-watch-metadata yt-formatted-string')?.getAttribute('title')
+  }
+  else if (isShortsPage()) {
+    $video = /** @type {HTMLVideoElement} */ (document.querySelector('ytd-reel-video-renderer video'))
+    channel = /** @type {HTMLElement} */ (document.querySelector('ytd-reel-video-renderer .ytReelChannelBarViewModelChannelName'))?.innerText
+    title = /** @type {HTMLElement} */ (document.querySelector('ytd-reel-video-renderer .ytShortsVideoTitleViewModelShortsVideoTitle'))?.innerText
+  } else {
+    warn('takeSnapshot: called on unexpected page', location.pathname)
+    return
+  }
+
+  if (!$video) {
+    warn('takeSnapshot: video not found')
+    return
+  }
+
+  let $canvas = document.createElement('canvas')
+  $canvas.width = $video.videoWidth
+  $canvas.height = $video.videoHeight
+
+  try {
+    let context = $canvas.getContext('2d')
+    context.drawImage($video, 0, 0, $canvas.width, $canvas.height)
+    let $a = document.createElement('a')
+    $a.href = $canvas.toDataURL(`image/${config.snapshotFormat}`, Number(config.snapshotQuality))
+    $a.download = [channel, title, $video.currentTime]
+      .filter(Boolean)
+      .join(' - ') + {jpeg: '.jpg', png: '.png'}[config.snapshotFormat]
+    log('takeSnapshot:', $a.download)
+    document.body.appendChild($a)
+    $a.click()
+    document.body.removeChild($a)
+  } catch (e) {
+    warn('error taking snapshot', e)
+  }
+}
+
+/**
+ * Forces the video to resize when options which affect its size are used.
+ */
+function triggerVideoPageResize() {
+  if (desktop && isVideoPage()) {
+    window.dispatchEvent(new Event('resize'))
+  }
+}
+
+async function tweakHomePage() {
+  if (config.disableHomeFeed && loggedIn) {
+    redirectFromHome()
+    return
+  }
+  hideAnimationController = createHideAnimationController()
+  if (desktop) {
+    observeDesktopRichGridItems({page: 'home'})
+  }
+  if (mobile) {
+    observeMobileVideoList({
+      name: 'home <ytm-rich-grid-renderer> contents',
+      selector: '.tab-content[tab-identifier="FEwhat_to_watch"] .rich-grid-renderer-contents',
+      page: 'home',
+      videoElements: new Set(['ytm-rich-item-renderer']),
+    })
+  }
+}
+
+async function tweakChannelPage() {
+  let stopIf = currentUrlChanges()
+  let $channelContent = await getElement('ytd-browse[page-subtype="channels"] ytd-two-column-browse-results-renderer > #primary', {
+    name: 'channel content',
+    stopIf,
+  })
+  if (!$channelContent) return
+
+  observeElement($channelContent, () => {
+    let grid = $channelContent.firstElementChild?.tagName == 'YTD-RICH-GRID-RENDERER'
+    log('channel content', {grid})
+    if (grid) {
+      observeDesktopRichGridItems({page: 'channels'})
+    }
+  }, {
+    leading: true,
+    name: 'channel content',
+    observers: pageObservers,
+  })
+
+  function getChannelTab() {
+    return location.pathname.match(URL_CHANNEL_TAB_RE)?.[1] ?? 'featured'
+  }
+  if (desktop && config.pauseChannelTrailers && getChannelTab() == 'featured') {
+    let $channelTrailer = /** @type {HTMLVideoElement} */ (
+      await getElement('ytd-channel-video-player-renderer video', {
+        name: `channel trailer`,
+        context: $channelContent,
+        stopIf,
+      })
+    )
+    if (!$channelTrailer) return
+
+    let timeoutId
+    function pauseTrailer() {
+      log(`pauseChannelTrailers: pausing channel trailer`, {readyState: $channelTrailer.readyState})
+      $channelTrailer.pause()
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+
+    // Prevent the next play attempt if the trailer hasn't started yet
+    if ($channelTrailer.paused && $channelTrailer.readyState == 0) {
+      $channelTrailer.addEventListener('play', pauseTrailer, {once: true})
+      timeoutId = setTimeout(() => {
+        log("pauseChannelTrailers: trailer didn't start playing after 1 second")
+        $channelTrailer.removeEventListener('play', pauseTrailer)
+      }, 1000)
+    } else {
+      pauseTrailer()
+    }
+  }
+}
+
+// TODO Hide ytd-channel-renderer if a channel is hidden
+function tweakSearchPage() {
+  if (desktop && config.hideShorts) {
+    run(async function() {
+      let stopIf = currentUrlChanges()
+      let $search = await getElement('ytd-search', {
+        name: 'search element (hideShorts)',
+        stopIf,
+      })
+      if (!$search) return
+      let $chips = await getElement('#chip-bar #chips', {
+        name: 'search chips (hideShorts)',
+        context: $search,
+        stopIf,
+      })
+      if (!$chips) return
+      for (let $chip of $chips.children) {
+        if ($chip.textContent.trim() == getString('SHORTS')) {
+          $chip.classList.add('HideShorts')
+          log('hideShorts: Shorts chip hidden')
+          break
+        }
+      }
+    })
+  }
+
+  if (!config.hideStreamed && !config.hideChannels) return
+
+  if (desktop) {
+    observeSearchResultSections({
+      name: 'search <ytd-section-list-renderer> contents',
+      selector: 'ytd-search #contents.ytd-section-list-renderer',
+      sectionContentsSelector: '#contents',
+      sectionElement: 'ytd-item-section-renderer',
+      suggestedSectionElement: 'ytd-shelf-renderer',
+      videoElement: 'ytd-video-renderer',
+    })
+  }
+
+  if (mobile) {
+    observeSearchResultSections({
+      name: 'search <lazy-list>',
+      selector: 'ytm-search ytm-section-list-renderer > lazy-list',
+      sectionContentsSelector: 'lazy-list',
+      sectionElement: 'ytm-item-section-renderer',
+      videoElement: 'ytm-video-with-context-renderer',
+    })
+  }
+}
+
+async function tweakShortsPage() {
+  if (desktop && config.alwaysUseOriginalAudio) {
+    alwaysUseOriginalAudio('#shorts-player')
+  }
+
+  if (config.stopShortsLooping) {
+    let $player = await getElement(desktop ? '#shorts-player' : '#movie_player', {
+      name: 'shorts player',
+      stopIf: currentUrlChanges(),
+    })
+    if (!$player) return
+
+    setTimeout(() => {
+      log('stopShortsLooping: turning looping off')
+      // @ts-expect-error
+      $player.setLoopVideo?.(false)
+    }, 500)
+    function onStateChange(playerState) {
+      if (playerState == 1) {
+        setTimeout(() => {
+          log('stopShortsLooping: turning looping off')
+          // @ts-expect-error
+          $player.setLoopVideo?.(false)
+        }, 500)
+      }
+    }
+    $player.addEventListener('onStateChange', onStateChange)
+    pageObservers.set('#shorts-player onStateChange', {
+      disconnect() {
+        $player.removeEventListener?.('onStateChange', onStateChange)
+      }
+    })
+  }
+}
+
+async function tweakSubscriptionsPage() {
+  hideAnimationController = createHideAnimationController()
+  if (desktop) {
+    observeDesktopRichGridItems({page: 'subscriptions'})
+  }
+  if (mobile) {
+    observeMobileVideoList({
+      name: 'subscriptions <ytm-rich-grid-renderer> contents',
+      selector: '.tab-content[tab-identifier="FEsubscriptions"] .rich-grid-renderer-contents',
+      page: 'subscriptions',
+      videoElements: new Set(['ytm-rich-item-renderer']),
+    })
+  }
+}
+
+async function tweakVideoPage() {
+  if (config.disableAutoplay) {
+    disableAutoplay()
+  }
+  if (desktop) {
+    run(async () => {
+      let $player = await getElement('#movie_player', {
+        name: 'player (tweakVideoPage)',
+        stopIf: currentUrlChanges(),
+      })
+      if (!$player) return
+      if (config.alwaysUseTheaterMode) {
+        alwaysUseTheaterMode($player)
+      }
+      if (config.alwaysUseOriginalAudio) {
+        alwaysUseOriginalAudio('#movie_player', $player)
+      }
+      if (config.disableContinueWatching) {
+        disableContinueWatching()
+      }
+      if (config.playerHideFullScreenMoreVideos) {
+        hideFullScreenMoreVideos($player)
+      }
+    })
+    if (config.hideChannels && !config.hideEndVideos && config.hiddenChannels.length > 0) {
+      observeDesktopEndscreenVideos()
+    }
+    if (config.disableNumberKeySeeking) {
+      log('disableNumberKeySeeking: listening for number key events')
+      /** @param {KeyboardEvent} e */
+      function disableNumberKeySeeking(e) {
+        let isNumberKey = e.code >= 'Digit0' && e.code <= 'Digit9' || e.code >= 'Numpad0' && e.code <= 'Numpad9'
+        let isUnmodified = !e.ctrlKey && !e.metaKey && !e.altKey
+        let isEditable =
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          // @ts-expect-error
+          e.target?.isContentEditable
+        if (isNumberKey && isUnmodified && !isEditable) {
+          e.preventDefault()
+          e.stopImmediatePropagation()
+        }
+      }
+      window.addEventListener('keydown', disableNumberKeySeeking, {capture: true})
+      pageObservers.set('disable number keys listener', {
+        disconnect() {
+          window.removeEventListener('keydown', disableNumberKeySeeking, {capture: true})
+        }
+      })
+    }
+    if (config.disableThemedHover) {
+      // The theme is applied to snippet text on hover using style="color: …",
+      // we need to grab that before unsetting theme variables.
+      run(async() => {
+        let $watchMetadata = await getElement('ytd-watch-metadata', {
+          name: 'ytd-watch-metadata (disableThemedHover)',
+          stopIf: currentUrlChanges(),
+        })
+        if (!$watchMetadata) return
+        let $style
+        observeElement($watchMetadata, () => {
+          let ytSaturatedTextPrimary = $watchMetadata.style.getPropertyValue('--yt-saturated-text-primary')
+          if (!ytSaturatedTextPrimary) return
+          let hoverTextColor
+          let match = ytSaturatedTextPrimary.match(/\d+/g)
+          if (match) {
+            let [r, g, b] = match.map(Number)
+            hoverTextColor = `rgb(${r}, ${g}, ${b})`
+            log(`disableThemedHover: snippet hover text color is ${hoverTextColor}`)
+          } else {
+            warn('disableThemedHover: no match for ytSaturatedTextPrimary=', ytSaturatedTextPrimary)
+          }
+          $style ??= addStyle()
+          $style.textContent = dedent(`
+            ytd-watch-metadata {
+              --yt-saturated-base-background: unset !important;
+              --yt-saturated-raised-background: unset !important;
+              --yt-saturated-additive-background: unset !important;
+              --yt-saturated-text-primary: unset !important;
+              --yt-saturated-text-secondary: unset !important;
+              --yt-saturated-outline: unset !important;
+              --yt-saturated-key-light: unset !important;
+              --yt-saturated-collection-stack: unset !important;
+              --yt-saturated-inverted-background: unset !important;
+              --yt-saturated-text-primary-inverse: unset !important;
+              --yt-saturated-text-disabled: unset !important;
+              --yt-saturated-drop-shadow: unset !important;
+              --yt-saturated-card-outline: unset !important;
+              --yt-saturated-overlay-background: unset !important;
+              --yt-saturated-overlay-text-primary: unset !important;
+            }
+            ${hoverTextColor ? `#snippet-text span[style="color: ${hoverTextColor};"] {
+              color: rgb(19, 19, 19) !important;
+            }
+            html[dark] #snippet-text span[style="color: ${hoverTextColor};"] {
+              color: rgb(255, 255, 255) !important;
+            }` : ''}
+          `)
+        }, {
+          leading: true,
+          name: 'ytd-watch-metadata[style] (disableThemedHover)',
+          observers: pageObservers,
+          onDisconnect: () => {
+            $style?.remove()
+          }
+        }, {
+          attributes: true,
+          attributeFilter: ['style'],
+        })
+      })
+    }
+    if (config.restoreMiniplayerButton) {
+      restoreMiniplayerButton()
+    }
+    if (config.hideSidebarWhenEmpty) {
+      run(async() => {
+        let $secondaryInner = await getElement('#secondary-inner', {
+          name: '#secondary-inner (hideSidebarWhenEmpty)',
+          stopIf: currentUrlChanges(),
+        })
+        if (!$secondaryInner) return
+        let observer = new ResizeObserver(([entry]) => {
+          $secondaryInner.classList.toggle('cpfyt-empty', entry.contentRect.height < 1)
+        })
+        observer.observe($secondaryInner)
+        pageObservers.set('#secondary-inner resize observer (hideSidebarWhenEmpty)', {
+          disconnect() {
+            observer.disconnect()
+          }
+        })
+      })
+    }
+  }
+  if (config.hideWatched || config.hideStreamed || config.hideChannels || config.hideLowViews) {
+    if (desktop) {
+      observeDesktopRelatedVideos()
+    }
+    if (mobile) {
+      // If the video changes on mobile, related videos are rendered from scratch
+      observeMobileVideoList({
+        name: 'related <lazy-list>',
+        selector: 'ytm-item-section-renderer[section-identifier="related-items"] > lazy-list',
+        page: 'related',
+        // <ytm-compact-autoplay-renderer> displays as a large item on bigger mobile screens
+        videoElements: new Set(['ytm-video-with-context-renderer', 'ytm-compact-autoplay-renderer']),
+      })
+    }
+  }
+}
+
+/**
+ * Wait for video overlays with watch progress when they're loaded lazily.
+ * @param {Element} $video
+ * @param {string} uniqueId
+ */
+function waitForDesktopVideoOverlay($video, uniqueId) {
+  if (!config.hideWatched) return
+
+  // The overlay element is initially empty
+  let $overlays = $video.querySelector('#overlays')
+  if (!$overlays || $overlays.childElementCount > 0) return
+
+  observeElement($overlays, (mutations, observer) => {
+    let nodesAdded = false
+    for (let mutation of mutations) {
+      for (let $addedNode of mutation.addedNodes) {
+        if (!nodesAdded) nodesAdded = true
+        if ($addedNode.nodeName == 'YTD-THUMBNAIL-OVERLAY-RESUME-PLAYBACK-RENDERER') {
+          hideWatched($video)
+        }
+      }
+    }
+    if (nodesAdded) {
+      observer.disconnect()
+    }
+  }, {
+    name: `${uniqueId} #overlays (for overlay elements being added)`,
+    observers: pageObservers,
+  })
+}
+//#endregion
+
+//#region Response patching
+/** @type {Map<string, () => void>} */
+const initialResponseHooks = new Map()
+
+const initialResponses = [
+  ['ytInitialData', 'next'],
+  ['ytInitialPlayerResponse', 'player'],
+  ['ytInitialReelWatchSequenceResponse', 'reel_watch_sequence'],
+]
+
+function configureInitialResponses() {
+  for (let [name, endpoint] of initialResponses) {
+    if (!getResponsePatcher(endpoint)) {
+      initialResponseHooks.get(name)?.()
+      initialResponseHooks.delete(name)
+      continue
+    }
+    if (!initialResponseHooks.has(name)) {
+      let descriptor = Object.getOwnPropertyDescriptor(window, name)
+      // Leave other extensions' accessors and read-only properties intact.
+      if (!descriptor || descriptor.configurable && Object.hasOwn(descriptor, 'value') && descriptor.writable) {
+        let value = window[name]
+        function get() { return value }
+        try {
+          Object.defineProperty(window, name, {
+            configurable: true,
+            enumerable: descriptor?.enumerable ?? true,
+            get,
+            set(data) {
+              value = data
+              patchInitialResponse(data, endpoint, name)
+            },
+          })
+          initialResponseHooks.set(name, () => {
+            if (Object.getOwnPropertyDescriptor(window, name)?.get !== get) {
+              log('configureInitialResponses: leaving replacement hook intact', name)
+              return
+            }
+            Object.defineProperty(window, name, descriptor
+              ? {...descriptor, value}
+              : {configurable: true, enumerable: true, writable: true, value})
+            log('configureInitialResponses: removed hook', name)
+          })
+          log('configureInitialResponses: installed hook', name)
+        } catch (error) {
+          warn('configureInitialResponses: error defining', name, ':', error)
+        }
+      } else {
+        log('configureInitialResponses: preserving existing accessor or read-only property', name)
+      }
+    }
+    patchInitialResponse(window[name], endpoint, name)
+  }
+  if (debug) log('configureInitialResponses: registered hooks', [...initialResponseHooks.keys()])
+}
+
+function getResponseEndpoint(url) {
+  return url?.match(/\/(player|next|get_watch|reel_watch_sequence)(?:\?|$)/)?.[1]
+}
+
+function patchInitialResponse(data, endpoint, name) {
+  let patcher = getResponsePatcher(endpoint)
+  if (data != null && patcher) patcher(data, name)
+}
+
+function getResponsePatcher(endpoint) {
+  if (!config.enabled) return
+  let ads = config.blockAds
+  let chapters = config.disableAIGeneratedChapters
+  if (endpoint == 'get_watch' && (ads || chapters)) {
+    return (data, source) => {
+      if (ads) removePlayerAds(data, source)
+      if (chapters) removeAutoChapters(data[0]?.response, source)
+    }
+  }
+  else if (endpoint == 'next' && chapters) {
+    return removeAutoChapters
+  }
+  else if (endpoint == 'player' && ads) {
+    return removePlayerAds
+  }
+  else if (endpoint == 'reel_watch_sequence' && ads) {
+    return removeShortsAds
+  }
+}
+
+function patchResponseText(responseText, patcher, source) {
+  try {
+    let prefix = responseText.match(/^(\)\]\}'\n?)/)?.[1] ?? ''
+    let data = JSON.parse(responseText.slice(prefix.length))
+    patcher(data, source)
+    return prefix + JSON.stringify(data)
+  } catch (error) {
+    warn('patchRequests: error patching', source, 'response:', error)
+    return responseText
+  }
+}
+
+function patchRequests() {
+  // History navigation can restore cached responses without making a request
+  window.addEventListener('yt-page-data-fetched', event => {
+    let patcher = getResponsePatcher('next')
+    let data = /** @type {CustomEvent} */ (event).detail?.pageData?.response
+    if (data != null && patcher) patcher(data, 'yt-page-data-fetched')
+  }, true)
+
+  let Request_clone = Request.prototype.clone
+  let Response_clone = Response.prototype.clone
+  let XMLHttpRequest_open = XMLHttpRequest.prototype.open
+  /** @type {[string, () => any][]} */
+  let responseGetters = [
+    ['response', Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype, 'response').get],
+    ['responseText', Object.getOwnPropertyDescriptor(XMLHttpRequest.prototype, 'responseText').get],
+  ]
+
+  window.fetch = new Proxy(window.fetch, {
+    apply(target, thisArg, argArray) {
+      let request = argArray[0]
+      if (!(request instanceof Request)) return Reflect.apply(target, thisArg, argArray)
+
+      let endpoint = getResponseEndpoint(request.url)
+      // Ignore adblock detection requests with data: URL payloads
+      if (!endpoint || !Request_clone.call(request).url.startsWith('https://')) {
+        return Reflect.apply(target, thisArg, argArray)
+      }
+
+      return Reflect.apply(target, thisArg, argArray).then(async response => {
+        let patcher = getResponsePatcher(endpoint)
+        if (!patcher) return response
+        try {
+          let original = await Response_clone.call(response).text()
+          let patched = patchResponseText(original, patcher, 'fetch')
+          if (patched != original) {
+            return new Response(patched, {
+              status: response.status,
+              statusText: response.statusText,
+              headers: response.headers,
+            })
+          }
+        } catch (error) {
+          warn('patchRequests: error patching', endpoint, 'fetch response:', error)
+        }
+        return response
+      })
+    },
+  })
+
+  // Patch response reads
+  let xhrResponseOverrides = new WeakSet()
+  XMLHttpRequest.prototype.open = function(_, url) {
+    if (xhrResponseOverrides.has(this)) {
+      Reflect.deleteProperty(this, 'response')
+      Reflect.deleteProperty(this, 'responseText')
+      xhrResponseOverrides.delete(this)
+    }
+    let endpoint = getResponseEndpoint(url)
+    if (getResponsePatcher(endpoint)) {
+      xhrResponseOverrides.add(this)
+      let processed = false
+      let patchedResponse
+      for (let [name, getter] of responseGetters) {
+        Object.defineProperty(this, name, {
+          configurable: true,
+          get() {
+            let value = getter.call(this)
+            if (this.readyState != 4 || typeof value != 'string') return value
+            if (!processed) {
+              processed = true
+              let patcher = getResponsePatcher(endpoint)
+              patchedResponse = patcher ? patchResponseText(value, patcher, 'XHR') : value
+            }
+            return patchedResponse
+          },
+        })
+      }
+    }
+    return XMLHttpRequest_open.apply(this, arguments)
+  }
+}
+
+function removeAutoChapters(data, source) {
+  const panelId = 'engagement-panel-macro-markers-auto-chapters'
+
+  function isAutoChapterPanel(panel) {
+    let renderer = panel.engagementPanelSectionListRenderer
+    return renderer?.panelIdentifier == panelId || renderer?.targetId == panelId
+  }
+
+  if (!data?.engagementPanels?.some(isAutoChapterPanel)) return
+
+  function filterEntries(object, key, remove) {
+    if (object?.[key]) object[key] = object[key].filter(entry => !remove(entry))
+  }
+
+  function targetsAutoChapterPanel(command) {
+    return command?.updateEngagementPanelContentCommand?.contentSourcePanelIdentifier?.tag == panelId ||
+      command?.changeEngagementPanelVisibilityAction?.targetId == panelId ||
+      command?.commandExecutorCommand?.commands?.some(targetsAutoChapterPanel) == true
+  }
+
+  // Player timeline and "View Chapters" button
+  let overlay = data.playerOverlays?.playerOverlayRenderer
+  let decoratedBar = overlay?.decoratedPlayerBarRenderer?.decoratedPlayerBarRenderer
+  let markers = decoratedBar?.playerBar?.multiMarkersPlayerBarRenderer
+  let hasAutoChapters = markers?.markersMap?.some(marker => marker.key == 'AUTO_CHAPTERS')
+  filterEntries(markers, 'markersMap', marker => marker.key == 'AUTO_CHAPTERS')
+  if (markers?.visibleOnLoad?.key == 'AUTO_CHAPTERS') {
+    delete markers.visibleOnLoad
+  }
+  if (hasAutoChapters && !markers.markersMap.length) {
+    delete overlay.decoratedPlayerBarRenderer
+  } else if (targetsAutoChapterPanel(decoratedBar?.playerBarActionButton?.buttonRenderer?.command)) {
+    delete decoratedBar.playerBarActionButton
+    delete decoratedBar.buttonType
+  }
+
+  // Marker loading and entity updates
+  function isAutoChapterKey(key) {
+    // Keys are URL-encoded base64url protobufs
+    return atob(decodeURIComponent(key).replace(/-/g, '+').replace(/_/g, '/')).includes('AUTO_CHAPTERS')
+  }
+  for (let endpoint of data.onResponseReceivedEndpoints ?? []) {
+    let command = endpoint.loadMarkersCommand
+    for (let key of ['entityKeys', 'visibleOnLoadKeys']) {
+      filterEntries(command, key, isAutoChapterKey)
+    }
+  }
+  let update = data.frameworkUpdates?.entityBatchUpdate
+  filterEntries(update, 'mutations', mutation => isAutoChapterKey(mutation.entityKey))
+
+  // Chapters sidebar (also provides video scrubber titles), selector chip and description carousel
+  filterEntries(data, 'engagementPanels', isAutoChapterPanel)
+  for (let panel of data.engagementPanels ?? []) {
+    let renderer = panel.engagementPanelSectionListRenderer
+    let chipBar = renderer?.header?.engagementPanelTitleHeaderRenderer?.subheader?.chipBarViewModel
+    filterEntries(chipBar, 'chips', chip => targetsAutoChapterPanel(chip.chipViewModel?.tapCommand?.innertubeCommand))
+    let description = renderer?.content?.structuredDescriptionContentRenderer
+    filterEntries(description, 'items', item => targetsAutoChapterPanel(
+      item.horizontalCardListRenderer?.header?.richListHeaderRenderer?.navigationButton?.buttonRenderer?.command
+    ))
+  }
+
+  log(`disableAIGeneratedChapters: patched auto-generated chapters response (${source})`)
+}
+
+function removePlayerAds(data, source) {
+  let playerResponse = data.videoDetails ? data : Array.isArray(data) ? data[0]?.playerResponse : null
+  if (!playerResponse?.videoDetails) return
+  delete playerResponse.adPlacements
+  delete playerResponse.adSlots
+  delete playerResponse.playerAds
+  log(`blockAds: patched player response (${source})`)
+}
+
+function removeShortsAds(data, source) {
+  for (let response of [data, data.reelWatchSequenceResponse]) {
+    if (!Array.isArray(response?.entries)) continue
+    response.entries = response.entries.filter(entry => entry.command?.reelWatchEndpoint?.adClientParams?.isAd != true)
+  }
+  log(`blockAds: patched Shorts response (${source})`)
+}
+//#endregion
+
+//#region Global patching
+function suppressPlaybackInterruptions() {
+  const name = 'playback interruptions'
+  if (!config.enabled || !config.hideExperiencingInterruptions) {
+    globalObservers.get(name)?.disconnect()
+    return
+  }
+  if (globalObservers.has(name)) return
+
+  let active = true
+  const originalThen = Promise.prototype.then
+  const originalSetTimeout = window.setTimeout
+  const functionToString = Function.prototype.toString
+  const suppressionMessage = 'hideExperiencingInterruptions: suppressed onAbnormalityDetected callback'
+
+  // uBlock's YouTube quick fixes prevent the callback which sets up
+  // onAbnormalityDetected and shorten a matching 17-second timeout.
+  // https://github.com/uBlockOrigin/uAssets/blob/master/filters/quick-fixes.txt
+  const then = new Proxy(originalThen, {
+    apply(target, thisArg, args) {
+      const callback = args[0]
+      if (active && typeof callback == 'function' && functionToString.call(callback).includes('onAbnormalityDetected')) {
+        args[0] = function(...callbackArgs) {
+          // A callback queued before the option was disabled should still run.
+          if (!active) return Reflect.apply(callback, this, callbackArgs)
+          log(suppressionMessage)
+        }
+      }
+      return Reflect.apply(target, thisArg, args)
+    },
+  })
+  const setTimeout = new Proxy(originalSetTimeout, {
+    apply(target, thisArg, args) {
+      if (active && args[1] === 17000 && typeof args[0] == 'function' && functionToString.call(args[0]).includes('[native code]')) {
+        args[1] = 17
+        log('hideExperiencingInterruptions: shortened playback timeout from 17000ms to 17ms')
+      }
+      return Reflect.apply(target, thisArg, args)
+    },
+  })
+  Promise.prototype.then = then
+  window.setTimeout = setTimeout
+  globalObservers.set(name, {
+    disconnect() {
+      active = false
+      // Preserve any hooks installed by YouTube or other extensions after ours.
+      if (Promise.prototype.then === then) Promise.prototype.then = originalThen
+      if (window.setTimeout === setTimeout) window.setTimeout = originalSetTimeout
+      globalObservers.delete(name)
+      log('hideExperiencingInterruptions: removed playback interruption hooks')
+    },
+  })
+  log('hideExperiencingInterruptions: installed playback interruption hooks')
+}
+
+/** @type {WeakMap<object, Map<string, import("./types").PropertyHook>>} */
+const hookedProperties = new WeakMap()
+
+/**
+ * Watches property paths, including later assignments and replacements.
+ * Subscriptions persist until disconnect, including on replaced objects.
+ * Disconnect removes subscriptions but leaves shared accessors installed.
+ *
+ * @param {string | string[]} paths
+ * @param {import("./types").PropertyWatcher} watcher
+ * @param {{name: string}} options
+ */
+function watchPaths(paths, watcher, {name}) {
+  globalObservers.get(name)?.disconnect()
+  const subscriptions = (Array.isArray(paths) ? paths : [paths]).map(path => ({parts: path.split('.'), id: {}}))
+  /** @type {Map<Map<object, import("./types").PropertyWatcher>, Set<object>>} */
+  const cleanups = new Map()
+  let active = true
+
+  /**
+   * @param {unknown} target
+   * @param {string[]} parts
+   * @param {object} id
+   */
+  function watchPath(target, parts, id) {
+    if (!active || target == null || typeof target != 'object') return
+    let [name, ...rest] = parts
+    watchProperty(target, name, id, rest.length ? {
+      onChange: value => watchPath(value, rest, id),
+    } : watcher)
+  }
+
+  /**
+   * @param {unknown} target
+   * @param {string} name
+   * @param {object} id
+   * @param {import("./types").PropertyWatcher} options
+   */
+  function watchProperty(target, name, id, options) {
+    // Wait for real config objects rather than creating placeholders
+    if (!active || target == null || typeof target != 'object') return
+    let hooked = hookedProperties.get(target)
+    let hook = hooked?.get(name)
+    let descriptor = Object.getOwnPropertyDescriptor(target, name)
+    if (!hook || descriptor?.get !== hook.get) {
+      // Respect existing hooks & reinstall ours if a data property replaced it
+      if (descriptor && (!descriptor.configurable || !Object.hasOwn(descriptor, 'value'))) {
+        options.onChange?.(target[name])
+        return
+      }
+      let value = target[name]
+      const watchers = hook?.watchers || new Map()
+      function get() {
+        let result = value
+        for (let {getValue} of watchers.values()) {
+          if (getValue) result = getValue(result, name)
+        }
+        return result
+      }
+      try {
+        Object.defineProperty(target, name, {
+          configurable: true,
+          enumerable: descriptor?.enumerable ?? true,
+          get,
+          set: descriptor?.writable === false ? undefined : next => {
+            value = next
+            for (let {onChange} of watchers.values()) {
+              try {
+                onChange?.(value)
+              } catch (error) {
+                warn('watchPaths: error patching', name, error)
+              }
+            }
+          },
+        })
+      } catch (error) {
+        warn('watchPaths: could not hook', name, error)
+        return
+      }
+      hook = {get, watchers}
+      if (!hooked) hookedProperties.set(target, hooked = new Map())
+      hooked.set(name, hook)
+    }
+    hook.watchers.set(id, options)
+    let cleanup = cleanups.get(hook.watchers)
+    if (!cleanup) cleanups.set(hook.watchers, cleanup = new Set())
+    cleanup.add(id)
+    options.onChange?.(target[name])
+  }
+
+  function scan() {
+    for (let {parts, id} of subscriptions) watchPath(window, parts, id)
+  }
+
+  scan()
+  document.addEventListener('load', scan, true)
+  window.addEventListener('yt-navigate-start', scan)
+  function disconnect() {
+    if (!active) return
+    active = false
+    document.removeEventListener('load', scan, true)
+    window.removeEventListener('yt-navigate-start', scan)
+    for (let [watchers, ids] of cleanups) {
+      for (let id of ids) watchers.delete(id)
+    }
+    cleanups.clear()
+    globalObservers.delete(name)
+    log('watchPaths: disconnected', name)
+  }
+  globalObservers.set(name, {disconnect})
+}
+
+async function disableVideoPreviews() {
+  const name = 'video previews'
+  if (!config.enabled || !config.disableVideoPreviews) {
+    globalObservers.get(name)?.disconnect()
+    return
+  }
+  if (globalObservers.has(name)) return
+
+  let active = true
+  /** @type {() => void} */
+  let restore
+  function disconnect() {
+    if (!active) return
+    active = false
+    globalObservers.get('waitFor: video preview controller')?.disconnect()
+    restore?.()
+    globalObservers.delete(name)
+    log('disableVideoPreviews: disconnected')
+  }
+  globalObservers.set(name, {disconnect})
+
+  let $app = await getElement('ytd-app', {
+    name: 'video preview app',
+    observers: globalObservers,
+    stopIf: () => !active,
+  })
+  if (!active) return
+  if (!$app) {
+    disconnect()
+    return
+  }
+
+  let ready = await waitFor(() => {
+    const app = /** @type {any} */ ($app).polymerController || $app
+    return typeof app.updateIsInlinePreviewDisabled == 'function'
+  }, 'video preview controller', {
+    observers: globalObservers,
+    stopIf: () => !active,
+  })
+  if (!ready || !active) return
+
+  const app = /** @type {any} */ ($app).polymerController || $app
+  const descriptor = Object.getOwnPropertyDescriptor(app, 'updateIsInlinePreviewDisabled')
+  const original = app.updateIsInlinePreviewDisabled
+  /** @this {any} */
+  function updateIsInlinePreviewDisabled() {
+    const result = original.apply(this, arguments)
+    if (active) {
+      this.isInlinePreviewDisabled = true
+      // Updates animatedThumbnailEnabled
+      this.isInlinePreviewEnabledChanged?.()
+    }
+    return result
+  }
+  app.updateIsInlinePreviewDisabled = updateIsInlinePreviewDisabled
+  restore = () => {
+    if (app.updateIsInlinePreviewDisabled === updateIsInlinePreviewDisabled) {
+      if (descriptor) {
+        Object.defineProperty(app, 'updateIsInlinePreviewDisabled', descriptor)
+      } else {
+        delete app.updateIsInlinePreviewDisabled
+      }
+    }
+    app.updateIsInlinePreviewDisabled()
+    app.isInlinePreviewEnabledChanged?.()
+  }
+  log('disableVideoPreviews: overriding video preview preference')
+  app.updateIsInlinePreviewDisabled()
+}
+
+function removeDelhiExperimentFlags() {
+  const name = 'player experiment flags'
+  if (!config.enabled || !config.playerRemoveDelhiExperimentFlags) {
+    globalObservers.get(name)?.disconnect()
+    return
+  }
+  log('removeDelhiExperimentFlags: watching player serializedExperimentFlags')
+  if (globalObservers.has(name)) return
+  removeSerializedFlags(
+    [
+      'yt.config_.WEB_PLAYER_CONTEXT_CONFIGS.WEB_PLAYER_CONTEXT_CONFIG_ID_KEVLAR_WATCH.serializedExperimentFlags',
+      'ytcfg.data_.WEB_PLAYER_CONTEXT_CONFIGS.WEB_PLAYER_CONTEXT_CONFIG_ID_KEVLAR_WATCH.serializedExperimentFlags',
+    ],
+    ['delhi_modern_web_player', 'delhi_modern_web_player_icons'],
+    {name},
+  )
+}
+
+function revertWatchLayout() {
+  const name = 'watch layout flags'
+  if (!config.enabled || !config.revertWatchLayout) {
+    globalObservers.get(name)?.disconnect()
+    return
+  }
+  log('revertWatchLayout: watching EXPERIMENT_FLAGS flags')
+  if (globalObservers.has(name)) return
+  tweakFlags(
+    ['yt.config_.EXPERIMENT_FLAGS', 'ytcfg.data_.EXPERIMENT_FLAGS'],
+    // From https://www.reddit.com/r/youtube/comments/1wzmupx/ublock_filter_to_revert_the_new_layout/
+    {
+      disable_theater_mode: false,
+      enable_web_side_rail: false,
+      kevlar_watch_cinematics: false,
+      kevlar_watch_hide_comments_while_panel_open: false,
+      web_engagement_panel_show_description: false,
+      web_fixed_panel_watch_next_grid_swap: false,
+      web_live_chat_panel_watch_next_grid_swap: false,
+      web_side_rail_dismissible_panels: false,
+      web_watch_eligible_to_switch_to_grid: false,
+      web_watch_enable_single_column_grid_view: false,
+      web_watch_fixed_default_panels: false,
+      web_watch_hero_list: false,
+      web_watch_move_summary_to_sd: false,
+      web_watch_split_scroll: false,
+    },
+    {name},
+  )
+}
+
+/**
+ * @param {string | string[]} paths
+ * @param {string[]} flagNames
+ * @param {{name: string}} options
+ */
+function removeSerializedFlags(paths, flagNames, options) {
+  const removed = new Set(flagNames)
+  watchPaths(paths, {
+    getValue: value => typeof value == 'string'
+      ? value.split('&').filter(flag => !removed.has(flag.split('=', 1)[0])).join('&')
+      : value,
+  }, options)
+}
+
+/**
+ * @param {string | string[]} paths
+ * @param {Record<string, boolean | number | string>} overrides
+ * @param {{name: string}} options
+ */
+function tweakFlags(paths, overrides, options) {
+  const flagPaths = (Array.isArray(paths) ? paths : [paths])
+    .flatMap(path => Object.keys(overrides).map(flag => `${path}.${flag}`))
+  watchPaths(flagPaths, {
+    getValue: (_, name) => overrides[name],
+  }, options)
+}
+//#endregion
+
+//#region Main
+/** @type {BroadcastChannel} */
+let channel
+
+function main() {
+  let cachedConfig = getCachedConfig()
+  config = {...defaultConfig, ...cachedConfig}
+  debug = config.debug
+
+  patchRequests()
+  // Avoid installing initial-response hooks the user may have disabled
+  if (['enabled', 'blockAds', 'disableAIGeneratedChapters'].every(key => Object.hasOwn(cachedConfig, key))) {
+    configureInitialResponses()
+  }
+  if (desktop) {
+    // Run global patching early when cached config is present
+    suppressPlaybackInterruptions()
+    removeDelhiExperimentFlags()
+    revertWatchLayout()
+  }
+
+  channel = new BroadcastChannel(crypto.randomUUID())
+  channel.addEventListener('message', receiveConfigFromContentScript)
+  window.postMessage({
+    type: 'init',
+    channelName: channel.name,
+    configKeys: Object.keys(defaultConfig),
+  }, location.origin)
+}
+
+function configurePage() {
+  if (desktop) {
+    suppressPlaybackInterruptions()
+    disableVideoPreviews()
+    removeDelhiExperimentFlags()
+    revertWatchLayout()
+  }
+
+  if (config.enabled) {
+    if (config.disableStableVolume) {
+      let pref = JSON.parse(localStorage['yt-player-drc-pref'] || 'null')
+      if (pref?.data !== '0' || (pref?.expiration ?? 0) < Date.now()) {
+        log('Disabling Stable Volume')
+        localStorage['yt-player-drc-pref'] = JSON.stringify({
+          data: '0',
+          creation: Date.now(),
+          expiration: Date.now() + 365 * 24 * 60 * 60 * 1000,
+        })
+      } else {
+        log('Stable Volume already disabled')
+      }
+    }
+    if (desktop && config.enforceTheme != 'default') {
+      enforceTheme()
+    }
+    if (mobile && config.allowBackgroundPlay) {
+      allowBackgroundPlay()
+    }
+    configureCss()
+    if (desktop) {
+      configureGridCss()
+      handleDesktopGuideBar()
+    }
+    // @ts-expect-error
+    if (!window.ytcfg?.msgs) {
+      // @ts-expect-error
+      waitFor(() => window.ytcfg?.msgs, 'ytcfg.msgs', {
+        observers: globalObservers,
+        stopIf: () => !config.enabled,
+      }).then(ready => {
+        if (!ready || !config.enabled) return
+        configureTranslationCss()
+      })
+    }
+    triggerVideoPageResize()
+    observeTitle()
+    observePopups()
+    document.addEventListener('click', onDocumentClick, true)
+    globalObservers.set('document clicks', {
+      disconnect() {
+        document.removeEventListener('click', onDocumentClick, true)
+      }
+    })
+  }
+}
+
+/** @param {Partial<import("./types").SiteConfig>} changes */
+function configChanged(changes) {
+  if (['enabled', 'blockAds', 'disableAIGeneratedChapters'].some(key => Object.hasOwn(changes, key))) {
+    configureInitialResponses()
+  }
+  if (desktop && ['enabled', 'hideExperiencingInterruptions'].some(key => Object.hasOwn(changes, key))) {
+    suppressPlaybackInterruptions()
+  }
+  if (!Object.hasOwn(changes, 'enabled')) {
+    log('config changed', changes)
+    if (desktop && Object.hasOwn(changes, 'disableVideoPreviews')) {
+      disableVideoPreviews()
+    }
+    if (desktop && changes.enforceTheme && config.enforceTheme != 'default') {
+      enforceTheme()
+    }
+    if (desktop && (
+      Object.hasOwn(changes, 'fixGhostCards') || Object.hasOwn(changes, 'minimumGridItemsPerRow')
+    )) {
+      configureGridCss()
+    }
+    if (desktop && Object.hasOwn(changes, 'playerRemoveDelhiExperimentFlags')) {
+      removeDelhiExperimentFlags()
+    }
+    if (desktop && Object.hasOwn(changes, 'revertWatchLayout')) {
+      revertWatchLayout()
+    }
+    configureCss()
+    triggerVideoPageResize()
+    if (desktop) {
+      handleDesktopGuideBar()
+    }
+    handleCurrentUrl()
+    return
+  }
+
+  log(`${changes.enabled ? 'en' : 'dis'}abling extension functionality`)
+  if (changes.enabled) {
+    configurePage()
+  } else {
+    configureCss()
+    configureGridCss()
+    triggerVideoPageResize()
+    disconnectObservers(pageObservers, 'page')
+    disconnectObservers(globalObservers,' global')
+  }
+}
+
+/** @returns {Partial<import("./types").SiteConfig>} */
+function getCachedConfig() {
+  try {
+    let cached = JSON.parse(localStorage.getItem('cpfyt:startup-config') || 'null')
+    if (cached == null || typeof cached != 'object' || Array.isArray(cached)) return {}
+    return Object.fromEntries(
+      cachedConfigKeys
+        .filter(key => typeof cached[key] == 'boolean')
+        .map(key => [key, cached[key]])
+    )
+  } catch (error) {
+    warn('could not read cached config', error)
+    return {}
+  }
+}
+
+/**
+ * @param {MessageEvent<import("./types").SiteConfigMessage>} message
+ */
+function receiveConfigFromContentScript({data: {type, siteConfig}}) {
+  if (type == 'initial') {
+    config = {...defaultConfig, ...siteConfig}
+    debug = config.debug
+    debugLogGetElementStats = config.debugLogGetElementStats
+    debugManualHiding = config.debugManualHiding
+    log('initial config', config, {version, lang, loggedIn})
+    storeCachedConfig()
+    // Configure initial-response hooks and patch existing data
+    configureInitialResponses()
+    // Let the options page know which version is being used
+    storeConfigChanges({version})
+    configurePage()
+    return
+  }
+
+  if (Object.hasOwn(siteConfig, 'debug')) {
+    log('disabling debug mode')
+    debug = config.debug = siteConfig.debug
+    storeCachedConfig()
+    log('enabled debug mode')
+    return
+  }
+
+  if (Object.hasOwn(siteConfig, 'debugLogGetElementStats')) {
+    debugLogGetElementStats = siteConfig.debugLogGetElementStats
+    log(`${debugLogGetElementStats ? 'en' : 'dis'}abled logging of getElement() stats`)
+    return
+  }
+
+  if (Object.hasOwn(siteConfig, 'debugLogGridObservers')) {
+    debugLogGridObservers = siteConfig.debugLogGridObservers
+    log(`${debugLogGridObservers ? 'en' : 'dis'}abled logging of grid observers`)
+    return
+  }
+
+  if (Object.hasOwn(siteConfig, 'debugManualHiding')) {
+    debugManualHiding = siteConfig.debugManualHiding
+    log(`${debugManualHiding ? 'en' : 'dis'}abled debugging manual hiding`)
+    configureCss()
+    return
+  }
+
+  Object.assign(config, siteConfig)
+  if (cachedConfigKeys.some(key => Object.hasOwn(siteConfig, key))) {
+    storeCachedConfig()
+  }
+  configChanged(siteConfig)
+}
+
+function storeCachedConfig() {
+  try {
+    let cached = JSON.stringify(Object.fromEntries(cachedConfigKeys.map(key => [key, config[key]])))
+    if (localStorage.getItem('cpfyt:startup-config') != cached) {
+      localStorage.setItem('cpfyt:startup-config', cached)
+    }
+  } catch (error) {
+    warn('could not store cached config', error)
+  }
+}
+
+/** @param {Partial<import("./types").OptionsConfig>} configChanges */
+function storeConfigChanges(configChanges) {
+  channel.postMessage(configChanges)
+}
+
+main()
+//#endregion
+
+}()
