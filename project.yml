@@ -42,6 +42,9 @@ targets:
     sources:
       - path: Extension/Shared
       - path: Extension/Resources
+        buildPhase: resources
+        excludes: ["images", "_locales"]
+      - path: Extension/Resources/images
         type: folder
         buildPhase: resources
     info:
@@ -86,6 +89,9 @@ targets:
     sources:
       - path: Extension/Shared
       - path: Extension/Resources
+        buildPhase: resources
+        excludes: ["images", "_locales"]
+      - path: Extension/Resources/images
         type: folder
         buildPhase: resources
     entitlements:
