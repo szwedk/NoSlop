@@ -1,0 +1,2276 @@
+[
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "omw",
+  "author": {
+   "handle": "person0"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "brb",
+  "author": {
+   "handle": "person1"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "lol",
+  "author": {
+   "handle": "person2"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "same tbh",
+  "author": {
+   "handle": "person3"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Happy birthday Mum!!",
+  "author": {
+   "handle": "person4"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "who won?",
+  "author": {
+   "handle": "person5"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "coffee?",
+  "author": {
+   "handle": "person6"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "nope.",
+  "author": {
+   "handle": "person7"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Mondays.",
+  "author": {
+   "handle": "person8"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "goal!!!",
+  "author": {
+   "handle": "person9"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Finally Friday 🙌",
+  "author": {
+   "handle": "person10"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "cant sleep",
+  "author": {
+   "handle": "person11"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "this song though",
+  "author": {
+   "handle": "person12"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "ok ok ok",
+  "author": {
+   "handle": "person13"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "New phone who dis",
+  "author": {
+   "handle": "person14"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "it rained all day",
+  "author": {
+   "handle": "person15"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "so tired",
+  "author": {
+   "handle": "person16"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Dinner was great, thanks Ana",
+  "author": {
+   "handle": "person17"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "lost my keys again",
+  "author": {
+   "handle": "person18"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Traffic on the M25 is insane right now",
+  "author": {
+   "handle": "person19"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "🎉🎉🎉 WE DID IT 🎉🎉🎉",
+  "author": {
+   "handle": "person20"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "🍕🍕🍕 pizza night 🍕🍕🍕",
+  "author": {
+   "handle": "person21"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "😭😭😭 my team lost in the 90th minute",
+  "author": {
+   "handle": "person22"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "🐶❤️ meet Biscuit!",
+  "author": {
+   "handle": "person23"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "☀️🏖️🌊 first beach day of the year",
+  "author": {
+   "handle": "person24"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "🏃‍♀️ 10k done 🥵 legs are jelly",
+  "author": {
+   "handle": "person25"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "🎸🎶 band practice tonight 🤘",
+  "author": {
+   "handle": "person26"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "🍁🍂 autumn walk with the kids 🍂🍁",
+  "author": {
+   "handle": "person27"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "🤧🤒 day three of this cold, send soup",
+  "author": {
+   "handle": "person28"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "🎂 30 today. Feeling 60. 😅",
+  "author": {
+   "handle": "person29"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "WE ARE GOING TO WEMBLEY",
+  "author": {
+   "handle": "person30"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "I PASSED MY DRIVING TEST",
+  "author": {
+   "handle": "person31"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "DO NOT BUY THE GREEN ONE IT BROKE AFTER TWO DAYS",
+  "author": {
+   "handle": "person32"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "HAPPY NEW YEAR EVERYONE",
+  "author": {
+   "handle": "person33"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "THE DOG ATE THE BIRTHDAY CAKE",
+  "author": {
+   "handle": "person34"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "WHY IS THE TRAIN LATE AGAIN",
+  "author": {
+   "handle": "person35"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "BEST. GIG. EVER.",
+  "author": {
+   "handle": "person36"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "SNOW DAY!!!",
+  "author": {
+   "handle": "person37"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "I hate AI art, it all looks the same",
+  "author": {
+   "handle": "person38"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "tried ChatGPT for recipes, meh",
+  "author": {
+   "handle": "person39"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "so much AI-generated garbage on my feed lately, anyone else?",
+  "author": {
+   "handle": "person40"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "my boss wants us to use Copilot for everything and honestly the code reviews got worse",
+  "author": {
+   "handle": "person41"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Can you tell if this is AI? The hands look weird to me",
+  "author": {
+   "handle": "person42"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "How to spot AI-generated images: count the fingers, check the text in the background, look at the earrings",
+  "author": {
+   "handle": "person43"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "The amount of AI slop on YouTube is ruining the kids section",
+  "author": {
+   "handle": "person44"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Not a fan of the AI dubbing on Netflix, the lip sync is off",
+  "author": {
+   "handle": "person45"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Midjourney vs DALL-E vs Stable Diffusion: I tested all three for my thesis and wrote up the results",
+  "author": {
+   "handle": "person46"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Is this AI? Asking for a friend who thinks every photo is fake now",
+  "author": {
+   "handle": "person47"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Sick of AI influencers. Give me real people with real acne",
+  "author": {
+   "handle": "person48"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Saw a \"deepfake\" of the mayor today, obviously fake, the voice was wrong",
+  "author": {
+   "handle": "person49"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "AI is going to take my job and honestly my job sucks so go ahead",
+  "author": {
+   "handle": "person50"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Our school banned ChatGPT and the kids just use it on their phones instead",
+  "author": {
+   "handle": "person51"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "this is clearly AI, look at the clock in the background",
+  "author": {
+   "handle": "person52"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "hot take: the AI art debate is boring, pay artists either way",
+  "author": {
+   "handle": "person53"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Reminder that this account is 100% human and 100% tired",
+  "author": {
+   "handle": "person54"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Anti-AI people and pro-AI people are equally exhausting on this app",
+  "author": {
+   "handle": "person55"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Played with Grok for a bit, it's fine, not life changing",
+  "author": {
+   "handle": "person56"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "The new iPhone AI features are useless to me, I just want a better battery",
+  "author": {
+   "handle": "person57"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Deleted the AI assistant from my phone, it kept interrupting my music",
+  "author": {
+   "handle": "person58"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Real photo, no AI, I promise. The sky really was that purple",
+  "author": {
+   "handle": "person59"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "The ethics of AI in medicine: a thread from someone who actually works in a hospital",
+  "author": {
+   "handle": "person60"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "OpenAI pricing went up again, cancelling my subscription",
+  "author": {
+   "handle": "person0"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Had to explain to my dad that the video of the pope in a puffer jacket was fake",
+  "author": {
+   "handle": "person1"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Reviewing the Sora 2 launch for my newsletter — mixed feelings",
+  "author": {
+   "handle": "person2"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Drew this myself, took six hours, not AI, please stop asking",
+  "author": {
+   "handle": "person3"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Hand drawn, pencil on paper. Took the photo with my own camera.",
+  "author": {
+   "handle": "person4"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Finally fixed the memory leak. It was a closure holding the whole DOM tree in a listener. Three days of my life.",
+  "author": {
+   "handle": "person5"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "PSA: if your Postgres query is slow, check for a missing index on the foreign key before you blame the ORM.",
+  "author": {
+   "handle": "person6"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Kubernetes question: has anyone got cert-manager working with an internal CA on 1.31? The webhook keeps timing out.",
+  "author": {
+   "handle": "person7"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Migrating from Webpack to Vite took an afternoon and the dev server is 10x faster. Should have done it a year ago.",
+  "author": {
+   "handle": "person8"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Hot take: most teams do not need microservices. A modular monolith with clear boundaries gets you 90% of the way.",
+  "author": {
+   "handle": "person9"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "TIL that `git worktree` exists. Where has this been all my life.",
+  "author": {
+   "handle": "person10"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Rust borrow checker fought me for two hours and then the code just worked without a single bug. Fair trade.",
+  "author": {
+   "handle": "person11"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Our CI went from 40 min to 12 min by caching node_modules and splitting the test suite. Nothing clever.",
+  "author": {
+   "handle": "person12"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Swift 6 strict concurrency warnings: 400. Fixed: 12. Send help.",
+  "author": {
+   "handle": "person13"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "The bug was a timezone. It is always a timezone.",
+  "author": {
+   "handle": "person14"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Anyone using XcodeGen for a Safari extension project? The appex Resources folder keeps nesting twice.",
+  "author": {
+   "handle": "person15"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Debugging a race condition in the websocket reconnect logic, the backoff resets when it shouldn't",
+  "author": {
+   "handle": "person16"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Dropped the ORM, wrote the SQL by hand, query went from 11 seconds to 23 ms. Sometimes the boring answer is right.",
+  "author": {
+   "handle": "person17"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Serious question: do you unit test your bash scripts? Asking because I just broke prod with a missing quote.",
+  "author": {
+   "handle": "person18"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Learned today that Safari caps runtime.sendMessage at 64 MB. Guess who was sending 70 MB.",
+  "author": {
+   "handle": "person19"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Made my grandma's pierogi recipe for the first time and they actually held together. She would be proud.",
+  "author": {
+   "handle": "person20"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Sourdough update: day 14 and the starter finally doubled. Named it Doughlores.",
+  "author": {
+   "handle": "person21"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Shopping list:\n- eggs\n- milk\n- bread\n- that good olive oil\n- cat food",
+  "author": {
+   "handle": "person22"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Does anyone else put ketchup on scrambled eggs or is that just my family",
+  "author": {
+   "handle": "person23"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "The ramen place on 5th finally reopened. The tonkotsu is still the best in the city.",
+  "author": {
+   "handle": "person24"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Recipe: 2 eggs, a handful of spinach, feta, chili flakes. Fry. Eat. Done.",
+  "author": {
+   "handle": "person25"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Burnt the garlic again. Why does it go from raw to charcoal in four seconds",
+  "author": {
+   "handle": "person26"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Tried air frying brussels sprouts with honey and sriracha, converted a sprout hater",
+  "author": {
+   "handle": "person27"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "My 4 year old asked why the moon follows the car and I did not have a good answer.",
+  "author": {
+   "handle": "person28"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Day 2 of potty training. Pray for us.",
+  "author": {
+   "handle": "person29"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Kid lost his first tooth at school and the teacher gave him a tiny treasure chest for it. Love that woman.",
+  "author": {
+   "handle": "person30"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Grandpa turned 92 and beat all of us at cards. Again.",
+  "author": {
+   "handle": "person31"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Teenager slammed the door, came back ten minutes later for a hug. Parenting is weird.",
+  "author": {
+   "handle": "person32"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "School run in the rain with two kids and one umbrella. Character building.",
+  "author": {
+   "handle": "person33"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "The cat has decided the new laptop is her bed. Working on 11 inches of screen now.",
+  "author": {
+   "handle": "person34"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Biscuit learned \"sit\" today. Took 200 treats. Worth it.",
+  "author": {
+   "handle": "person35"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Vet says the dog is \"a little chunky\". The dog disagrees.",
+  "author": {
+   "handle": "person36"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "My parrot learned the microwave beep and now I never know if dinner is ready",
+  "author": {
+   "handle": "person37"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "What a match. Down 2-0 at half time and we won 3-2. I have no voice left.",
+  "author": {
+   "handle": "person38"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Ran my first half marathon in 1:58. The last 3 km were pure stubbornness.",
+  "author": {
+   "handle": "person39"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "The ref was terrible but honestly we deserved to lose, the midfield was asleep",
+  "author": {
+   "handle": "person40"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Climbing gym opened a new bouldering wall and I have no skin left on my fingers",
+  "author": {
+   "handle": "person41"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Lewandowski at 38 still scoring braces. Unreal.",
+  "author": {
+   "handle": "person42"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Does anyone know a good 5-a-side pitch near Hackney that isn't booked until 2027",
+  "author": {
+   "handle": "person43"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Landed in Lisbon. First pastel de nata within 20 minutes of leaving the airport. Priorities.",
+  "author": {
+   "handle": "person44"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Overnight train from Vienna to Venice: cramped, loud, absolutely worth it.",
+  "author": {
+   "handle": "person45"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Three days in Oaxaca and I have eaten my body weight in mole",
+  "author": {
+   "handle": "person46"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Pro: the hostel was 12 euros. Con: the hostel was 12 euros.",
+  "author": {
+   "handle": "person47"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Missed the last ferry, slept on the dock, saw the best sunrise of my life. Would not recommend. Would do again.",
+  "author": {
+   "handle": "person48"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Got the promotion. Four years of \"next cycle\". Finally.",
+  "author": {
+   "handle": "person49"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Meeting that could have been an email: 55 minutes. Email that followed: 4 lines.",
+  "author": {
+   "handle": "person50"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "My coworker brings his sourdough to the office every Monday and honestly it is the only reason I go in",
+  "author": {
+   "handle": "person51"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Quit my job today. No plan. Terrified. Also relieved.",
+  "author": {
+   "handle": "person52"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "The printer on floor 3 has been \"out of toner\" since March. It is November.",
+  "author": {
+   "handle": "person53"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Council voted to close the library on Sundays. Petition link in the replies if you want to sign.",
+  "author": {
+   "handle": "person54"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "New bike lane on Main St is already full of parked cars. Classic.",
+  "author": {
+   "handle": "person55"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Polling station had a queue around the block at 7am. Good sign.",
+  "author": {
+   "handle": "person56"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "The potholes on our road have names now. Meet Gerald.",
+  "author": {
+   "handle": "person57"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Saw Fontaines D.C. last night. Ears still ringing. No regrets.",
+  "author": {
+   "handle": "person58"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Finished the book club pick in one sitting. Did not expect to cry on the bus.",
+  "author": {
+   "handle": "person59"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "The new season is slower than the first but episode 6 is incredible",
+  "author": {
+   "handle": "person60"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Vinyl collection hit 300 records and my shelf is bending. Carpenter friends, help.",
+  "author": {
+   "handle": "person0"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Learned the intro to Little Wing after six months of trying. Fingers hate me.",
+  "author": {
+   "handle": "person1"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Deadlifted 140 kg today. My back has opinions about it.",
+  "author": {
+   "handle": "person2"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Week 3 of couch to 5k. Ran 8 minutes without stopping. Small wins.",
+  "author": {
+   "handle": "person3"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Yoga teacher said \"breathe into your hips\" and I still don't know what that means",
+  "author": {
+   "handle": "person4"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Beat the final boss at 3am on my 47th attempt. My neighbours heard about it.",
+  "author": {
+   "handle": "person5"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Elden Ring DLC is kicking my teeth in and I love it",
+  "author": {
+   "handle": "person6"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Our D&D group has met every Thursday for 9 years. The campaign is still going.",
+  "author": {
+   "handle": "person7"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "The Switch 2 queue at the mall wrapped around the food court. People are built different.",
+  "author": {
+   "handle": "person8"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Finally paid off the student loan. 11 years. Going out for a very cheap pizza to celebrate.",
+  "author": {
+   "handle": "person9"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "My electricity bill doubled and I have no idea why. Same usage. Anyone else?",
+  "author": {
+   "handle": "person10"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Switched energy suppliers and saved 30 quid a month. Took ten minutes.",
+  "author": {
+   "handle": "person11"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Got my flu jab, arm hurts, worth it",
+  "author": {
+   "handle": "person12"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Six months sober today. One day at a time, as they say.",
+  "author": {
+   "handle": "person13"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Dentist said no cavities for the first time in my adult life. Flossing works, apparently.",
+  "author": {
+   "handle": "person14"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "First frost of the year on the allotment. The kale survived, the beans did not.",
+  "author": {
+   "handle": "person15"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Northern lights visible from the back garden tonight!!! In Manchester!!!",
+  "author": {
+   "handle": "person16"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "The fox is back in the garden and it brought a friend",
+  "author": {
+   "handle": "person17"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "My wife said I never listen to her. Or something like that.",
+  "author": {
+   "handle": "person18"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Accidentally said \"love you\" to the bus driver. He said \"you too\". We are getting married in June.",
+  "author": {
+   "handle": "person19"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Spent 20 minutes looking for my glasses. They were on my head. I am 29.",
+  "author": {
+   "handle": "person20"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Weekend plan:\n1. Sleep\n2. Coffee\n3. Repeat step 1",
+  "author": {
+   "handle": "person21"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Packing for the trip: passport, charger, three books I will not read, one pair of socks too few.",
+  "author": {
+   "handle": "person22"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Things my toddler cried about today: the banana was too bendy, the dog looked at her, the sun.",
+  "author": {
+   "handle": "person23"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Steps to fix the printer: 1. turn it off 2. turn it on 3. cry 4. call Dave",
+  "author": {
+   "handle": "person24"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Reasons I was late: traffic, alarm, cat, life.",
+  "author": {
+   "handle": "person25"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Pancakes, the way my nan did them:\n- 200g flour\n- 2 eggs\n- 300ml milk\n- pinch of salt\nRest the batter 20 min. Butter, not oil.",
+  "author": {
+   "handle": "person26"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Today:\n☐ gym\n☐ call the dentist\n☐ finish the report\n☑ coffee",
+  "author": {
+   "handle": "person27"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Things I learned moving house:\n1. Label the boxes.\n2. No really, label the boxes.\n3. Order pizza for the helpers.",
+  "author": {
+   "handle": "person28"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Garden log, week 12\nTomatoes: 14 ripe\nCourgettes: too many\nSlugs: winning",
+  "author": {
+   "handle": "person29"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Meeting notes:\n- budget approved\n- launch moved to March\n- Dave brings cake next time",
+  "author": {
+   "handle": "person30"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Ran out of:\nmilk\nbread\npatience",
+  "author": {
+   "handle": "person31"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Road trip playlist so far:\nThe Cure\nKhruangbin\nthat one Fleetwood Mac album\nsuggestions welcome",
+  "author": {
+   "handle": "person32"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Camping checklist\n- tent (with pegs this time)\n- stove\n- matches\n- the good coffee\n- rain jacket because obviously",
+  "author": {
+   "handle": "person33"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "ok",
+  "author": {
+   "handle": "person34"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "yesss",
+  "author": {
+   "handle": "person35"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "thank you!!",
+  "author": {
+   "handle": "person36"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "no way",
+  "author": {
+   "handle": "person37"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "see you there",
+  "author": {
+   "handle": "person38"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "good luck today",
+  "author": {
+   "handle": "person39"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "love this",
+  "author": {
+   "handle": "person40"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "nice one",
+  "author": {
+   "handle": "person41"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "morning!",
+  "author": {
+   "handle": "person42"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "still waiting",
+  "author": {
+   "handle": "person43"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Dzisiaj pierwszy śnieg w Krakowie, dzieci oszalały ze szczęścia",
+  "author": {
+   "handle": "person44"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Kto wygrał wczoraj mecz? Zasnąłem w drugiej połowie",
+  "author": {
+   "handle": "person45"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Babcia zrobiła pierogi z kapustą i grzybami, nie ma lepszych na świecie",
+  "author": {
+   "handle": "person46"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Nie mogę znaleźć kluczy od samochodu, trzeci raz w tym tygodniu",
+  "author": {
+   "handle": "person47"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Pociąg do Warszawy spóźniony 40 minut, klasyka PKP",
+  "author": {
+   "handle": "person48"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Wreszcie piątek! Kto na piwo wieczorem?",
+  "author": {
+   "handle": "person49"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Mój pies nauczył się otwierać lodówkę. Mamy problem.",
+  "author": {
+   "handle": "person50"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Remont kuchni trwa już trzeci miesiąc, hydraulik znowu nie przyszedł",
+  "author": {
+   "handle": "person51"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Zdałam egzamin na prawo jazdy za drugim razem!!! 🎉",
+  "author": {
+   "handle": "person52"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Jesień w Tatrach jest piękna, ale tłumy jak w lipcu",
+  "author": {
+   "handle": "person53"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Tak, wiem, że to AI, dlatego nie udostępniam takich rzeczy",
+  "author": {
+   "handle": "person54"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Hoy ganó el Betis y mi abuelo lloró de alegría",
+  "author": {
+   "handle": "person55"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Alguien sabe dónde comer buenas tapas en Sevilla sin pagar precio de turista?",
+  "author": {
+   "handle": "person56"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Mi hija aprendió a montar en bici hoy. Cuatro caídas, cero lágrimas.",
+  "author": {
+   "handle": "person57"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Qué calor hace en Madrid, 38 grados a las 7 de la tarde",
+  "author": {
+   "handle": "person58"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Terminé la maratón de Valencia en 3:45. Las piernas no me responden.",
+  "author": {
+   "handle": "person59"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "El gato se comió mi planta favorita y ahora me mira como si nada",
+  "author": {
+   "handle": "person60"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Primer día en el trabajo nuevo. Los compañeros parecen majos.",
+  "author": {
+   "handle": "person0"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "No soporto el arte hecho con inteligencia artificial, prefiero mil veces un dibujo a mano",
+  "author": {
+   "handle": "person1"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Se me olvidó el paraguas y claro, diluvio",
+  "author": {
+   "handle": "person2"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "La paella de mi madre no tiene competencia, lo siento Valencia",
+  "author": {
+   "handle": "person3"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Heute endlich die Steuererklärung abgegeben. Zwei Bier verdient.",
+  "author": {
+   "handle": "person4"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Die Bahn hat schon wieder 25 Minuten Verspätung, ich bin so müde davon",
+  "author": {
+   "handle": "person5"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Mein Sohn hat heute seinen ersten Zahn verloren und wollte ihn unbedingt behalten",
+  "author": {
+   "handle": "person6"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Kennt jemand einen guten Bäcker in Berlin-Neukölln? Der an der Ecke hat zugemacht.",
+  "author": {
+   "handle": "person7"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Wochenende in den Alpen, 1200 Höhenmeter, Knie kaputt, Herz voll",
+  "author": {
+   "handle": "person8"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Unser Hund hat die Weihnachtsplätzchen gefressen. Alle. Die ganze Dose.",
+  "author": {
+   "handle": "person9"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Ich hasse KI-generierte Bilder in den Nachrichten, man weiß nie mehr was echt ist",
+  "author": {
+   "handle": "person10"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Erster Schnee in München, die Stadt ist komplett still",
+  "author": {
+   "handle": "person11"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Habe heute meine Masterarbeit abgegeben. 112 Seiten. Nie wieder.",
+  "author": {
+   "handle": "person12"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Kaffee ist alle. Der Tag ist gelaufen.",
+  "author": {
+   "handle": "person13"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Honest review of the new bakery: the croissants are great, the coffee is weak, the staff are lovely, the prices are London prices. Would go back for the croissants.",
+  "author": {
+   "handle": "person14"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Spent the whole weekend rebuilding the fence after the storm. My neighbour came over with tea every hour and left when there was any actual lifting to do. Good man.",
+  "author": {
+   "handle": "person15"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "To the person who returned my wallet to the pub last night with everything still in it: thank you. I owe you a pint and I don't even know your name.",
+  "author": {
+   "handle": "person16"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Unpopular opinion but the sequel is better than the original. The pacing is tighter and they finally gave the sister something to do.",
+  "author": {
+   "handle": "person17"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Our street organised a swap shop in the car park and I came home with a lamp, two books and a plant I will probably kill.",
+  "author": {
+   "handle": "person18"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Update on the kitchen: the tiles arrived, the wrong colour, again. The builder laughed. I did not laugh.",
+  "author": {
+   "handle": "person19"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "I think about the time my dad drove four hours to bring me a forgotten textbook at least once a week.",
+  "author": {
+   "handle": "person20"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Long day. Van broke down on the A1, two jobs cancelled, then the last customer tipped twenty quid and said thanks for coming out. Balance, I guess.",
+  "author": {
+   "handle": "person21"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Lost my grandmother this morning. She taught me to swim, to swear in Polish and to never trust a cheap frying pan. Rest easy, Babcia.",
+  "author": {
+   "handle": "person22"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "The allotment committee meeting lasted two hours and the only decision was about the colour of the new shed door. Green won.",
+  "author": {
+   "handle": "person23"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Running late, car wouldn't start, neighbour jump-started it, got to the interview with two minutes to spare, and they rescheduled. Universe has jokes.",
+  "author": {
+   "handle": "person24"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Guys the baby slept 6 hours straight. SIX. I woke up in a panic thinking something was wrong. Nothing was wrong. She was just asleep.",
+  "author": {
+   "handle": "person25"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "My students built a weather station from a Raspberry Pi and old sensors and now the whole school checks it instead of the BBC.",
+  "author": {
+   "handle": "person26"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "There is a man on this train eating a whole raw onion like an apple and nobody is saying anything. London.",
+  "author": {
+   "handle": "person27"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "First tomato of the season from the balcony. Tiny. Ugly. Best thing I have eaten all year.",
+  "author": {
+   "handle": "person28"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Tried to fix the leaking tap myself. Now the tap leaks and the cupboard under it is wet. Plumber coming Tuesday.",
+  "author": {
+   "handle": "person29"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "The bus driver waited for me while I ran across the road with two bags of shopping. Small kindnesses.",
+  "author": {
+   "handle": "person30"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Twelve people at the pub quiz, we came second, lost on a question about the capital of Australia. It is not Sydney.",
+  "author": {
+   "handle": "person31"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Our team at work did a 24h hackathon and built a thing that reads the office coffee machine status. Most useful project of the year.",
+  "author": {
+   "handle": "person32"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Camped by the lake, forgot the tent pegs, used sticks, it held. Mostly.",
+  "author": {
+   "handle": "person33"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Vaccinated the cat, cat held a grudge for 48 hours, now back to sleeping on my face.",
+  "author": {
+   "handle": "person34"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "The kids made breakfast for my birthday. Toast, slightly burnt, jam on one side only. Perfect.",
+  "author": {
+   "handle": "person35"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Went to see the old house we grew up in. Someone painted it yellow. It looks happy.",
+  "author": {
+   "handle": "person36"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "We lost the final on penalties. Walked home in the rain. Still the best season we have had in years.",
+  "author": {
+   "handle": "person37"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Dropped my phone in the canal while taking a photo of a swan. The swan looked pleased.",
+  "author": {
+   "handle": "person38"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "My mum discovered voice notes and now sends me 4 minute monologues about the neighbours. I love it.",
+  "author": {
+   "handle": "person39"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Reminder that the clocks go back tonight. Or forward. One of them. Check your oven.",
+  "author": {
+   "handle": "person40"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Took the kids fossil hunting at Lyme Regis, found three ammonites and one very wet dog",
+  "author": {
+   "handle": "person41"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Haircut went wrong, hat season has started early",
+  "author": {
+   "handle": "person42"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "The new neighbours have a drum kit. The old neighbours had a baby. I miss the baby.",
+  "author": {
+   "handle": "person43"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "Watched the sunrise from the hospital car park after a 14 hour shift. The nurses here are superheroes.",
+  "author": {
+   "handle": "person44"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "Tried oat milk in tea. It is fine. It is not tea.",
+  "author": {
+   "handle": "person45"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "Girls weekend in Porto: 3 bottles of vinho verde, 1 lost shoe, zero regrets",
+  "author": {
+   "handle": "person46"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Note to self: do not schedule a dentist appointment and a job interview on the same morning",
+  "author": {
+   "handle": "person47"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Just found out my grandad was a radio operator in the war and never told anyone. Going through his letters tonight.",
+  "author": {
+   "handle": "person48"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "ngl the new tram line is actually great, 15 minutes to the centre now",
+  "author": {
+   "handle": "person49"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "idk how people in this city afford rent and also eat",
+  "author": {
+   "handle": "person50"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "text": "bruh the exam was on chapters we never covered",
+  "author": {
+   "handle": "person51"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "ok whoever invented daylight saving time owes me an hour",
+  "author": {
+   "handle": "person52"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "text": "my landlord \"fixed\" the boiler and now the shower is either lava or ice",
+  "author": {
+   "handle": "person53"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "Picked up litter on the beach with the kids this morning: 4 bags, one shoe, one crab (released)",
+  "author": {
+   "handle": "person54"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Great question from my daughter tonight: \"if the earth spins why don't we feel dizzy\". Still thinking.",
+  "author": {
+   "handle": "person55"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Dad joke of the day: I used to hate facial hair, but then it grew on me.",
+  "author": {
+   "handle": "person56"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Sunday sketch, 2h, pencil and ink",
+  "hashtags": [
+   "#sketch",
+   "#inktober",
+   "#traditionalart"
+  ],
+  "author": {
+   "handle": "inkmaria"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "instagram",
+  "text": "Digital painting WIP, Procreate on the iPad",
+  "hashtags": [
+   "#digitalart",
+   "#procreate",
+   "#wip"
+  ],
+  "author": {
+   "handle": "pxlanna"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "title": "How I built a shed in a weekend (and what went wrong)",
+  "text": "Full build, mistakes included. Tools list in the description.",
+  "author": {
+   "handle": "@shedguy"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "youtube",
+  "title": "Running Berlin Marathon 2026 – vlog",
+  "text": "My first marathon abroad. 3:52. Legs gone.",
+  "author": {
+   "handle": "@runwithkasia"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "title": "My cat after I came back from a two week holiday",
+  "text": "She ignored me for an hour and then sat on my head all night.",
+  "author": {
+   "handle": "u/throwaway_cat"
+  },
+  "extra": {
+   "subreddit": "cats"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "reddit",
+  "title": "What is a skill you learned in your 30s?",
+  "text": "For me it was cooking properly. Not just pasta. Actual meals.",
+  "author": {
+   "handle": "u/latebloomer"
+  },
+  "extra": {
+   "subreddit": "AskReddit"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "linkedin",
+  "text": "After 12 years I am leaving the company. Grateful for the people, the coffee, and the one project that nearly killed me. On to the next thing.",
+  "author": {
+   "handle": "in/jan-kowalski"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "x",
+  "text": "Thread about my 3 months in Japan 👇 (long, sorry) 1/ Landed in Osaka with one bag and no plan",
+  "author": {
+   "handle": "wanderpat"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "tiktok",
+  "text": "rate my pierogi fold 🥟 #cooking #polishfood",
+  "hashtags": [
+   "#cooking",
+   "#polishfood"
+  ],
+  "author": {
+   "handle": "kuchnia.ani"
+  }
+ },
+ {
+  "expect": "none",
+  "category": "human",
+  "site": "facebook",
+  "text": "Lost dog near Victoria Park, brown lab, answers to Max, very friendly, please share",
+  "author": {
+   "handle": "neighbourjo"
+  }
+ }
+]

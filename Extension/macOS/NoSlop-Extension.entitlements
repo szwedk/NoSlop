@@ -4,5 +4,9 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>5DDNFER638.group.com.szwedk.noslop</string>
+	</array>
 </dict>
 </plist>

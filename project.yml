@@ -1,3 +1,6 @@
+# NoSlop — XcodeGen spec (owner: swift-app agent). Regenerate with `xcodegen generate`.
+# Four targets: iOS app + iOS Safari extension, macOS app + macOS Safari extension.
+# All four share the App Group group.com.szwedk.noslop (settings/stats JSON in UserDefaults).
 name: NoSlop
 options:
   bundleIdPrefix: com.szwedk
@@ -15,6 +18,7 @@ settings:
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
     ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: NO
 targets:
   NoSlop-iOS:
     type: application
@@ -22,17 +26,39 @@ targets:
     sources:
       - path: App/Shared
       - path: App/iOS
+      - path: Extension/Shared/NoSlopSharedStore.swift
+      # The whole web-extension folder, copied verbatim as a folder reference named "WebExtension"
+      # so the Clean Feeds WKWebView can load the scripts via Bundle.main.url(forResource:"WebExtension").
+      # App/WebExtension is a symlink to Extension/Resources; CpResource resolves source symlinks.
+      - path: App/WebExtension
+        type: folder
+        buildPhase: resources
+    entitlements:
+      path: App/iOS/NoSlop.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.szwedk.noslop]
     info:
       path: App/iOS/Info.plist
       properties:
         CFBundleDisplayName: NoSlop
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         ITSAppUsesNonExemptEncryption: false
+        # noslop://open — the extension popup's "Open the NoSlop app" link (popup/popup.html footer)
+        CFBundleURLTypes:
+          - CFBundleURLName: com.szwedk.noslop
+            CFBundleURLSchemes: [noslop]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.szwedk.noslop
         TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+      configs:
+        Debug:
+          OTHER_SWIFT_FLAGS: "$(inherited) -D NOSLOP_CLEAN_FEEDS"
     dependencies:
       - target: NoSlop-Extension-iOS
         embed: true
@@ -41,16 +67,33 @@ targets:
     platform: iOS
     sources:
       - path: Extension/Shared
+      # Top-level extension files stay flat in the appex Resources (Safari needs manifest.json at the root);
+      # each subfolder is a folder reference so lib/, adapters/, popup/ and images/ keep their paths.
       - path: Extension/Resources
         buildPhase: resources
-        excludes: ["images", "_locales"]
+        excludes: ["images", "lib", "adapters", "popup", "_locales"]
       - path: Extension/Resources/images
         type: folder
         buildPhase: resources
+      - path: Extension/Resources/lib
+        type: folder
+        buildPhase: resources
+      - path: Extension/Resources/adapters
+        type: folder
+        buildPhase: resources
+      - path: Extension/Resources/popup
+        type: folder
+        buildPhase: resources
+    entitlements:
+      path: Extension/iOS/NoSlop-Extension.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.szwedk.noslop]
     info:
       path: Extension/iOS/Info.plist
       properties:
         CFBundleDisplayName: NoSlop Extension
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.Safari.web-extension
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SafariWebExtensionHandler
@@ -64,22 +107,37 @@ targets:
     sources:
       - path: App/Shared
       - path: App/macOS
+      - path: Extension/Shared/NoSlopSharedStore.swift
+      - path: App/WebExtension
+        type: folder
+        buildPhase: resources
     entitlements:
       path: App/macOS/NoSlop.entitlements
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.files.user-selected.read-only: true
         com.apple.security.network.client: true
+        com.apple.security.application-groups: [5DDNFER638.group.com.szwedk.noslop]
     info:
       path: App/macOS/Info.plist
       properties:
         CFBundleDisplayName: NoSlop
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
         NSHumanReadableCopyright: ""
+        CFBundleURLTypes:
+          - CFBundleURLName: com.szwedk.noslop
+            CFBundleURLSchemes: [noslop]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.szwedk.noslop
         ENABLE_APP_SANDBOX: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+      configs:
+        Debug:
+          OTHER_SWIFT_FLAGS: "$(inherited) -D NOSLOP_CLEAN_FEEDS"
     dependencies:
       - target: NoSlop-Extension-macOS
         embed: true
@@ -88,20 +146,34 @@ targets:
     platform: macOS
     sources:
       - path: Extension/Shared
+      # Top-level extension files stay flat in the appex Resources (Safari needs manifest.json at the root);
+      # each subfolder is a folder reference so lib/, adapters/, popup/ and images/ keep their paths.
       - path: Extension/Resources
         buildPhase: resources
-        excludes: ["images", "_locales"]
+        excludes: ["images", "lib", "adapters", "popup", "_locales"]
       - path: Extension/Resources/images
+        type: folder
+        buildPhase: resources
+      - path: Extension/Resources/lib
+        type: folder
+        buildPhase: resources
+      - path: Extension/Resources/adapters
+        type: folder
+        buildPhase: resources
+      - path: Extension/Resources/popup
         type: folder
         buildPhase: resources
     entitlements:
       path: Extension/macOS/NoSlop-Extension.entitlements
       properties:
         com.apple.security.app-sandbox: true
+        com.apple.security.application-groups: [5DDNFER638.group.com.szwedk.noslop]
     info:
       path: Extension/macOS/Info.plist
       properties:
         CFBundleDisplayName: NoSlop Extension
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.Safari.web-extension
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).SafariWebExtensionHandler
@@ -113,7 +185,4 @@ targets:
 schemes:
   NoSlop-iOS:
     build: { targets: { NoSlop-iOS: all } }
-    run: { config: Debug }
-  NoSlop-macOS:
-    build: { targets: { NoSlop-macOS: all } }
     run: { config: Debug }

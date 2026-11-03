@@ -4,9 +4,13 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "test": "node --test tests/",
+    "test": "node --test \"tests/**/*.test.mjs\"",
     "build:ext": "node tools/build-extension.mjs",
-    "gen": "xcodegen generate"
+    "gen": "xcodegen generate",
+    "build:rules": "node tools/build-rules.mjs",
+    "build:chrome": "node tools/build-chrome.mjs"
   },
-  "devDependencies": { "jsdom": "^26.1.0" }
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
 }

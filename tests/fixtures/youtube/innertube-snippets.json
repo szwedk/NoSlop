@@ -1,0 +1,27 @@
+{
+  "_about": "VERBATIM JSON fragments copied from youtube.com watch-page HTML (ytInitialData) on 2026-11-02, logged out. For unit-testing rules.labels.youtube.watchHtmlRegex / the youtube adapter enrich() parser without fetching. Tracking params are opaque strings as served.",
+  "madeWithAI": {
+    "videoId": "Qqc0pav5wEI",
+    "fragment": "{\"howThisWasMadeSectionViewModel\":{\"sectionTitle\":{\"content\":\"How this was made\"},\"bodyText\":{\"content\":\"Sounds or visuals were altered or fully generated. Learn more\",\"commandRuns\":[{\"startIndex\":51,\"length\":10,\"onTap\":{\"innertubeCommand\":{\"clickTrackingParams\":\"CBwQtp4MGAMiEwib7YOAsOqXAxWHNmgIHZBJGWrKAQQu4JB-\",\"commandMetadata\":{\"webCommandMetadata\":{\"url\":\"//support.google.com/youtube/answer/15447836?hl=en\",\"webPageType\":\"WEB_PAGE_TYPE_UNKNOWN\",\"rootVe\":83769}},\"urlEndpoint\":{\"url\":\"//support.google.com/youtube/answer/15447836?hl=en\",\"target\":\"TARGET_NEW_WINDOW\"}}}}],\"styleRuns\":[{\"startIndex\":51,\"length\":10,\"fontColor\":4282296063}]},\"bodyHeader\":{\"content\":\"Made with AI\"},\"attributionText\":{},\"shouldRemoveBottomPadding\":false,\"rendererContext\":{\"loggingContext\":{\"loggingDirectives\":{\"trackingParams\":\"CBwQtp4MGAMiEwib7YOAsOqXAxWHNmgIHZBJGWo=\",\"visibility\":{\"types\":\"12\"}}}}}}"
+  },
+  "autoDubbed_NOT_AI": {
+    "videoId": "gXtjlubIVgQ",
+    "fragment": "{\"howThisWasMadeSectionViewModel\":{\"sectionTitle\":{\"content\":\"How this was made\"},\"bodyText\":{\"content\":\"Audio tracks for some languages were automatically generated. Learn more\",\"commandRuns\":[{\"startIndex\":62,\"length\":10,\"onTap\":{\"innertubeCommand\":{\"clickTrackingParams\":\"CCYQtp4MGAQiEwjh-tO-r-qXAxUnPlcBHRWHDhTKAQQu4JB-\",\"commandMetadata\":{\"webCommandMetadata\":{\"url\":\"//support.google.com/youtube/answer/15569972?hl=en\",\"webPageType\":\"WEB_PAGE_TYPE_UNKNOWN\",\"rootVe\":83769}},\"urlEndpoint\":{\"url\":\"//support.google.com/youtube/answer/15569972?hl=en\",\"target\":\"TARGET_NEW_WINDOW\"}}}}],\"styleRuns\":[{\"startIndex\":62,\"length\":10,\"fontColor\":4282296063}]},\"bodyHeader\":{\"content\":\"Auto-dubbed\"},\"attributionText\":{},\"shouldRemoveBottomPadding\":false,\"rendererContext\":{\"loggingContext\":{\"loggingDirectives\":{\"trackingParams\":\"CCYQtp4MGAQiEwjh-tO-r-qXAxUnPlcBHRWHDhQ=\",\"visibility\":{\"types\":\"12\"}}}}}}"
+  },
+  "titleBadge": {
+    "videoId": "Qqc0pav5wEI",
+    "where": "ytInitialData → videoPrimaryInfoRenderer.badges[]",
+    "fragment": "\"badges\":[{\"metadataBadgeRenderer\":{\"icon\":{\"iconType\":\"INFO\"},\"style\":\"BADGE_STYLE_TYPE_SIMPLE\",\"label\":\"AI\",\"trackingParams\":\"CNcBEK6vEhgAIhMIm-2DgLDqlwMVhzZoCB2QSRlq\",\"accessibilityData\":{\"label\":\"AI: Content was made with AI\"},\"loggingDirectives\":{\"trackingParams\":\"CNcBEK6vEhgAIhMIm-2DgLDqlwMVhzZoCB2QSRlq\",\"visibility\":{\"types\":\"12\"},\"attentionLogging\":\"ATTENTION_LOGGING_BASIC\"}}}]"
+  },
+  "falsePositive_rendererNameList": {
+    "where": "ytcfg / renderer registry list present in SOME watch pages (seen on gXtjlubIVgQ) — the key appears as a bare string in an array, NOT as an object key",
+    "fragment": "\"expandableMetadataRenderer\",\"videoSummaryContentViewModel\",\"videoSummaryParagraphViewModel\",\"howThisWasMadeSectionViewModel\",\"horizontalCardListRenderer\",\"richListHeaderRenderer\""
+  },
+  "surveyed": {
+    "_note": "27 watch pages fetched 2026-11-02 and classified by the bodyHeader of their howThisWasMadeSectionViewModel object (real key = /\"howThisWasMadeSectionViewModel\":\\{/). titleBadgeAI = metadataBadgeRenderer label \"AI\" present in videoPrimaryInfoRenderer.badges.",
+    "madeWithAI_withTitleBadge": ["Qqc0pav5wEI", "PsmLVj-crug", "sqiBDe8SzkI", "gcZwE5cM4xs", "_6S84shtCko", "MlhXQAfn-SQ", "a_quG0zJb2k", "CXLcS_YU2q4", "MW2FnJP_5EM", "EAm-KR0cBX0", "jlcrmAGxpAg", "pljQ5nf8tuw", "5VSjuLoTH-0"],
+    "madeWithAI_descriptionOnly_noTitleBadge": ["k43pJvIN6p4", "zIJ0YEsz-zE"],
+    "autoDubbed_only": ["4LryAnzFLMw", "IjF5Uun2jrM", "YePbSSrJsdg", "7DwdKcAyvH0", "BbDLRHxb9Y8", "EDSk2T1Dhuk", "9xHzk1gzHlQ", "D1_NPEKvtRc", "Odmk15MPiUA", "gXtjlubIVgQ"],
+    "noSection": ["f8FHas1dmt8", "JhH3uxcdM1M"]
+  }
+}

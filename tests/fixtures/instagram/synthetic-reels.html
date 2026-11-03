@@ -1,0 +1,16 @@
+<!-- NoSlop fixture: instagram/synthetic-reels
+  *** SYNTHETIC *** — NOT a capture (owner: adapter:instagram). instagram.com/reels/ is a login wall when logged out
+  (see instagram/notes.md). Hand-written 2026-11-02 from docs/research/platform-dom-and-ai-labels.md §2.4:
+  reels surface = main[role="main"]:has([data-virtualized] video); reels videos = main [data-virtualized] video;
+  the data-virtualized attribute marks the virtualized list; nav entry point a[href="/reels/"] (nav blocks row).
+  HYPOTHESES (UNVERIFIED): each list child holds one <video>, a /reel/<id>/ link, a /<user>/ profile link and a
+  [dir="auto"] caption; the "AI info" label text sits in the item's overlay as a whole text node.
+  Class names are never used (atomic, regenerated per build). Usernames, ids and captions are invented.
+  nodes: 1 nav + 1 main containing 1 [data-virtualized] list with 3 reel items
+-->
+<div data-visualcompletion="ignore-dynamic"><div><span><div><a href="/reels/" role="link"><span>Reels</span></a></div></span></div></div>
+<main role="main"><div><div data-virtualized="true">
+<div><div><video playsinline preload="none" src="https://scontent.example/o1/v/t2/SYNTHR0001.mp4" poster="[stripped]"></video></div><div><a href="/surf_daily/" role="link"><img alt="surf_daily's profile picture" src="[stripped]"></a><a href="/surf_daily/" role="link"><span dir="auto">surf_daily</span></a><div><span dir="auto">dawn patrol, 4 ft and glassy</span></div><a href="/reel/SYNTHR0001/" role="link"><time datetime="2026-11-02T06:00:00.000Z">5h</time></a></div></div>
+<div><div><video playsinline preload="none" src="https://scontent.example/o1/v/t2/SYNTHR0002.mp4" poster="[stripped]"></video></div><div><a href="/neon.dreams.ai/" role="link"><img alt="neon.dreams.ai's profile picture" src="[stripped]"></a><a href="/neon.dreams.ai/" role="link"><span dir="auto">neon.dreams.ai</span></a><div><span dir="auto">AI info</span></div><div><span dir="auto">cyber city flythrough 🌆 <a href="/explore/tags/aivideo/" role="link">#aivideo</a></span></div><a href="/reel/SYNTHR0002/" role="link"><time datetime="2026-11-02T05:00:00.000Z">6h</time></a></div></div>
+<div><div><video playsinline preload="none" src="https://scontent.example/o1/v/t2/SYNTHR0003.mp4" poster="[stripped]"></video></div><div><a href="/kitchen.notes/" role="link"><img alt="kitchen.notes's profile picture" src="[stripped]"></a><a href="/kitchen.notes/" role="link"><span dir="auto">kitchen.notes</span></a><div><span dir="auto">30 second focaccia, no kneading</span></div><a href="/reel/SYNTHR0003/" role="link"><time datetime="2026-11-02T04:00:00.000Z">7h</time></a></div></div>
+</div></div></main>

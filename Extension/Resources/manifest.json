@@ -3,11 +3,91 @@
   "name": "NoSlop",
   "version": "0.1.0",
   "description": "Removes AI-generated content and AI slop from your feeds.",
-  "icons": { "48": "images/icon-48.png", "96": "images/icon-96.png", "128": "images/icon-128.png", "256": "images/icon-256.png", "512": "images/icon-512.png" },
-  "background": { "scripts": ["background.js"], "persistent": false },
+  "icons": {
+    "48": "images/icon-48.png",
+    "96": "images/icon-96.png",
+    "128": "images/icon-128.png",
+    "256": "images/icon-256.png",
+    "512": "images/icon-512.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
   "content_scripts": [
-    { "matches": ["*://*.youtube.com/*"], "js": ["content.js"], "run_at": "document_start" }
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.x.com/*",
+        "*://*.twitter.com/*",
+        "*://*.instagram.com/*",
+        "*://*.facebook.com/*",
+        "*://*.tiktok.com/*",
+        "*://*.reddit.com/*",
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "rules.js",
+        "lib/dom.js",
+        "lib/scorer.js",
+        "lib/host-extension.js",
+        "lib/engine.js",
+        "adapters/youtube.js",
+        "adapters/x.js",
+        "adapters/instagram.js",
+        "adapters/facebook.js",
+        "adapters/tiktok.js",
+        "adapters/reddit.js",
+        "adapters/linkedin.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
   ],
-  "permissions": ["storage", "nativeMessaging"],
-  "browser_specific_settings": { "safari": { "strict_min_version": "17.0" } }
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "nativeMessaging",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.x.com/*",
+    "*://*.twitter.com/*",
+    "*://*.instagram.com/*",
+    "*://*.facebook.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.reddit.com/*",
+    "*://*.linkedin.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "NoSlop",
+    "default_icon": {
+      "48": "images/icon-48.png",
+      "96": "images/icon-96.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/tiktok-main.js"
+      ],
+      "matches": [
+        "*://*.tiktok.com/*"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "safari": {
+      "strict_min_version": "17.0"
+    }
+  }
 }

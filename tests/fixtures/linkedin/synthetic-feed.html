@@ -1,0 +1,15 @@
+<!-- NoSlop fixture: linkedin/synthetic-feed
+  *** SYNTHETIC *** — NOT a capture. linkedin.com/feed redirects to the login page when logged out (see linkedin/notes.md).
+  Hand-written 2026-11-02 from docs/research/platform-dom-and-ai-labels.md §2.8 (better-linkedin content-feed.js,
+  HEAD 2026-10-19): div[data-testid="mainFeed"], post = [role="listitem"][componentkey^="update-card-focus"],
+  body = span[data-testid="expandable-text-box"]; "Promoted" as span text (older Ember-era observation, still the
+  best known hook). The actor link shape (a[href^="https://www.linkedin.com/in/"]) is a HYPOTHESIS. The C2PA icon is
+  UNVERIFIED and not modelled. Names and text are invented. Post 3 is written in the "AI slop" style on purpose
+  (contrast pivot, emoji bullets, engagement-bait closer) for scorer tests — it carries NO platform label.
+  nodes: 1 mainFeed containing 3 listitem
+-->
+<main aria-label="Main Feed"><div data-testid="mainFeed"><div role="list">
+<div role="listitem" componentkey="update-card-focus-urn:li:activity:7000000000000000001"><div data-testid="update-card"><div><a href="https://www.linkedin.com/in/human-engineer-synthetic" aria-label="View Human Engineer's profile"><span>Human Engineer</span></a><span> · 2nd</span><p>Staff Engineer at Example Co</p><span>3h</span></div><div><span data-testid="expandable-text-box" dir="ltr">We shipped the migration last night. 14 months, 3 teams, zero downtime. Writing up what broke (a lot) next week.</span></div><div><button aria-label="React Like" type="button">Like</button><button aria-label="Comment" type="button">Comment</button><button aria-label="Repost" type="button">Repost</button></div></div></div>
+<div role="listitem" componentkey="update-card-focus-urn:li:activity:7000000000000000002"><div data-testid="update-card"><div><a href="https://www.linkedin.com/company/example-saas-synthetic" aria-label="View Example SaaS's page"><span>Example SaaS</span></a><p>1,204 followers</p><span aria-hidden="true">Promoted</span></div><div><span data-testid="expandable-text-box" dir="ltr">Cut your reporting time in half. Book a demo.</span></div><div><a href="https://www.linkedin.com/redir/redirect?url=https%3A%2F%2Fexample.com%2Fdemo&amp;urlhash=synthetic" target="_blank" rel="noopener">Learn more</a></div></div></div>
+<div role="listitem" componentkey="update-card-focus-urn:li:activity:7000000000000000003"><div data-testid="update-card"><div><a href="https://www.linkedin.com/in/growth-guru-synthetic" aria-label="View Growth Guru's profile"><span>Growth Guru</span></a><span> · 3rd+</span><p>Founder | Keynote Speaker | 10x Operator</p><span>5h</span></div><div><span data-testid="expandable-text-box" dir="ltr">Most people think leadership is about titles. It's not. It's about ownership. 🚀 Show up early. 💡 Listen more than you talk. 🔥 Celebrate your team. Agree? Repost if this resonated and follow for more.</span></div><div><button aria-label="React Like" type="button">Like</button><button aria-label="Comment" type="button">Comment</button><button aria-label="Repost" type="button">Repost</button></div></div></div>
+</div></div></main>

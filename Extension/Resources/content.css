@@ -1,0 +1,112 @@
+/* NoSlop — stub, dim and hide styles. Injected at document_start on every supported site.
+   !important everywhere: the sites' own rules are author-origin too (instagram-feed-blocker note). */
+
+/* ---- hidden-item stub (compact, system font, 12px, muted) ---- */
+.noslop-stub {
+  all: initial;
+  display: block !important;
+  box-sizing: border-box !important;
+  font: 12px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  color: #6b7280 !important;
+  background: #f3f4f6 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  margin: 4px 8px !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
+  cursor: default !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+.noslop-stub__label { font-weight: 600 !important; color: #374151 !important; }
+.noslop-stub__reason { color: #6b7280 !important; }
+.noslop-stub__sep { color: #9ca3af !important; }
+.noslop-stub__btn {
+  all: initial;
+  display: inline !important;
+  font: inherit !important;
+  color: #2563eb !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+  border: 0 !important;
+}
+.noslop-stub__btn:hover, .noslop-stub__btn:focus { text-decoration: underline !important; outline: none !important; }
+
+/* ---- dimmed items ----
+   `position: relative` is deliberately NOT !important: X's virtualized [data-testid="cellInnerDiv"] cells are
+   positioned absolutely (inline transform: translateY) and forcing them into normal flow stacks dimmed cells on top
+   of the tweets below them. An author/inline `position: absolute` still wins and is still a containing block for
+   the absolute .noslop-badge; static elements get `relative`. */
+.noslop-dim { opacity: 0.35 !important; position: relative; transition: opacity 120ms ease-out !important; }
+.noslop-dim:hover, .noslop-dim:focus-within { opacity: 1 !important; }
+.noslop-badge {
+  all: initial;
+  position: absolute !important;
+  top: 6px !important;
+  right: 6px !important;
+  z-index: 3 !important;
+  font: 600 10px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  letter-spacing: 0.02em !important;
+  color: #ffffff !important;
+  background: rgba(107, 114, 128, 0.85) !important;
+  border-radius: 999px !important;
+  padding: 3px 6px !important;
+  pointer-events: none !important;
+}
+
+/* ---- hide strategies (engine adds .noslop-hidden + .noslop-hidden--<strategy>) ----
+   The item stays in the DOM; its own children are hidden, the stub (if any) remains visible. */
+.noslop-hidden > :not(.noslop-stub) { display: none !important; }
+
+/* Shadow-host items (a bare reddit shreddit-post): the child rule cannot reach the shadow tree, so the engine puts
+   the stub BEFORE the element (adapter.stubPlacement 'before') and hides the host itself. */
+.noslop-hidden--host { display: none !important; }
+
+/* display-none (youtube, reddit, linkedin): without a stub the whole card disappears. */
+.noslop-hidden--display-none.noslop-nostub { display: none !important; }
+
+/* height-zero (facebook): collapse the feed unit, do not unmount it (uAssets recipe). */
+.noslop-hidden--height-zero { overflow: hidden !important; min-height: 0 !important; }
+.noslop-hidden--height-zero.noslop-nostub { height: 0 !important; max-height: 0 !important; padding: 0 !important; margin: 0 !important; border: 0 !important; }
+
+/* collapse-inner (x, instagram): keep the virtualized cell mounted, empty its content (Control Panel for Twitter recipe). */
+.noslop-hidden--collapse-inner.noslop-nostub { min-height: 0 !important; }
+.noslop-hidden--collapse-inner + [role="separator"] { display: none !important; }
+
+/* ---- youtube watch-page banner host (adapters/youtube.js inserts an empty [data-noslop-watch] div above the title) ---- */
+.noslop-youtube-watch-host { display: block !important; margin: 0 0 8px !important; }
+.noslop-youtube-watch-host.noslop-dim > .noslop-badge { position: static !important; display: inline-block !important; }
+
+/* ---- whole-surface hides (Shorts shelf, Reels, Grok posts, TikTok For You, ads) ----
+   Default strategy display-none; a surface entry with strategy 'height-zero' (facebook "Reels and short videos"
+   shelf, an aria-posinset feed unit that must stay mounted for the virtualizer's height bookkeeping — uAssets recipe)
+   is collapsed instead. */
+.noslop-surface:not(.noslop-surface--height-zero) { display: none !important; }
+.noslop-surface--height-zero {
+  height: 0 !important; min-height: 0 !important; max-height: 0 !important; overflow: hidden !important;
+  padding: 0 !important; margin: 0 !important; border: 0 !important;
+}
+
+/* ---- dark mode ---- */
+@media (prefers-color-scheme: dark) {
+  .noslop-stub { color: #9ca3af !important; background: #1f2937 !important; border-color: #374151 !important; }
+  .noslop-stub__label { color: #d1d5db !important; }
+  .noslop-stub__reason { color: #9ca3af !important; }
+  .noslop-stub__sep { color: #6b7280 !important; }
+  .noslop-stub__btn { color: #60a5fa !important; }
+  .noslop-badge { background: rgba(156, 163, 175, 0.85) !important; color: #111827 !important; }
+}
+/* Sites that set their own dark theme without the media query. */
+html[dark] .noslop-stub, html[data-theme="dark"] .noslop-stub, html.dark .noslop-stub, body.dark .noslop-stub, html[data-color-mode="dark"] .noslop-stub {
+  color: #9ca3af !important; background: #1f2937 !important; border-color: #374151 !important;
+}
+html[dark] .noslop-stub__label, html[data-theme="dark"] .noslop-stub__label, html.dark .noslop-stub__label, body.dark .noslop-stub__label, html[data-color-mode="dark"] .noslop-stub__label { color: #d1d5db !important; }
+html[dark] .noslop-stub__btn, html[data-theme="dark"] .noslop-stub__btn, html.dark .noslop-stub__btn, body.dark .noslop-stub__btn, html[data-color-mode="dark"] .noslop-stub__btn { color: #60a5fa !important; }
+
+@media (prefers-reduced-motion: reduce) { .noslop-dim { transition: none !important; } }

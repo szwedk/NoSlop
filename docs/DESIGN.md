@@ -26,7 +26,9 @@ Extension/
     rules.js                    generated from rules.json by `npm run build:rules`; committed (owner: core)
     lib/host-extension.js       host shim for the extension runtime (owner: core)
     lib/scorer.js               pure scoring (owner: core)
-    lib/engine.js               observer/pipeline/hiding/caching/stats (owner: core)
+    lib/engine.js               observer/pipeline/hiding/caching/stats + the popup's tab messages (owner: core)
+    lib/host-webview.js         host shim for the in-app Clean Feeds WKWebView (owner: swift-app); loaded FIRST there, host-extension.js is not loaded
+    lib/tiktok-main.js          PAGE-world JSON relay for tiktok.com (owner: adapter:tiktok); manifest web_accessible_resources, never a content script, never polyfilled
     lib/dom.js                  small DOM helpers: text(), closest(), visible(), hashtags() (owner: core)
     adapters/<site>.js          one per site (owner: that adapter agent)
     content.js                  bootstrap: pick adapter by hostname, start engine (owner: core)
@@ -38,6 +40,9 @@ App/Shared/*.swift              SwiftUI app shared by iOS+macOS (owner: swift-ap
 App/iOS, App/macOS              platform bits (owner: swift-app)
 tools/build-rules.mjs           rules.json -> rules.js (owner: core)
 tools/build-chrome.mjs          Extension/Resources -> dist/chrome (service_worker manifest, polyfill) (owner: chrome agent)
+tools/check-bundle.mjs          verifies a built .app: one .appex, manifest.json + every referenced file present and identical to Extension/Resources (owner: integration)
+tests/bootstrap.test.mjs        boots the full content-script chain in jsdom for all 8 hostnames incl. m.youtube.com / twitter.com (owner: integration)
+docs/STATUS.md                  what is verified / synthetic / missing (owner: integration)
 scripts/build-mac.sh, build-ios.sh, install-iphone.sh, test.sh (owner: swift-app / integration)
 tests/helpers/load.mjs          jsdom + vm loader for the plain scripts (owner: core)
 tests/<area>.test.mjs           node --test (each agent owns tests for its own files)
@@ -72,7 +77,7 @@ Tests load the same files with jsdom via `tests/helpers/load.mjs`: `const {windo
   },
   "disclosure": { "regex": ["..."], "score": 1.0 },                 // tier 1 self-disclosure
   "hashtags": { "strong": [...], "strongScore": 0.8, "weak": [...], "weakScore": 0.4 },
-  "toolNames": { "terms": [...], "scoreEach": 0.4, "cap": 0.8 },
+  "toolNames": { "terms": [...], "scoreEach": 0.4, "cap": 1.0 },                    // 3 families with no disclosure verb = a pipeline post (hide); a SINGLE family is mention-level (see categoryCaps.mention)
   "chatbotResidue": { "regex": [...], "score": 0.9 },
   "promptMetadata": { "regex": [...], "score": 0.9 },
   "style": {                                                          // tier 3: DIM ONLY, total capped at styleCap
@@ -103,7 +108,8 @@ the report §1.1); AiSList (CC BY-NC) and OpenSlop (PolyForm NC) are NOT bundled
 ```js
 NoSlop.engine.start({ adapter, rules, host })   // host: see §6
 // Pipeline per candidate element `el` returned by adapter.findItems(root):
-//   item = adapter.extract(el)  -> null (skip) or Item
+//   item = adapter.extract(el)  -> Item, null (NOT an item: separator/promo -> any applied state is removed) or
+//                                  undefined (not READY: virtualizer placeholder, cell without its permalink yet -> the applied state is KEPT)
 //   id   = item.id              (stable post/video id; NEVER the element). el.dataset.noslopId = id
 //   verdict = cache.get(id) || scorer.score(item, rules, settings, site)  -> { score, tier, reasons[], action }
 //   if action==='none' && adapter.enrich && settings allows: queue enrich(item) (async, concurrency from settings), re-score on result
@@ -111,18 +117,41 @@ NoSlop.engine.start({ adapter, rules, host })   // host: see §6
 //   stats.bump(site, action, reason)
 // Cell reuse: on every mutation inside a processed element, re-run extract; if id changed -> unapply + re-verdict.
 // Observer: one MutationObserver on document.body, childList+subtree, batched with requestIdleCallback/setTimeout(0),
-//   plus a 1 s safety sweep while the tab is visible. Must handle the SPA navigation (history pushState hook + popstate) and re-read surface.
-// Verdict cache: Map in memory; verdicts with tier<=1 or from enrich persisted in storage.local 'verdicts' (LRU 5000, TTL 7 d).
+//   plus a 2.5 s safety sweep while the tab is visible: a full pass only when a mutation was observed since the last sweep or the URL
+//   changed, otherwise a cheap re-check of what is applied. adapter.surfaces() is applied ONCE per flush / sweep, never per mutation root.
+//   SPA navigation is detected by comparing location.href on every flush and sweep (content scripts, Safari, Chrome and the WKWebView
+//   .defaultClient world are isolated worlds: the page's own history.pushState never reaches a content-script History patch); the
+//   popstate/hashchange/adapter.navigateEvents listeners, the Navigation API (currententrychange) and the history patch are extras.
+// Verdict cache: Map in memory (LRU 5000, TTL 7 d; E.counted / authorHits are evicted with it); verdicts with tier<=1 or from a SUCCESSFUL
+//   enrich persisted in storage.local 'verdicts:<site>' (<= 1000 newest rows, enrich text capped to a 300-char snippet, read-merge-write so
+//   tabs do not clobber each other, 12 s debounce + flush on pagehide/visibilitychange, row cap halved on a rejected write; manifest asks
+//   for unlimitedStorage). A FAILED enrich (timeout/429/host refused) is never a result: enriched stays false, retried after a doubling
+//   backoff (60 s, max 3 attempts per page life). settings.enabled=false / sites.<site>.mode='off' stop enrich and surface hides too.
 // Hidden-item stub: unless settings.showStubs===false, insert a compact .noslop-stub ("Hidden: AI content — <reason> · Show · Never show @author");
+//   adapter.stubPlacement(el,item) -> 'inside' (el.firstChild, default) | 'before' (previous sibling + .noslop-hidden--host display:none on el,
+//   for shadow hosts such as a bare reddit shreddit-post whose shadow chrome the child-hiding CSS cannot reach). Un-hide restores `muted`.
 //   Show -> unhide this one (session allow); Never -> settings.blockedAccounts[site].push(author) via host.
 // Auto-promotion: N (settings.autoPromote.hits, default 3) tier-0/1 hits on the same author -> added to blockedAccounts (reversible in the app/popup).
-// Surfaces: adapter.surfaces() returns [{ settingKey:'hideShorts', selector:'...' }]; engine hides those elements when setting is on.
+//   Requires a STABLE identifier (author.handle || author.id; never a display name); account:*, ad:* and label:reddit_flair verdicts never promote.
+// Surfaces: adapter.surfaces() returns [{ settingKey:'hideShorts', selector:'...', strategy?:'display-none'|'height-zero' }]; engine hides those
+//   elements when the setting is on AND the site is active ('height-zero' collapses instead of display:none: facebook feed units must stay mounted).
+//   The stats bump is once per (element, settingKey).
+//   settingKeys in use: hideShorts (youtube), hideReels (instagram/facebook), hideGrokPosts (x: Grok share links, quotes of / posts by @grok, quotes of AI-labelled posts, home-feed Grok promo cells),
+//   hideTikTokForYou, hideAds, hideRedditRecommended (reddit shreddit-post[recommendation-source]).
+// extract(el, ctx): ctx = { settings, rules, surface, site } (live values; adapters may still read NoSlop.engine.settings).
+// Verdict cache entries carry the surface they were scored on: a post seen on 'home' is re-scored after an SPA navigation
+//   into another surface (reddit account:subreddit applies on 'popular' and to recommended posts only).
+// NoSlop.engine.invalidate(id): drops the cached verdict/enrich for one id and re-processes its elements (adapters call it when evidence grows).
+// Popup <-> content script (browser.runtime.onMessage in the content script; unknown types are ignored so background messages pass):
+//   {type:'getRecentHidden', limit:20} -> { site, items:[{ id, action:'hide'|'dim', author, reason, reasonText, title?, text?, ts }] } newest first (ring of 50)
+//   {type:'showItem', id}              -> {ok:true, count} | {ok:false, error}   (same as the stub's Show: session allow + unapply + re-process)
+//   {type:'invalidate', id}            -> {ok}      {type:'noslopStatus'} -> {ok, running, site, surface, hidden}
 // Hide strategies (adapter.hideStrategy): 'display-none' (youtube, reddit, linkedin), 'height-zero' (facebook: height:0;overflow:hidden on the cell),
 //   'collapse-inner' (x, instagram: hide the cell's first child / article inner content, keep the cell mounted; pause+mute <video>).
 ```
 Item shape:
 ```ts
-{ id: string, kind: 'post'|'video'|'short'|'ad'|'shelf', surface: 'home'|'search'|'watch'|'profile'|'reels'|'shorts'|'other',
+{ id: string, kind: 'post'|'video'|'short'|'ad'|'shelf', surface: 'home'|'search'|'watch'|'profile'|'reels'|'shorts'|'popular'|'other',   // x maps /status/ pages to 'watch' (item.extra.page = 'status'), explore to 'search', lists/communities to 'home'; reddit maps /r/popular|/r/all to 'popular'
   text: string, title?: string, author: { handle?: string, name?: string, id?: string }, hashtags: string[], links: string[],
   labels: Array<{ type: 'platform_ai'|'promoted'|'c2pa', text?: string }>, media: Array<'image'|'video'|'none'>, extra?: object }
 ```
@@ -149,13 +178,20 @@ Settings (storage.local key `settings`, `version: 1`):
 ```jsonc
 { "enabled": true, "updatedAt": 0,
   "sites": { "youtube": {"mode":"balanced"}, "x": {...}, "instagram": {...}, "facebook": {...}, "tiktok": {...}, "reddit": {...}, "linkedin": {...} },
-  "surfaces": { "hideShorts": false, "hideReels": false, "hideGrokPosts": true, "hideTikTokForYou": false, "hideAds": false },
+  "surfaces": { "hideShorts": false, "hideReels": false, "hideGrokPosts": true, "hideTikTokForYou": false, "hideAds": false, "hideRedditRecommended": false },
+  "reelsAutoAdvance": true,          // instagram: scrollIntoView the next reel after hiding the active one on /reels/
+  "tiktokJsonRelay": true,           // tiktok: inject lib/tiktok-main.js (page world) to read TikTok's own AIGC JSON fields
+  // sites.reddit may also carry "flagAppAccounts": false (opt-in: the Reddit "App" automated-account label becomes a tier-0 label reddit_app_account)
   "youtubePrefetch": true, "youtubePrefetchConcurrency": 2,
   "showStubs": true, "dimInsteadOfHide": false,
   "blockedAccounts": { "youtube": [], "x": [], "instagram": [], "facebook": [], "tiktok": [], "reddit": [], "linkedin": [] },
   "allowedAccounts": { ...same keys... }, "customPhrases": [], "customHashtags": [],
   "autoPromote": { "enabled": true, "hits": 3 }, "rulesOverride": null }
 ```
+`patchSettings(partial)` is a SHALLOW top-level merge: callers send whole sub-objects (`sites`, `surfaces`, `blockedAccounts`, ...).
+The Swift app stamps `updatedAt` (ms) on every write and re-reads the App Group on foreground; the popup writes through background -> putSharedSettings with a fresh updatedAt.
+`settings.rulesOverride` is a PARTIAL rules object deep-merged over the bundled rules by the engine (objects recurse, arrays/scalars replace), e.g.
+`{ "labels": { "instagram": { "text": ["AI info", "KI-Info"] } } }` adds a localized label string; a `null` value removes a section (adapters then use their documented fallbacks).
 Stats (storage.local key `stats`): `{ "<YYYY-MM-DD>": { "<site>": { "hide": n, "dim": n, "reasons": { "<reason>": n } } } }`.
 
 ## 7. Native messaging protocol (background.js <-> SafariWebExtensionHandler.swift)
@@ -182,5 +218,9 @@ Copy Extension/Resources to dist/chrome; rewrite manifest: `background.service_w
 drop `browser_specific_settings`, prepend `globalThis.browser ??= chrome;` polyfill to each script. Load unpacked for smoke tests.
 
 ## 10. Verification bar before "done"
-`npm test` green · macOS signed build · iOS signed device build · dist/chrome builds · live smoke: inject the content scripts into youtube.com in a browser and
-observe hides/dims with reasons · adversarial review (correctness under virtualization, false-positive risk, Safari-iOS API compatibility) with fixes applied.
+`scripts/test.sh` = `npm test` (node --test "tests/**/*.test.mjs"; a bare `node --test tests/` fails on Node 26) · `npm run build:rules -- --check` ·
+`node --check` on every extension script · `npm run build:chrome` (dist/chrome; exits 1 if a manifest-referenced file is missing) · macOS signed build +
+`node tools/check-bundle.mjs build/NoSlop.app` · iOS signed device build + bundle check (`NOSLOP_SKIP_IOS=1` skips it; `NOSLOP_NO_APP_GROUP=1 scripts/build-ios.sh`
+sideloads without app<->extension sync while the Apple PLA is unaccepted) · live smoke: inject the content scripts into youtube.com in a browser and
+observe hides/dims with reasons (card hides arrive via the watch-HTML prefetch, a second or two after render) · adversarial review (correctness under
+virtualization, false-positive risk, Safari-iOS API compatibility) with fixes applied. Current state: docs/STATUS.md.

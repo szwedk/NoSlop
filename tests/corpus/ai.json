@@ -1,0 +1,2459 @@
+[
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Top 10 abandoned castles you can still visit",
+  "text": "Relaxing tour of forgotten castles across Europe.",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "The ocean at night: 3 hours of calm waves",
+  "text": "Sleep, study or just breathe.",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_36"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "What if Rome never fell?",
+  "text": "An alternate history documentary.",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_watch",
+    "text": "Made with AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_74"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Cat learns to play the piano",
+  "text": "Wait for the ending!",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_watch",
+    "text": "Altered or synthetic content",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Lofi beats to code to",
+  "text": "24/7 chill mix for focus.",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Every country explained in 30 seconds",
+  "text": "Part 12: Portugal",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_22"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "A day in the life of a Victorian chimney sweep",
+  "text": "History told like you were there.",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_watch",
+    "text": "Made with AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_65"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Luxury homes that will leave you speechless",
+  "text": "Episode 44",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_86"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Stoic quotes that will change your morning",
+  "text": "Marcus Aurelius on discipline",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_79"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Gorillas react to a mirror in the jungle",
+  "text": "Nature documentary short",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_watch",
+    "text": "Made with AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_27"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Golden hour in Santorini 🌅",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI info",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_36"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "New collection drop this Friday. Which one is your favourite?",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI info",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_69"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "If my cat ran a bakery",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "Imagined with AI",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Morning coffee and good vibes only ☕",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI-generated profile",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_59"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Outfit of the day. Link in bio.",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI info",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_49"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "A medieval knight ordering at a drive-through",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "Imagined with AI",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Beach day with the family",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI info",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_77"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Mirror selfie before the gym 💪",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI-generated profile",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_77"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "Grandma turned 90 today. Look at that cake!",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "AI info",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_66"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "Can you believe this sunset over the lake?",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "AI info",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_61"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "What Jesus would look like at a county fair",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "Imagined with AI",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_52"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "This soldier carved the whole thing with a pocket knife. Say amen.",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "AI info",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "Look at this log cabin we built with our own hands",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "AI info",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_33"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "The kitchen of my dreams",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "Imagined with AI",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_26"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "Lighthouse in a storm",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_text",
+    "text": "Made with AI",
+    "site": "x"
+   }
+  ],
+  "author": {
+   "handle": "creator_42"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "Elon as a Roman emperor lol",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_grok",
+    "text": "Made with Grok",
+    "site": "x"
+   }
+  ],
+  "author": {
+   "handle": "creator_35"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "Asked about the stock market and got this",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_grok_link"
+   }
+  ],
+  "author": {
+   "handle": "creator_47"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "Her first day at school 🥹",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_text",
+    "text": "Made with AI",
+    "site": "x"
+   }
+  ],
+  "author": {
+   "handle": "creator_49"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "the vibe this weekend",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_grok",
+    "text": "Create your own with Grok",
+    "site": "x"
+   }
+  ],
+  "author": {
+   "handle": "creator_96"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "x",
+  "title": "Street food night market in Osaka",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "x_text",
+    "text": "Made with AI",
+    "site": "x"
+   }
+  ],
+  "author": {
+   "handle": "creator_49"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "POV: you wake up in 1800s London",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_aigc",
+    "text": "AI-generated",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_93"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "Dancing grandma goes viral",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_aigc",
+    "text": "Creator labeled as AI-generated",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_34"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "Cat vs cucumber part 9",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_json",
+    "text": "aigcLabelType",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_81"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "Rate this fit 1-10",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_aigc",
+    "text": "AI-generated",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_15"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "Bigfoot sighting caught on camera",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_json",
+    "text": "moderationAigcLabelType",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "tiktok",
+  "title": "Learn Spanish in 60 seconds: colors",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "tiktok_aigc",
+    "text": "Creator labeled as AI-generated",
+    "site": "tiktok"
+   }
+  ],
+  "author": {
+   "handle": "creator_67"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "linkedin",
+  "title": "Five lessons from my first year as a manager",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "linkedin_text",
+    "text": "Written by AI",
+    "site": "linkedin"
+   }
+  ],
+  "author": {
+   "handle": "creator_10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "reddit",
+  "title": "Cyberpunk Warsaw at dawn",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "reddit_flair",
+    "text": "AI Art",
+    "site": "reddit"
+   }
+  ],
+  "author": {
+   "handle": "creator_55"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "reddit",
+  "title": "My take on a Shire cottage",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "reddit_flair",
+    "text": "AI Generated",
+    "site": "reddit"
+   }
+  ],
+  "author": {
+   "handle": "creator_31"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "youtube",
+  "title": "Baby elephant takes first bath",
+  "text": "So cute 😍",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "youtube_badge",
+    "text": "AI",
+    "site": "youtube"
+   }
+  ],
+  "author": {
+   "handle": "creator_38"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "instagram",
+  "title": "Throwback to Bali 🌴",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "instagram_text",
+    "text": "AI info",
+    "site": "instagram"
+   }
+  ],
+  "author": {
+   "handle": "creator_95"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "labelled",
+  "site": "facebook",
+  "title": "Veteran turns 100, nobody came to his party. Share to wish him happy birthday.",
+  "text": "",
+  "labels": [
+   {
+    "type": "platform_ai",
+    "id": "facebook_text",
+    "text": "AI info",
+    "site": "facebook"
+   }
+  ],
+  "author": {
+   "handle": "creator_96"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "This image was generated with Midjourney. Prompt in comments.",
+  "author": {
+   "handle": "maker0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Made with AI ✨ Took about 40 attempts to get the hands right.",
+  "author": {
+   "handle": "maker1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "AI-generated, not a real place. Still want to go there though.",
+  "author": {
+   "handle": "maker2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Generated this with ChatGPT image gen in about ten minutes. Thoughts?",
+  "author": {
+   "handle": "maker3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "Fully AI short film. Script, voices, visuals — all of it.",
+  "author": {
+   "handle": "maker4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "Created with Sora 2. No real footage, no camera, no crew.",
+  "author": {
+   "handle": "maker5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "This video was made using AI. The dog does not exist.",
+  "author": {
+   "handle": "maker6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Imagined with Meta AI: what my living room would look like as a jungle.",
+  "author": {
+   "handle": "maker7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Written by AI, edited by me. Let me know if the tone works.",
+  "author": {
+   "handle": "maker8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "AI generated portrait of my grandfather based on one old photo.",
+  "author": {
+   "handle": "maker9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "yes it's AI, no I don't care, it looks cool",
+  "author": {
+   "handle": "maker10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "Made with Grok Imagine. Took the prompt from a dream I had.",
+  "author": {
+   "handle": "maker11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "This is AI, by the way. Nobody believes me when I say so.",
+  "author": {
+   "handle": "maker12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "Not real, it's AI. Rendered the whole scene overnight.",
+  "author": {
+   "handle": "maker13"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "The whole thing was generated with Veo 3 — audio included.",
+  "author": {
+   "handle": "maker14"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Synthetic voice, synthetic video, real script.",
+  "author": {
+   "handle": "maker15"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "An artificially generated landscape I keep coming back to.",
+  "author": {
+   "handle": "maker16"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "AI did the heavy lifting here, I just picked the best frame.",
+  "author": {
+   "handle": "maker17"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "Rendered in Flux dev with a custom style. Fully AI, zero stock photos.",
+  "author": {
+   "handle": "maker18"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "Cooked this up with Nano Banana Pro in one go.",
+  "author": {
+   "handle": "maker19"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "100% AI generated. Prompt: a lighthouse made of glass at dawn.",
+  "author": {
+   "handle": "maker20"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Dreamed up with DALL·E 3 and upscaled. No real people were involved.",
+  "author": {
+   "handle": "maker21"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Animated with Kling AI, score made with Suno. Entirely AI.",
+  "author": {
+   "handle": "maker22"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "I generated these with Stable Diffusion last night, which one is best?",
+  "author": {
+   "handle": "maker0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Produced with Runway Gen-4. Everything you see is synthetic media.",
+  "author": {
+   "handle": "maker1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "Narrated by ElevenLabs, visuals by Midjourney. Fully AI documentary.",
+  "author": {
+   "handle": "maker2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "My face, but generated with AI as a 1920s detective.",
+  "author": {
+   "handle": "maker3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "Composed with Udio. AI song, human lyrics.",
+  "author": {
+   "handle": "maker4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Built this trailer with AI. Zero humans involved in the visuals.",
+  "author": {
+   "handle": "maker5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Created with Ideogram — text-to-image finally spells correctly.",
+  "author": {
+   "handle": "maker6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "This is all AI. No actors, no set, no budget.",
+  "author": {
+   "handle": "maker7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Yup, this is AI. Still my favourite thing I made this year.",
+  "author": {
+   "handle": "maker8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "AI-made loop. Pure AI, no editing.",
+  "author": {
+   "handle": "maker9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "Drawn by Midjourney, coloured by Firefly. Entirely AI.",
+  "author": {
+   "handle": "maker10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "Generated by a diffusion model trained on my own sketches.",
+  "author": {
+   "handle": "maker11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Everything here was generated with AI, including the voice.",
+  "author": {
+   "handle": "maker12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "It's AI generated, folks. Please stop asking where this beach is.",
+  "author": {
+   "handle": "maker13"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "Voiced with Synthesia, created with HeyGen. AI avatar, not me.",
+  "author": {
+   "handle": "maker14"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Partly AI: the backgrounds were generated with Imagen 4, the character is mine.",
+  "author": {
+   "handle": "maker15"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "Image made in Leonardo AI. Prompt was \"retro diner on Mars\".",
+  "author": {
+   "handle": "maker16"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "Made this with the help of ChatGPT and DALL-E — AI-generated recipe card.",
+  "author": {
+   "handle": "maker17"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "Our new ad was created using AI. Veo 3.1 did the shots.",
+  "author": {
+   "handle": "maker18"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Ghostwritten by Claude, approved by me.",
+  "author": {
+   "handle": "maker19"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Text-to-video test: a fox running through snow. Generated with Hailuo.",
+  "author": {
+   "handle": "maker20"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "Prompt in comments. Fully AI, no post-processing.",
+  "author": {
+   "handle": "maker21"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Entirely AI-generated music video. Sora for video, Suno for the track.",
+  "author": {
+   "handle": "maker22"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "AI generated the script, AI generated the visuals, I pressed upload.",
+  "author": {
+   "handle": "maker0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "Generated with Grok. Took one try.",
+  "author": {
+   "handle": "maker1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "This clip is AI-generated. Obviously the cat can't actually skateboard.",
+  "author": {
+   "handle": "maker2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "x",
+  "text": "Co-written with GPT-5, so blame the robot for the puns.",
+  "author": {
+   "handle": "maker3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "instagram",
+  "text": "Rendered the entire city using AI. Artificially generated, every brick.",
+  "author": {
+   "handle": "maker4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "facebook",
+  "text": "Imagined with AI: the Eiffel Tower, but made of pasta.",
+  "author": {
+   "handle": "maker5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "youtube",
+  "text": "Made using AI tools: Midjourney for stills, Pika for motion.",
+  "author": {
+   "handle": "maker6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "reddit",
+  "text": "AI image, not a photo. Made with Nano Banana.",
+  "author": {
+   "handle": "maker7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "tiktok",
+  "text": "this one's ai generated btw. prompt was way too long to paste",
+  "author": {
+   "handle": "maker8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "disclosed",
+  "site": "linkedin",
+  "text": "Fully AI concept trailer for a game that does not exist.",
+  "author": {
+   "handle": "maker9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "morning light 🌅 #aiart #midjourney",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "she is not real #aigirl #aimodel #aiinfluencer",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "new drop #aiartcommunity #aiartwork #generativeai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "cozy cabin series, part 4 #aiart",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "what dreams are made of #midjourneyart #aiartist",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "rainy tokyo loop #aivideo #sora2",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "the future of fashion #aifashion #aibeauty #aimodel",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "cinematic test #veo3 #aivideo",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "medieval cats #aiart #stablediffusion",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "first attempt at consistent characters #nanobanana #aiimages",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "dragon over Kraków #aiart #aifantasy",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "retro poster set #ideogram #aiartwork",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "cyber samurai #aianime #aicharacter",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "she said yes #aigenerated",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger13"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "another one for the wall #aiphotography #aiportrait",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger14"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "sunday loops #aianimation #klingai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger15"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "full song, no humans #aimusic #sunoai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger16"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "ancient library at night #aiart #comfyui #sdxl",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "if cars were animals #aiart #dalle3",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "nostalgia core #aiimages #fluxai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "tiny worlds #aiart #midjourneyv7",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "test render #aishorts #aireels",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "The old lighthouse keeper #aistorytelling #aicinema",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "coral city #aigeneratedart #aiartdaily",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "first grok video #grokimagine",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "vibe check #aiedit #aivideos",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "Cottage in the Alps #madewithai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "mood #createdwithai #aiart",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "moody forest #aiphoto #aiimagery",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "queen of the north #aigirls #aiwoman",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "wanderlust #aiart #aiimages #aiartwork #generativeai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger13"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "new workflow finally works #comfyui #civitai #aiart",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger14"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "training montage #aifilm #hunyuanvideo",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger15"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "Paris in 2090 #aiartgallery #midjourneyai",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger16"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "tiktok",
+  "text": "late night render #sora #openaisora",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "facebook",
+  "text": "vintage car ad that never existed #adobefirefly #aiart",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "instagram",
+  "text": "dance test #seedance #aivideo",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "hashtag",
+  "site": "x",
+  "text": "pretty in pink #aibeauty #aigirl",
+  "hashtags": [],
+  "author": {
+   "handle": "tagger3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Sora 2 for the shots, ElevenLabs for the narration, Suno for the music. Took me a weekend.",
+  "author": {
+   "handle": "pipeline0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "Workflow: Midjourney → Kling → Udio. Whole pipeline, one evening.",
+  "author": {
+   "handle": "pipeline1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "Stills in Midjourney, motion in Runway Gen-4, voice from ElevenLabs. Done.",
+  "author": {
+   "handle": "pipeline2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "instagram",
+  "text": "Flux dev for the characters, ComfyUI for consistency, Hailuo for animation.",
+  "author": {
+   "handle": "pipeline3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Pipeline update: Nano Banana for keyframes, Veo 3.1 for video, Suno for the score.",
+  "author": {
+   "handle": "pipeline4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "Character sheet in Ideogram, scenes in Stable Diffusion, animated with Pika Labs.",
+  "author": {
+   "handle": "pipeline5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "DALL-E 3 → Kling AI → ElevenLabs. Full trailer, no filming.",
+  "author": {
+   "handle": "pipeline6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "instagram",
+  "text": "Everything you see: Midjourney v7, Luma Dream Machine, Udio.",
+  "author": {
+   "handle": "pipeline7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Leonardo AI for backgrounds, Nano Banana Pro for edits, Seedance for motion.",
+  "author": {
+   "handle": "pipeline8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "Grok Imagine + Veo 3 + Suno. Two hours start to finish.",
+  "author": {
+   "handle": "pipeline9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "Imagen 4 for the posters, Flux Kontext for edits, Runway ML for the reel.",
+  "author": {
+   "handle": "pipeline10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "instagram",
+  "text": "Shot list: Sora, Hunyuan, Wan 2.2 — stacking all three in one cut.",
+  "author": {
+   "handle": "pipeline0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Made the whole ad in Midjourney, Kling and ElevenLabs. Client happy.",
+  "author": {
+   "handle": "pipeline1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "HeyGen avatar, Synthesia script, Suno jingle. Launch video is live.",
+  "author": {
+   "handle": "pipeline2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "Civitai LoRA, ComfyUI pipeline, Kling for the dance. Took 300 generations.",
+  "author": {
+   "handle": "pipeline3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "instagram",
+  "text": "Nano Banana 2, Veo 3, Udio. The holy trinity for this one.",
+  "author": {
+   "handle": "pipeline4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Stable Diffusion stills + Luma Dream Machine + ElevenLabs voice. #ai",
+  "author": {
+   "handle": "pipeline5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "Midjourney for the look, Pika for the motion, Suno for the hook. #aitools",
+  "author": {
+   "handle": "pipeline6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "Ideogram titles, Hailuo motion, Udio music. Short is up.",
+  "author": {
+   "handle": "pipeline7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "instagram",
+  "text": "Whole sequence: Flux Pro → Runway Gen-3 → ElevenLabs.",
+  "author": {
+   "handle": "pipeline8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "x",
+  "text": "Sora 2 x Suno x HeyGen. No crew, no actors.",
+  "author": {
+   "handle": "pipeline9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "youtube",
+  "text": "Krea AI for upscales, Midjourney for base, Kling for the loop.",
+  "author": {
+   "handle": "pipeline10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "tool",
+  "site": "linkedin",
+  "text": "DALL-E, Pika Labs and Udio did the rest. #generativeai",
+  "author": {
+   "handle": "pipeline0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "Certainly! Here is a catchy caption for your beach photo: \"Sun, sand and zero notifications.\"",
+  "author": {
+   "handle": "bot0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "As an AI language model, I cannot have personal opinions, but here are five reasons to visit Lisbon.",
+  "author": {
+   "handle": "bot1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "I hope this helps! Let me know if you'd like me to adjust the tone.",
+  "author": {
+   "handle": "bot2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "As of my last knowledge update in 2023, the tallest building in the world is the Burj Khalifa.",
+  "author": {
+   "handle": "bot3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "Here's a template for your LinkedIn post about leadership: [Insert personal anecdote] ...",
+  "author": {
+   "handle": "bot4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "Great question! The three pillars of productivity are focus, energy and time. Would you like me to expand on each?",
+  "author": {
+   "handle": "bot5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "I'm sorry, but I can't assist with that request. However, I can help you write a polite follow-up email.",
+  "author": {
+   "handle": "bot6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "Is there anything else you'd like to know about this topic? I'm happy to help.",
+  "author": {
+   "handle": "bot7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "Here is the rewritten version with a more professional tone: Dear [Your Name], thank you for ...",
+  "author": {
+   "handle": "bot8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "Absolutely! Here are 10 Instagram captions for your dog's birthday: 1. Pawty time!",
+  "author": {
+   "handle": "bot9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "Of course! Here is a 300-word blog post about the benefits of morning routines.",
+  "author": {
+   "handle": "bot10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "Up to my last training update, there was no confirmed release date for the sequel.",
+  "author": {
+   "handle": "bot11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "Sure! Here's a more detailed breakdown of the differences between HIIT and steady-state cardio.",
+  "author": {
+   "handle": "bot12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "According to the source contentReference[oaicite:3], the policy came into effect in 2024.",
+  "author": {
+   "handle": "bot0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "Read more here: https://example.com/article?utm_source=chatgpt.com",
+  "author": {
+   "handle": "bot1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "I hope this message finds you well. I am writing to share an exciting opportunity. Let me know if you would like more details.",
+  "author": {
+   "handle": "bot2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "My training data does not include events after that date, so I recommend checking the official site.",
+  "author": {
+   "handle": "bot3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "Feel free to ask if you need more suggestions for your trip to Rome!",
+  "author": {
+   "handle": "bot4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "Let me know if you would like a shorter version for Twitter.",
+  "author": {
+   "handle": "bot5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "As requested, here is the updated caption with emojis: 🌊 Weekend mode: ON. Let me know if you would like a shorter version!",
+  "author": {
+   "handle": "bot6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "[Company Name] is proud to announce our partnership with [Partner Name]. Dated 2025-XX-XX.",
+  "author": {
+   "handle": "bot7"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "I cannot provide that information, but I can offer general guidance on nutrition.",
+  "author": {
+   "handle": "bot8"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "facebook",
+  "text": "As an AI assistant, I don't have access to real-time weather data.",
+  "author": {
+   "handle": "bot9"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "reddit",
+  "text": "Would you like me to generate a few alternative headlines for this article?",
+  "author": {
+   "handle": "bot10"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "linkedin",
+  "text": "I am an AI and do not have feelings, but I understand why this moment is meaningful to you.",
+  "author": {
+   "handle": "bot11"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "residue",
+  "site": "x",
+  "text": "Here's a sample itinerary: Day 1 — arrive and explore the old town. [Add specific restaurants]",
+  "author": {
+   "handle": "bot12"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "masterpiece, best quality, 1girl, cyberpunk street\nNegative prompt: blurry, lowres, bad hands\nSteps: 30, Sampler: DPM++ 2M Karras, CFG scale: 7, Seed: 3141592653",
+  "author": {
+   "handle": "promptdump0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "x",
+  "text": "a lighthouse at dusk, volumetric fog --ar 16:9 --v 7 --stylize 250",
+  "author": {
+   "handle": "promptdump1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "instagram",
+  "text": "Checkpoint: juggernautXL_v9, Sampler: Euler a, Steps: 25, Seed: 88811922, Denoising strength: 0.45",
+  "author": {
+   "handle": "promptdump2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "knight in silver armour, oil painting --niji 6 --ar 2:3",
+  "author": {
+   "handle": "promptdump3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "x",
+  "text": "Workflow JSON in the comments. cfg_scale 5.5, sampler_name dpmpp_2m, steps 28.",
+  "author": {
+   "handle": "promptdump4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "instagram",
+  "text": "<lora:film_grain_v2:0.6> portrait, 85mm, golden hour. Model hash: a1b2c3d4",
+  "author": {
+   "handle": "promptdump5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "prompt: cozy reading nook, rain outside, warm lamp. negative prompt: people, text, watermark",
+  "author": {
+   "handle": "promptdump6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "x",
+  "text": "Seed: 20240101, CFG: 6, Steps: 40. Same prompt as yesterday, different sampler.",
+  "author": {
+   "handle": "promptdump0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "instagram",
+  "text": "forest spirit, bioluminescent --chaos 30 --sref 1234567890 --v 6.1",
+  "author": {
+   "handle": "promptdump1"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "Finally cracked consistent faces. ComfyUI workflow attached, denoise: 0.35.",
+  "author": {
+   "handle": "promptdump2"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "x",
+  "text": "cinematic shot of a train crossing a bridge --ar 21:9 --style raw --v 7",
+  "author": {
+   "handle": "promptdump3"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "instagram",
+  "text": "Negative prompt: deformed, extra fingers, mutated. Steps: 20 Sampler: DDIM CFG scale: 8",
+  "author": {
+   "handle": "promptdump4"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "Lora: pixel_art_v3, weight 0.8. Sampler: Euler, Steps: 35, Seed: 777777",
+  "author": {
+   "handle": "promptdump5"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "x",
+  "text": "Steps: 50, Sampler: DPM++ SDE Karras, CFG scale: 4.5, Seed: 1029384756, Size: 1024x1024",
+  "author": {
+   "handle": "promptdump6"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "instagram",
+  "text": "retro anime girl on a scooter --niji --stylize 800 --ar 3:4",
+  "author": {
+   "handle": "promptdump0"
+  }
+ },
+ {
+  "expect": "hide",
+  "category": "prompt",
+  "site": "reddit",
+  "text": "Prompt used: \"a cathedral made of ice at sunrise\". Sampler: Euler a, Steps: 30, Seed: 555123456.",
+  "author": {
+   "handle": "promptdump1"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "It's not about working harder — it's about working smarter.\n\nMost people don't know this.\n\nHere's the thing: discipline beats motivation every single time.\n\nLet that sink in.\n\nAgree?",
+  "author": {
+   "handle": "guru0"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "In today's fast-paced digital landscape, leveraging actionable insights is crucial. Moreover, a holistic approach fosters synergy across teams. Furthermore, it empowers stakeholders to navigate the complexities of an ever-evolving market.",
+  "author": {
+   "handle": "guru1"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "🚀 5 lessons from building a startup:\n\n✅ Ship fast.\n✅ Listen harder.\n✅ Hire slow.\n✅ Focus on what matters.\n✅ Celebrate small wins.\n\nWhich one resonates with you? 👇",
+  "author": {
+   "handle": "guru2"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "Delve into the intricate tapestry of leadership. At its core, great leadership underscores a testament to meticulous preparation and unwavering resolve. In conclusion, embark on the journey.",
+  "author": {
+   "handle": "guru3"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "Not hustle. Not luck. Just consistency.\n\nShow up. Do the work. Repeat.\n\nThat's it. That's the post.",
+  "author": {
+   "handle": "guru4"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "**Why most people fail at habits**\n\n## The hard part\n\n- They start too big\n- They quit too early\n- They never track\n\n---\n\nKey takeaway: start smaller than feels reasonable.",
+  "author": {
+   "handle": "guru5"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "This changes everything. 🔥\n\nStudies show that 80% of success is showing up. Experts agree: the real unlock is consistency.\n\nSave this post. 📌 Follow for more. 🚀",
+  "author": {
+   "handle": "guru6"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "Leaders don't just manage — they empower, elevate and inspire. It's not just about results, it's about the journey. Thoughts?",
+  "author": {
+   "handle": "guru7"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "In an era of constant noise, the ability to pause is a game-changer. It's worth noting that clarity is a skill. Additionally, it is a testament to discipline. Moving forward, stay tuned for part two.",
+  "author": {
+   "handle": "guru8"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "Less busywork. More impact.\nLess noise. More signal.\nLess talk. More ship.\n\nRead that again.",
+  "author": {
+   "handle": "guru0"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "Here's what nobody tells you about remote work:\n\nThe catch is loneliness.\nThe trick is structure.\nThe real unlock is boundaries.\n\nWho else feels this? 💯",
+  "author": {
+   "handle": "guru1"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "The productivity paradox is real. Research suggests that fewer meetings foster deeper work. Industry reports underscore this: a seamless, robust workflow is non-negotiable in the ever-evolving landscape.",
+  "author": {
+   "handle": "guru2"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "🧵 A thread on focus 👇\n\n1/ Your attention is your most valuable asset.\n\n2/ Protect it meticulously.\n\n3/ Everything else is noise.",
+  "author": {
+   "handle": "guru3"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "Great leaders understand that it's not just about vision, it's about execution. They harness the power of teams, foster a sense of belonging and showcase unwavering commitment. At the end of the day, culture is everything.",
+  "author": {
+   "handle": "guru4"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "Unlock the power of your morning. 🌅\n\n✨ Wake early.\n✨ Move your body.\n✨ Plan the day.\n✨ Win before noon.\n\nDrop a 🔥 if you agree.",
+  "author": {
+   "handle": "guru5"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "Boasting a vibrant, diverse array of cutting-edge features, this platform serves as a comprehensive, best-in-class solution that stands as a testament to innovation. Stay tuned. Exciting times ahead!",
+  "author": {
+   "handle": "guru6"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "Nobody talks about this: the gap between knowing and doing is where most dreams die. Let that sink in. Bookmark this.",
+  "author": {
+   "handle": "guru7"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "It's not a tool, it's a paradigm shift. It's not a feature — it's a revolution. Moreover, it's cutting-edge and groundbreaking. Final thoughts: the future is here.",
+  "author": {
+   "handle": "guru8"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "Most people quit at 90%.\nThe last 10% is where the magic happens.\nDon't quit.\nYou are closer than you think.\nKeep going.",
+  "author": {
+   "handle": "guru0"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "In summary: leverage data, foster trust, streamline processes and enhance outcomes. Notably, a multifaceted strategy is pivotal. Key takeaways below. 👇",
+  "author": {
+   "handle": "guru1"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "Stop scrolling. 🛑\n\nRead that again: your network is your net worth.\n\nTag someone who needs to hear this. 🙌",
+  "author": {
+   "handle": "guru2"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "The hard part isn't starting. The hard part is continuing when nobody is watching. Here's the kicker: nobody is ever watching. Agree?",
+  "author": {
+   "handle": "guru3"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "facebook",
+  "text": "Success isn't a destination, it's a journey. Growth isn't linear, it's messy. Failure isn't the end, it's a lesson. Would love to hear your thoughts.",
+  "author": {
+   "handle": "guru4"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "instagram",
+  "text": "A quietly profound reminder that enduring brands are built on trust. This underscores the pivotal role of consistency and sets the stage for transformative growth. Overall, a key turning point.",
+  "author": {
+   "handle": "guru5"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "linkedin",
+  "text": "Your 20s are for learning.\nYour 30s are for earning.\nYour 40s are for returning.\n\nMost people don't know this. Save for later. 📌",
+  "author": {
+   "handle": "guru6"
+  }
+ },
+ {
+  "expect": "dim",
+  "category": "style",
+  "site": "x",
+  "text": "🔑 Three rules for 2026:\n💡 Say no more often.\n⚡ Protect your mornings.\n🎯 Finish what you start.\n\nRT if you agree. 🚀",
+  "author": {
+   "handle": "guru7"
+  }
+ }
+]

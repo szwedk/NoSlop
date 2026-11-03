@@ -1,0 +1,15 @@
+<!-- NoSlop fixture: instagram/synthetic-explore
+  *** SYNTHETIC *** — NOT a capture (owner: adapter:instagram). The logged-out /explore/ page renders only topic
+  links and ZERO a[href^="/p/"] (instagram/notes.md). Hand-written 2026-11-02 from
+  docs/research/platform-dom-and-ai-labels.md §2.4: explore grid = main[role="main"] > div > div:has(a[href^="/p/"]):not(:has(input));
+  tiles are a[href^="/p/"] / a[href^="/reel/"] holding an <img>. The same tile shape is assumed (UNVERIFIED) for a
+  profile grid; the profile header's "AI-generated profile" label (creators.instagram.com 2026-08-31) is placed in
+  main > header as a whole text node — a HYPOTHESIS. Usernames, ids and alt texts are invented.
+  nodes: 1 main containing 1 header + 1 grid with 4 tiles
+-->
+<main role="main"><div><header><div><h2><span dir="auto">render.farm.ai</span></h2><div><span dir="auto">AI-generated profile</span></div></div></header><div><div role="tablist"><a href="/render.farm.ai/" role="tab">Posts</a><a href="/render.farm.ai/reels/" role="tab">Reels</a></div></div><div>
+<a href="/p/SYNTHE0001/" role="link"><div><img alt="Photo by render.farm.ai on November 01, 2026." src="[stripped]"></div></a>
+<a href="/p/SYNTHE0002/" role="link"><div><img alt="Photo by render.farm.ai on October 30, 2026." src="[stripped]"></div></a>
+<a href="/reel/SYNTHE0003/" role="link"><div><img alt="Photo by render.farm.ai on October 28, 2026." src="[stripped]"></div></a>
+<a href="/p/SYNTHE0004/" role="link"><div><img alt="Photo by render.farm.ai on October 25, 2026." src="[stripped]"></div></a>
+</div></div></main>

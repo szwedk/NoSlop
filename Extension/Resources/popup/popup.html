@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>NoSlop</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="popup" id="popup" data-state="loading">
+
+    <!-- Header: wordmark + master switch -->
+    <header class="header">
+      <div class="brand">
+        <img class="brand__icon" src="../images/icon-48.png" width="24" height="24" alt="">
+        <h1 class="brand__name">NoSlop</h1>
+      </div>
+      <label class="switch" for="master-toggle">
+        <span class="switch__label" id="master-label">On</span>
+        <input class="switch__input" type="checkbox" role="switch" id="master-toggle" aria-describedby="master-hint" checked>
+        <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+      </label>
+    </header>
+    <p class="hint" id="master-hint">Filters AI content on YouTube, X, Instagram, Facebook, TikTok, Reddit and LinkedIn in this browser.</p>
+
+    <!-- Current site -->
+    <section class="card" id="site-card" aria-labelledby="site-title">
+      <div class="card__row">
+        <h2 class="card__title" id="site-title">This site</h2>
+        <span class="site-name" id="site-name">—</span>
+      </div>
+      <p class="muted" id="site-unsupported" hidden>Not a supported site. Open youtube.com, x.com, instagram.com, facebook.com, tiktok.com, reddit.com or linkedin.com to filter it.</p>
+      <fieldset class="segmented" id="mode-group">
+        <legend class="sr-only">Filtering mode for this site</legend>
+        <label class="segmented__item"><input type="radio" name="mode" value="strict"><span>Strict</span></label>
+        <label class="segmented__item"><input type="radio" name="mode" value="balanced"><span>Balanced</span></label>
+        <label class="segmented__item"><input type="radio" name="mode" value="off"><span>Off</span></label>
+      </fieldset>
+      <p class="muted mode-hint" id="mode-hint">Balanced hides labelled and disclosed AI content and dims suspicious writing.</p>
+    </section>
+
+    <!-- Today's counts -->
+    <section class="card" aria-labelledby="counts-title">
+      <h2 class="card__title" id="counts-title">Today</h2>
+      <dl class="counts" id="counts">
+        <div class="counts__cell"><dt>Hidden here</dt><dd id="count-site-hide">0</dd></div>
+        <div class="counts__cell"><dt>Dimmed here</dt><dd id="count-site-dim">0</dd></div>
+        <div class="counts__cell"><dt>Hidden total</dt><dd id="count-all-hide">0</dd></div>
+        <div class="counts__cell"><dt>Dimmed total</dt><dd id="count-all-dim">0</dd></div>
+      </dl>
+    </section>
+
+    <!-- Surface toggles -->
+    <section class="card" aria-labelledby="surfaces-title">
+      <h2 class="card__title" id="surfaces-title">Hide whole surfaces</h2>
+      <ul class="toggles" id="surfaces">
+        <li><label class="toggle"><input type="checkbox" data-surface="hideShorts"><span>YouTube Shorts</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-surface="hideReels"><span>Instagram / Facebook Reels</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-surface="hideGrokPosts"><span>Hide Grok posts and promos on X</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-surface="hideTikTokForYou"><span>TikTok For You feed</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-surface="hideAds"><span>Promoted posts and ads</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-surface="hideRedditRecommended"><span>Reddit “recommended” posts</span></label></li>
+      </ul>
+      <ul class="toggles" id="flags">
+        <li><label class="toggle"><input type="checkbox" data-setting="tiktokJsonRelay"><span>Use TikTok's own AI labels from feed data</span></label></li>
+        <li><label class="toggle"><input type="checkbox" data-setting="reelsAutoAdvance"><span>Skip to the next Reel after hiding one</span></label></li>
+      </ul>
+    </section>
+
+    <!-- Recently hidden on this tab -->
+    <section class="card" aria-labelledby="recent-title">
+      <div class="card__row">
+        <h2 class="card__title" id="recent-title">Hidden on this tab</h2>
+        <button type="button" class="link-btn" id="recent-refresh" aria-label="Refresh the hidden list">Refresh</button>
+      </div>
+      <p class="muted" id="recent-empty">Nothing hidden on this tab yet.</p>
+      <ul class="recent" id="recent-list" aria-live="polite"></ul>
+    </section>
+
+    <!-- Footer: open the app -->
+    <footer class="footer">
+      <a class="btn" id="open-app" href="noslop://open">Open the NoSlop app</a>
+      <p class="muted" id="open-app-hint" hidden>Settings and lists also live in the NoSlop app on this device.</p>
+      <p class="muted version" id="version"></p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </main>
+  <script src="../rules.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

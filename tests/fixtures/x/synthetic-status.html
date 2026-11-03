@@ -1,0 +1,21 @@
+<!-- NoSlop fixture: x/synthetic-status
+  *** SYNTHETIC *** — NOT a capture (owner: adapter:x agent, written 2026-11-02). A /<handle>/status/<id> page:
+  the opened ("focal") tweet is article[data-testid="tweet"][tabindex="-1"] (Control Panel for Twitter script.js
+  lines 4552/4612/4637 use exactly that selector; Stevoisiak GenAI-Blocklist lines 4906-4916 exclude it with
+  :not([tabindex="-1"])), followed by reply cells with tabindex="0". Same cell / article / tweetText / User-Name
+  hooks as x/synthetic-feed.html (research §2.1). The "Made with AI" row in reply r2 is a HYPOTHESIS (research §1.3).
+  All handles, ids and texts are invented.
+  Cells (3): focal (@op_one, skipped by the adapter) · r1 plain reply · r2 reply with "Made with AI" text
+-->
+<div id="layers"></div>
+<div style="display:flex;flex-direction:row">
+<div data-testid="primaryColumn"><section aria-labelledby="accessible-list-1" role="region"><h1 id="accessible-list-1" dir="ltr" role="heading" aria-level="1">Conversation</h1><div aria-label="Timeline: Conversation"><div>
+
+<div data-testid="cellInnerDiv" data-fx="focal"><div><div><article data-testid="tweet" role="article" aria-labelledby="id__f" tabindex="-1"><div><div data-testid="User-Name"><div><a href="/op_one" role="link"><span>OP One</span></a></div><div><a href="/op_one" role="link" tabindex="-1"><span>@op_one</span></a></div></div><div data-testid="tweetText" lang="en" dir="auto"><span>this clip is AI-generated, what do you think</span></div><div data-testid="videoPlayer"><video src="[stripped]" preload="none"></video></div><div><a href="/op_one/status/3000000000000000001" role="link"><time datetime="2026-11-02T10:00:00.000Z">10:00 AM · Nov 2, 2026</time></a></div></div></article></div></div></div>
+
+<div data-testid="cellInnerDiv" data-fx="r1"><div><div><article data-testid="tweet" role="article" aria-labelledby="id__r1" tabindex="0"><div><div data-testid="User-Name"><div><a href="/reply_one" role="link"><span>Reply One</span></a></div><div><a href="/reply_one" role="link" tabindex="-1"><span>@reply_one</span></a><span aria-hidden="true">·</span><a href="/reply_one/status/3000000000000000002" role="link"><time datetime="2026-11-02T10:05:00.000Z">5m</time></a></div></div><div data-testid="tweetText" lang="en" dir="auto"><span>looks fake to me tbh</span></div></div></article></div></div></div>
+
+<div data-testid="cellInnerDiv" data-fx="r2"><div><div><article data-testid="tweet" role="article" aria-labelledby="id__r2" tabindex="0"><div><div data-testid="User-Name"><div><a href="/reply_two" role="link"><span>Reply Two</span></a></div><div><a href="/reply_two" role="link" tabindex="-1"><span>@reply_two</span></a><span aria-hidden="true">·</span><a href="/reply_two/status/3000000000000000003" role="link"><time datetime="2026-11-02T10:07:00.000Z">3m</time></a></div></div><div data-testid="tweetText" lang="en" dir="auto"><span>here is my version</span></div><div data-testid="tweetPhoto"><img alt="Image" src="[stripped]"></div><div><span>Made with AI</span></div></div></article></div></div></div>
+
+</div></div></section></div>
+</div>
