@@ -19,9 +19,7 @@ Owner: integration pass. This is the honest state of the codebase after merging 
 
 `scripts/test.sh` runs all of the above in order (`NOSLOP_SKIP_IOS=1` skips the device build).
 
-**Not done:** the live smoke on a real youtube.com tab in Safari/Chrome (DESIGN §10) — nobody in this swarm had a browser
-session on the real sites; the fixtures are the evidence. Expect card hides on youtube.com to appear a second or two
-after render (they come from the watch-HTML prefetch), not instantly.
+**Live smoke:** done after this pass on real www.youtube.com, m.youtube.com and tiktok.com pages (Browser pane, scripts injected into the page world, no extension install) and on the real reddit captures in jsdom; see `tests/live/REPORT.md`. It found and fixed one engine bug (stub built with innerHTML broke under YouTube's Trusted Types CSP). x.com / instagram.com / facebook.com / linkedin.com need a logged-in Safari session and are still unverified live. Expect card hides on youtube.com to appear a second or two after render (they come from the watch-HTML prefetch), not instantly.
 
 ## 2. What is VERIFIED against real DOM (captures in tests/fixtures, logged out, 2026-11-02)
 
@@ -102,9 +100,10 @@ after render (they come from the watch-HTML prefetch), not instantly.
 
 1. **iOS signed build with App Groups** is blocked until the Apple PLA is accepted (account holder action). The
    sideload build works but app↔extension settings sync is off there.
-2. **No live smoke on real pages** (Safari or Chrome). Everything above is fixture/jsdom evidence. First live run should
-   check: youtube.com card hides via prefetch, x.com "Made with AI" placement, instagram.com `AI info` placement,
-   tiktok.com relay injection (`<script data-noslop-tiktok-main>` 200 vs 404), reddit.com flair hides.
+2. **Live smoke in Safari with the extension installed** is still outstanding (the page-world smoke in `tests/live/REPORT.md` covered
+   youtube.com, m.youtube.com, tiktok.com logged out and the reddit captures). First Safari run should check: x.com "Made with AI"
+   placement, instagram.com `AI info` placement, tiktok.com relay injection (`<script data-noslop-tiktok-main>` 200 vs 404),
+   reddit.com flair hides, and that Safari's isolated world is not subject to the page's Trusted Types policy.
 3. **Instagram localized label strings**: the requested editable "Instagram AI label text" list UI is not built; the
    mechanism exists (`settings.rulesOverride.labels.instagram.text`, deep-merged) and the app's Lists tab could expose it.
 4. **X**: posts BY @grok are seed-blocked (`accounts.x.block`) even when `surfaces.hideGrokPosts` is off (test asserts

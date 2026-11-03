@@ -15,12 +15,12 @@ Safari on your device.
 - **Private Browsing** needs its own per-extension toggle (see below) — otherwise NoSlop is off in private tabs.
 - **What is detected:** platform AI labels (YouTube "Altered or synthetic" / "How this content was made", Meta
   "AI info" / "Imagined with AI", TikTok's AI-generated tag, X "Made with AI" and Grok links), self-disclosure
+  ("made with Midjourney"), AI hashtags, tool names, chatbot residue, your blocked accounts and seed lists.
+  These are high-precision and can **hide** a post.
   Two caveats: on Facebook, Meta moved the "AI info" label for AI-*edited* posts into the "…" menu (Sept 2024), so only
   posts whose label is shown inline (AI-generated) are caught; on a non-English Instagram/Facebook UI the label text differs
   ("KI-Info" in German, for example) and NoSlop's label matching has no recall until the localized string is added
   (hashtags, self-disclosure and blocked accounts still work).
-  ("made with Midjourney"), AI hashtags, tool names, chatbot residue, your blocked accounts and seed lists.
-  These are high-precision and can **hide** a post.
 - **Style tells** (listicle rhythm, engagement bait, "let that sink in", em-dash salad…) are low-precision and
   can only **dim** a post, never hide it. Unlabelled, undisclosed AI images cannot be reliably detected
   on-device in 2026 — NoSlop does not pretend otherwise.
