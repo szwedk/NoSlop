@@ -1,5 +1,5 @@
 <!-- NoSlop fixture: x/synthetic-timeline
-  *** SYNTHETIC *** — NOT a capture. x.com shows only a login dialog when logged out (see x/notes.md),
+  *** SYNTHETIC ***. NOT a capture. x.com shows only a login dialog when logged out (see x/notes.md),
   so this file is hand-written on 2026-11-02 from the code-verified selector table in
   docs/research/platform-dom-and-ai-labels.md §2.1 (Control Panel for Twitter script.js, HEAD 2026-10-18):
   div[data-testid="primaryColumn"] > section > h1 + div[aria-label] > div  (timeline root, children = items)
@@ -8,7 +8,7 @@
   a[href^="/i/grok/share/"], svg[data-testid="icon-verified"].
   Element nesting between cellInnerDiv and article is simplified; real pages have more anonymous divs.
   The "Made with AI" label placement (cell 3) is a HYPOTHESIS (research §1.3: text near the timestamp /
-  socialContext row) — UNVERIFIED. Handles and text are invented.
+  socialContext row), UNVERIFIED. Handles and text are invented.
   nodes: 1 primaryColumn containing 3 cellInnerDiv
 -->
 <div data-testid="primaryColumn"><section aria-labelledby="accessible-list-0" role="region"><h1 id="accessible-list-0" dir="ltr" role="heading" aria-level="1">Your Home Timeline</h1><div aria-label="Timeline: Your Home Timeline"><div>

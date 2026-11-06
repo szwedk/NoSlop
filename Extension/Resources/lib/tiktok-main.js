@@ -1,4 +1,4 @@
-// NoSlop — TikTok MAIN-world JSON relay (owner: adapter:tiktok). Plain classic script, NO NoSlop namespace:
+// NoSlop — TikTok MAIN-world JSON relay. Plain classic script, NO NoSlop namespace:
 // it runs in the PAGE world, injected by adapters/tiktok.js as <script src="browser.runtime.getURL('lib/tiktok-main.js')">
 // (needs manifest web_accessible_resources: lib/tiktok-main.js for *://*.tiktok.com/*). Safari's manifest `world`
 // key is unreliable (docs/research/ios-safari-extension-limits.md §1), hence the element injection.

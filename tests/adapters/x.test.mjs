@@ -1,4 +1,4 @@
-// Tests for Extension/Resources/adapters/x.js (owner: adapter:x agent).
+// Tests for Extension/Resources/adapters/x.js.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/adapters/x.test.mjs
 // Fixtures are SYNTHETIC (tests/fixtures/x/synthetic-*.html): x.com is login-walled, see tests/fixtures/x/notes.md.
 import { test, describe, afterEach } from 'node:test';

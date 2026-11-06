@@ -1,4 +1,4 @@
-// NoSlop — x.com / twitter.com adapter (owner: adapter:x agent). Plain classic script, no modules.
+// NoSlop — x.com / twitter.com adapter. Plain classic script, no modules.
 // Contract: adapters/_template.js + docs/DESIGN.md §4. Registers via NoSlop.adapters.register(adapter).
 //
 // Selectors come from NoSlop.rules.sites.x (docs/research/platform-dom-and-ai-labels.md §2.1, all [2026-code]

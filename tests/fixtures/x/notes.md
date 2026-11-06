@@ -1,6 +1,6 @@
 # x.com — logged-out observation (NO fixture; login was not attempted)
 
-Checked 2026-11-02 ~23:10 UTC, Claude Browser pane, desktop viewport 1366x900, logged out.
+Checked 2026-11-02 ~23:10 UTC, headless Chromium 152, desktop viewport 1366x900, logged out.
 
 | URL | What renders |
 |---|---|

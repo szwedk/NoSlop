@@ -1,4 +1,4 @@
-// Tests for adapters/tiktok.js + lib/tiktok-main.js (owner: adapter:tiktok).
+// Tests for adapters/tiktok.js + lib/tiktok-main.js.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/adapters/tiktok.test.mjs
 // REAL fixtures: tests/fixtures/tiktok/*.html (captured 2026-11-02, see notes.md). Everything built by the
 // helpers below (fyArticle / exploreCard / aigc markup / relay payloads) is *** SYNTHETIC ***: modelled on the

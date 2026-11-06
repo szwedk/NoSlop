@@ -1,4 +1,4 @@
-// NoSlop — instagram.com adapter (owner: adapter:instagram). Plain classic script, no modules.
+// NoSlop — instagram.com adapter. Plain classic script, no modules.
 // Runs in Safari 17+ (iOS/macOS) and Chrome 121+. Contract: adapters/_template.js + docs/DESIGN.md §4.
 //
 // Selectors come from NoSlop.rules.sites.instagram, which is seeded from

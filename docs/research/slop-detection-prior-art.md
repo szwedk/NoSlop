@@ -4,7 +4,7 @@ Research date: 2026-11-02. Target: iPhone + Mac app (Xcode 26.6, iOS/macOS 26.5 
 
 Legend: **VERIFIED** = read from the primary source (fetched page, downloaded file, API). **LIKELY** = from a secondary source or a search snippet quoting the primary. **UNVERIFIED** = could not confirm.
 
-Downloaded source files are in `/private/tmp/claude-501/-Users-kamilszwed-Documents-Claude-Projects/a998e563-75d3-445b-b05e-4e221b462c87/scratchpad/research/dl/` (lexicon JS files, filter lists, berenslab CSV, c2pa WASM).
+Third-party projects and licences are listed in [SOURCES.md](SOURCES.md); no third-party source files are stored here.
 
 ---
 

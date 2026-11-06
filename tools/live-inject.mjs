@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// NoSlop — live-smoke injector (owner: live-smoke agent; docs/DESIGN.md §10 "live smoke").
+// NoSlop — live-smoke injector (docs/DESIGN.md §10 "live smoke").
 //
 // Builds ONE injectable bundle out of the real content-script chain so the engine + adapters can be
 // exercised on a REAL page (youtube.com, m.youtube.com, reddit.com, tiktok.com, …) from a browser's
 // JavaScript console / CDP without installing the extension. Nothing here is loaded by the extension.
 //
-//   node tools/live-inject.mjs                    -> /tmp/claude-501/noslop-live.js (+ noslop-live.part-NN.js chunks)
+//   node tools/live-inject.mjs                    -> $TMPDIR/noslop-live.js (+ noslop-live.part-NN.js chunks)
 //   node tools/live-inject.mjs --out FILE         -> write the bundle elsewhere
 //   node tools/live-inject.mjs --serve [PORT]     -> also serve the bundle on http://127.0.0.1:PORT/noslop-live.js
 //                                                   with `Access-Control-Allow-Origin: *` so a page can
@@ -32,13 +32,14 @@
 //
 // Plain ESM Node script (Node 20+), no dependencies.
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const RESOURCES = path.join(ROOT, 'Extension/Resources');
-export const DEFAULT_OUT = '/tmp/claude-501/noslop-live.js';
+export const DEFAULT_OUT = path.join(os.tmpdir(), 'noslop-live.js');
 export const DEFAULT_PORT = 8765;
 export const HOST_FILE = 'lib/host-extension.js';
 export const CHUNK_LIMIT = 90 * 1024; // bytes per part file (a part never splits a script; a big script is its own part)
@@ -315,7 +316,7 @@ export function receiverSnippet(port = DEFAULT_PORT) {
     " b.onclick = () => { window.open('http://127.0.0.1:" + port + "/relay.html', 'noslop-relay', 'popup,width=420,height=160'); }; })();";
 }
 
-/** Hash mode (the transport that WORKS in the Claude Browser pane on youtube.com): navigate the tab to
+/** Hash mode (the transport that works in a CDP-driven browser on youtube.com): navigate the tab to
  *  http://127.0.0.1:PORT/relay.html?mode=hash&target=<encoded target url>; the relay forwards to the target with
  *  #noslop=<url-safe base64 of the bundle>. Then run this in the target page: it decodes the fragment (from
  *  location.hash, or the navigation entry if the SPA already rewrote the URL), evals via Trusted Types, cleans the URL. */
@@ -376,7 +377,7 @@ if (isMain) {
       console.log(`[live-inject] page loader (direct fetch; refused on youtube.com by Chrome LNA):\n  ${loaderSnippet(port)}`);
       console.log(`[live-inject] relay receiver (paste in the target page, then click the yellow button):\n  ${receiverSnippet(port)}`);
       console.log(`[live-inject] relay eval (after the popup says delivered):\n  ${evalSnippet()}`);
-      console.log(`[live-inject] HASH MODE (works in the Claude Browser pane): navigate to\n  ${hashUrl('https://www.youtube.com/results?search_query=made+with+veo+3+ai+generated', port)}\n  then run in the page:\n  ${hashEvalSnippet()}`);
+      console.log(`[live-inject] HASH MODE (works in a CDP-driven browser): navigate to\n  ${hashUrl('https://www.youtube.com/results?search_query=made+with+veo+3+ai+generated', port)}\n  then run in the page:\n  ${hashEvalSnippet()}`);
     }
     if (doServe) {
       serve(out, port);

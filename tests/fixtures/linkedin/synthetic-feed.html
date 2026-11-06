@@ -1,11 +1,11 @@
 <!-- NoSlop fixture: linkedin/synthetic-feed
-  *** SYNTHETIC *** — NOT a capture. linkedin.com/feed redirects to the login page when logged out (see linkedin/notes.md).
+  *** SYNTHETIC ***. NOT a capture. linkedin.com/feed redirects to the login page when logged out (see linkedin/notes.md).
   Hand-written 2026-11-02 from docs/research/platform-dom-and-ai-labels.md §2.8 (better-linkedin content-feed.js,
   HEAD 2026-10-19): div[data-testid="mainFeed"], post = [role="listitem"][componentkey^="update-card-focus"],
   body = span[data-testid="expandable-text-box"]; "Promoted" as span text (older Ember-era observation, still the
   best known hook). The actor link shape (a[href^="https://www.linkedin.com/in/"]) is a HYPOTHESIS. The C2PA icon is
   UNVERIFIED and not modelled. Names and text are invented. Post 3 is written in the "AI slop" style on purpose
-  (contrast pivot, emoji bullets, engagement-bait closer) for scorer tests — it carries NO platform label.
+  (contrast pivot, emoji bullets, engagement-bait closer) for scorer tests, it carries NO platform label.
   nodes: 1 mainFeed containing 3 listitem
 -->
 <main aria-label="Main Feed"><div data-testid="mainFeed"><div role="list">

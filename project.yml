@@ -1,4 +1,4 @@
-# NoSlop — XcodeGen spec (owner: swift-app agent). Regenerate with `xcodegen generate`.
+# NoSlop — XcodeGen spec. Regenerate with `xcodegen generate`.
 # Four targets: iOS app + iOS Safari extension, macOS app + macOS Safari extension.
 # All four share the App Group group.com.szwedk.noslop (settings/stats JSON in UserDefaults).
 name: NoSlop

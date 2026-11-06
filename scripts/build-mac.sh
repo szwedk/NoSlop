@@ -6,7 +6,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIG="${CONFIG:-Debug}"
-DD="${DERIVED_DATA:-/tmp/claude-501/noslop-dd-mac}"
+DD="${DERIVED_DATA:-${TMPDIR:-/tmp}/noslop-dd-mac}"
 cd "$ROOT"
 
 echo "==> xcodegen generate"

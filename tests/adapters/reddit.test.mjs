@@ -1,4 +1,4 @@
-// Tests for Extension/Resources/adapters/reddit.js (owner: adapter:reddit).
+// Tests for Extension/Resources/adapters/reddit.js.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/adapters/reddit.test.mjs
 // Real fixtures: tests/fixtures/reddit/*.html (server-rendered shreddit light DOM, see notes.md there).
 // Everything built by post()/ad()/oldThing() below is *** SYNTHETIC *** markup: it reuses the attribute names,

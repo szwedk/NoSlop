@@ -1,4 +1,4 @@
-// Validates the DOM fixtures in tests/fixtures/** (owner: fixtures agent).
+// Validates the DOM fixtures in tests/fixtures/**.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/fixtures/
 // Every assertion here was checked against the live page on 2026-11-02; see <site>/notes.md.
 import { test } from 'node:test';

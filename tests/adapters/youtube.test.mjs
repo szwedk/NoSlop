@@ -1,4 +1,4 @@
-// Tests for Extension/Resources/adapters/youtube.js (owner: adapter:youtube agent).
+// Tests for Extension/Resources/adapters/youtube.js.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/adapters/youtube.test.mjs
 // Fixtures are the REAL 2026-11-02 captures in tests/fixtures/youtube (www) and tests/fixtures/myoutube (m.).
 // Card-level "AI" badges were not observed on any real card that day, so the badge cases below inject a badge

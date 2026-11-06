@@ -1,4 +1,4 @@
-// NoSlop — tiktok.com adapter (owner: adapter:tiktok). Plain classic script; contract: adapters/_template.js, docs/DESIGN.md §4.
+// NoSlop — tiktok.com adapter. Plain classic script; contract: adapters/_template.js, docs/DESIGN.md §4.
 //
 // Surfaces: For You (/, /foryou), Following (/following), Explore (/explore), Search (/search), video pages
 // (/@user/video/<id>) and profiles (/@user). Selectors come from NoSlop.rules.sites.tiktok; every key that

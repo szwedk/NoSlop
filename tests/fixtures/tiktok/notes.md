@@ -1,6 +1,6 @@
 # tiktok.com fixtures — capture notes
 
-Captured 2026-11-02 (UTC ~23:00) with the Claude Browser pane (Chromium 152, logged out,
+Captured 2026-11-02 (UTC ~23:00) with headless Chromium 152, logged out,
 viewport 1366x900). Real DOM, cloned and stripped (svg/style/script/iframe/noscript/template/link
 removed, `style`/`srcset`/`tabindex` attrs removed, `data:` URIs replaced by `[stripped]`,
 whitespace collapsed). No personal data: the session was never logged in.

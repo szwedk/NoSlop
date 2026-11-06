@@ -1,7 +1,7 @@
 # m.youtube.com fixtures — capture notes
 
-Captured 2026-11-02 22:57–23:03 UTC with the Claude Browser pane in the **mobile preset**
-(375x812, Android 14 / Pixel 8 Chrome 152 Mobile UA — the pane cannot emulate iOS Safari; the
+Captured 2026-11-02 22:57–23:03 UTC with headless Chromium 152 in a **mobile emulation preset**
+(375x812, Android 14 / Pixel 8 Chrome 152 Mobile UA — the harness cannot emulate iOS Safari; the
 `ytm-*` DOM is the same app Safari on iPhone gets), logged out, then reset to desktop. Same stripping
 as the desktop fixtures. Each file has a comment header with url/timestamp/viewport.
 

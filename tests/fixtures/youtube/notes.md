@@ -1,7 +1,7 @@
 # youtube.com (desktop) fixtures — capture notes
 
-Captured 2026-11-02 22:49–23:20 UTC with the Claude Browser pane (Chromium 152 UA
-`Claude/4.4212.0 Chrome/152.0.7977.167`), **logged out**, viewport emulated at 1366x900, dark theme.
+Captured 2026-11-02 22:49–23:20 UTC with headless Chromium 152 (UA
+`Chrome/152.0.7977.167`), **logged out**, viewport emulated at 1366x900, dark theme.
 Real DOM: `node.cloneNode(true)` then svg/style/script/iframe/noscript/template/link removed,
 `style`/`srcset`/`tabindex`/`draggable`/`nonce`/`jsaction` attrs removed, `data:`/base64/>1500-char
 attribute values replaced by `[stripped]`, comments dropped, whitespace collapsed. Every file starts

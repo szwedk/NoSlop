@@ -1,4 +1,4 @@
-// adapters/facebook.js tests (owner: adapter:facebook). jsdom via tests/helpers/load.mjs.
+// adapters/facebook.js tests. jsdom via tests/helpers/load.mjs.
 // Fixtures: tests/fixtures/facebook/synthetic-feed.html (fixtures agent) and synthetic-feed-cases.html (ours).
 // Both are SYNTHETIC (facebook.com is a login wall when logged out — see tests/fixtures/facebook/notes.md).
 import { test, describe, afterEach } from 'node:test';

@@ -1,4 +1,4 @@
-// adapters/instagram.js tests (owner: adapter:instagram). Fixtures are SYNTHETIC (tests/fixtures/instagram/*.html):
+// adapters/instagram.js tests. Fixtures are SYNTHETIC (tests/fixtures/instagram/*.html):
 // instagram.com is a login wall when logged out, so markup is hand-built from research §2.4 and marked as such.
 // Run: cd /Users/kamilszwed/Projects/NoSlop && node --test tests/adapters/instagram.test.mjs
 import { test, describe, afterEach } from 'node:test';

@@ -1,7 +1,7 @@
 # Platform feed DOM + AI-disclosure signals (web), as of 2026-11-02
 
 Scope: instagram.com, x.com, youtube.com (+ m.youtube.com), facebook.com, tiktok.com, reddit.com, linkedin.com.
-Method: primary platform docs/blogs via WebFetch; selectors pulled from the CURRENT source of actively maintained extensions/userscripts (downloaded to `scratchpad/research/repos/`), with repo + file + commit date recorded. Anything not confirmed from a primary source or live code is marked **UNVERIFIED**.
+Method: primary platform docs and blogs; selectors pulled from the CURRENT source of actively maintained extensions/userscripts (see SOURCES.md), with repo + file + commit date recorded. Anything not confirmed from a primary source or live code is marked **UNVERIFIED**.
 
 Source snapshots used (HEAD commit dates fetched from the GitHub API on 2026-11-02):
 

@@ -1,23 +1,23 @@
 <!-- NoSlop fixture: linkedin/synthetic-feed-labels
-  *** SYNTHETIC *** — NOT a capture. linkedin.com/feed redirects to the login page when logged out (see linkedin/notes.md).
-  Hand-written 2026-11-02 by the adapter:linkedin agent from docs/research/platform-dom-and-ai-labels.md §2.8
+  *** SYNTHETIC ***. NOT a capture. linkedin.com/feed redirects to the login page when logged out (see linkedin/notes.md).
+  Hand-written 2026-11-02 from docs/research/platform-dom-and-ai-labels.md §2.8
   (better-linkedin content-feed.js HEAD 2026-10-19; Greasy Fork 551021 v1.1.4) to exercise adapters/linkedin.js:
     div[data-testid="mainFeed"] > [role="list"] > [role="listitem"][componentkey^="update-card-focus-urn:li:activity:N"]
     body = span[data-testid="expandable-text-box"]; actor = a[href*="/in/"] | a[href*="/company/"] (link shape is a HYPOTHESIS).
   Cards (all names, URNs and text are invented):
     L101 plain human post with topic hashtags, avatar <img> inside the actor link (must NOT count as post media)
-    L102 image post carrying a C2PA "Content credentials" button — HYPOTHESIS: the icon DOM is UNVERIFIED (§1.6 / §5 item 5);
+    L102 image post carrying a C2PA "Content credentials" button. HYPOTHESIS: the icon DOM is UNVERIFIED (§1.6 / §5 item 5);
          it marks provenance, so NoSlop scores it at c2paScore (0.6 = dim), never as a 1.5 platform label
-    L103 post with a platform "Created with AI" text label OUTSIDE the body — HYPOTHESIS: LinkedIn has no verified
+    L103 post with a platform "Created with AI" text label OUTSIDE the body. HYPOTHESIS: LinkedIn has no verified
          per-post AI text label; the string is from rules.labels.linkedin.text (0xBapen label list, facts only)
-    L104 self-disclosed AI image post (tier 1: disclosure + #aiart + tool name) — no platform label
-    L105 "AI slop" style post (vocab, contrast pivot, closer) — no platform label, must only DIM
+    L104 self-disclosed AI image post (tier 1: disclosure + #aiart + tool name), no platform label
+    L105 "AI slop" style post (vocab, contrast pivot, closer), no platform label, must only DIM
     L106 loading skeleton: componentkey without a URN, no body text
     L107 the new DOM's "…more" as a <button> inside the body (must be stripped from the text) + a @mention link
          inside the body (must NOT become the author) + <br> line breaks
   Old Ember DOM block (outside mainFeed): O201 .feed-shared-update-v2[role="article"] with data-urn / data-id, a social
     header link ABOVE the actor, .update-components-actor__* classes, .feed-shared-update-v2__description with the
-    "…more" toggle and .visually-hidden duplicates, and span[aria-hidden="true"]Promoted — class names other than the
+    "…more" toggle and .visually-hidden duplicates, and span[aria-hidden="true"]Promoted; class names other than the
     §2.8 ones are from memory of the 2024–25 Ember DOM and UNVERIFIED by the research pack.
   nodes: 1 mainFeed containing 7 listitem; 1 old-DOM article
 -->

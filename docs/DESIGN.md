@@ -1,57 +1,55 @@
-# NoSlop — engineering contract (v1)
+# NoSlop architecture and contracts
 
-NoSlop removes AI-generated content and "AI slop" from social feeds. It ships as ONE codebase:
-an iPhone app and a Mac app, each containing the same Safari Web Extension (plain JS, no bundler),
-plus a Chrome build of the same extension folder. No backend, no ML model in v1.
+NoSlop removes AI-generated content and "AI slop" from social feeds. One codebase: an iPhone app and a
+Mac app, each containing the same Safari Web Extension (plain JS, no bundler), plus a Chrome build of
+the same extension folder. No backend, no ML model in v1.
 
-## 0. The honest ceiling (put this in onboarding, never hide it)
-- On iPhone, Apple gives no app any way to see or change what the native Instagram / X / YouTube
-  apps show. NoSlop filters those sites **in Safari** (instagram.com, x.com, m.youtube.com).
-  Home-Screen web apps do NOT run extensions on iOS; Private Browsing needs a per-extension toggle.
-  The "nuclear option" is a Screen Time shield on the native app so the user opens Safari instead.
-- On Mac, X / Instagram / YouTube have no native apps, so Safari (and the Chrome build) IS everything.
+## 0. The honest ceiling (stated in onboarding, never hidden)
+- On iPhone, no app can see or change what the native Instagram / X / YouTube apps show. NoSlop
+  filters those sites **in Safari** (instagram.com, x.com, m.youtube.com). Home-Screen web apps do
+  not run extensions on iOS; Private Browsing needs a per-extension toggle. The "nuclear option" is a
+  Screen Time shield on the native app so the user opens Safari instead.
+- On Mac, X / Instagram / YouTube have no native apps, so Safari (and the Chrome build) is everything.
 - Only platform labels (YouTube AI badge / "how this was made", Meta "AI info", TikTok aigc tag,
   X "Made with AI" + Grok links) and self-disclosure are high-precision. Style heuristics only DIM,
   never hide. Unlabelled, undisclosed AI images cannot be reliably detected on-device in 2026.
 
-## 1. Repository layout and file ownership
+## 1. Repository layout
 ```
-project.yml                     XcodeGen spec (owner: swift-app agent; others report needed changes)
+project.yml                     XcodeGen spec
 package.json                    node --test + jsdom
 Extension/
-  Shared/SafariWebExtensionHandler.swift   native handler (owner: swift-app)
+  Shared/SafariWebExtensionHandler.swift   native handler
   Resources/                    THE web extension folder (Safari manifest). Plain scripts, no modules.
-    manifest.json               Safari: background.scripts + persistent:false  (owner: core)
-    rules.json                  canonical data: selectors, labels, lexicon, seeds (owner: core; adapters may APPEND to sites.<site>)
-    rules.js                    generated from rules.json by `npm run build:rules`; committed (owner: core)
-    lib/host-extension.js       host shim for the extension runtime (owner: core)
-    lib/scorer.js               pure scoring (owner: core)
-    lib/engine.js               observer/pipeline/hiding/caching/stats + the popup's tab messages (owner: core)
-    lib/host-webview.js         host shim for the in-app Clean Feeds WKWebView (owner: swift-app); loaded FIRST there, host-extension.js is not loaded
-    lib/tiktok-main.js          PAGE-world JSON relay for tiktok.com (owner: adapter:tiktok); manifest web_accessible_resources, never a content script, never polyfilled
-    lib/dom.js                  small DOM helpers: text(), closest(), visible(), hashtags() (owner: core)
-    adapters/<site>.js          one per site (owner: that adapter agent)
-    content.js                  bootstrap: pick adapter by hostname, start engine (owner: core)
-    content.css                 stub + dim styles (owner: core)
-    background.js               settings sync, native bridge, fetch proxy, stats (owner: core)
-    popup/popup.html|js|css     extension UI (owner: popup agent)
+    manifest.json               Safari: background.scripts + persistent:false
+    rules.json                  canonical data: selectors, labels, lexicon, seeds (adapters append to sites.<site>)
+    rules.js                    generated from rules.json by `npm run build:rules`; committed
+    lib/host-extension.js       host shim for the extension runtime
+    lib/scorer.js               pure scoring
+    lib/engine.js               observer/pipeline/hiding/caching/stats + the popup's tab messages
+    lib/host-webview.js         host shim for the in-app Clean Feeds WKWebView; loaded FIRST there, host-extension.js is not loaded
+    lib/tiktok-main.js          PAGE-world JSON relay for tiktok.com; manifest web_accessible_resources, never a content script, never polyfilled
+    lib/dom.js                  small DOM helpers: text(), closest(), visible(), hashtags()
+    adapters/<site>.js          one per site
+    content.js                  bootstrap: pick adapter by hostname, start engine
+    content.css                 stub + dim styles
+    background.js               settings sync, native bridge, fetch proxy, stats
+    popup/popup.html|js|css     extension UI
     images/icon-*.png
-App/Shared/*.swift              SwiftUI app shared by iOS+macOS (owner: swift-app)
-App/iOS, App/macOS              platform bits (owner: swift-app)
-tools/build-rules.mjs           rules.json -> rules.js (owner: core)
-tools/build-chrome.mjs          Extension/Resources -> dist/chrome (service_worker manifest, polyfill) (owner: chrome agent)
-tools/check-bundle.mjs          verifies a built .app: one .appex, manifest.json + every referenced file present and identical to Extension/Resources (owner: integration)
-tests/bootstrap.test.mjs        boots the full content-script chain in jsdom for all 8 hostnames incl. m.youtube.com / twitter.com (owner: integration)
-docs/STATUS.md                  what is verified / synthetic / missing (owner: integration)
-scripts/build-mac.sh, build-ios.sh, install-iphone.sh, test.sh (owner: swift-app / integration)
-tests/helpers/load.mjs          jsdom + vm loader for the plain scripts (owner: core)
-tests/<area>.test.mjs           node --test (each agent owns tests for its own files)
-tests/fixtures/<site>/*.html    real captures (youtube, tiktok, reddit) or SYNTHETIC (x, instagram, facebook, linkedin — mark in a README)
-tests/corpus/ai.json, human.json  golden set (owner: core)
+App/Shared/*.swift              SwiftUI app shared by iOS+macOS
+App/iOS, App/macOS              platform bits
+tools/build-rules.mjs           rules.json -> rules.js
+tools/build-chrome.mjs          Extension/Resources -> dist/chrome (service_worker manifest, polyfill)
+tools/check-bundle.mjs          verifies a built .app: one .appex, manifest.json + every referenced file present and identical to Extension/Resources
+tests/bootstrap.test.mjs        boots the full content-script chain in jsdom for all 8 hostnames incl. m.youtube.com / twitter.com
+tests/helpers/load.mjs          jsdom + vm loader for the plain scripts
+tests/<area>.test.mjs           node --test
+tests/fixtures/<site>/*.html    real captures (youtube, tiktok, reddit) or SYNTHETIC (x, instagram, facebook, linkedin); see tests/fixtures/README.md
+tests/corpus/ai.json, human.json  golden set
+scripts/build-mac.sh, build-ios.sh, install-iphone.sh, test.sh
+docs/STATUS.md                  what is verified / synthetic / missing
 docs/                           this file, research/, USER-GUIDE.md
 ```
-Rules: agents only write the files they own. Needed changes to someone else's file go in the agent's
-return value under `requests`. Nobody runs git. Nobody edits project.yml except swift-app.
 
 ## 2. Script loading model (plain scripts, one namespace)
 Every extension script is a classic script that attaches to `globalThis.NoSlop` (create if missing).
@@ -100,8 +98,8 @@ Tests load the same files with jsdom via `tests/helpers/load.mjs`: `const {windo
 }
 ```
 Seed content comes from docs/research/slop-detection-prior-art.md §7 (JSON block) and the selector
-tables in docs/research/platform-dom-and-ai-labels.md §2. Use ONLY MIT-licensed sources (listed in
-the report §1.1); AiSList (CC BY-NC) and OpenSlop (PolyForm NC) are NOT bundled — the app offers
+tables in docs/research/platform-dom-and-ai-labels.md §2. Only MIT-licensed sources (listed in that
+report §1.1) are bundled; AiSList (CC BY-NC) and OpenSlop (PolyForm NC) are not, the app offers
 "Import list from URL" instead. All regexes are strings (JSON) compiled once, case-insensitive, unicode.
 
 ## 4. Engine contract (lib/engine.js)
@@ -127,9 +125,10 @@ NoSlop.engine.start({ adapter, rules, host })   // host: see §6
 //   tabs do not clobber each other, 12 s debounce + flush on pagehide/visibilitychange, row cap halved on a rejected write; manifest asks
 //   for unlimitedStorage). A FAILED enrich (timeout/429/host refused) is never a result: enriched stays false, retried after a doubling
 //   backoff (60 s, max 3 attempts per page life). settings.enabled=false / sites.<site>.mode='off' stop enrich and surface hides too.
-// Hidden-item stub: unless settings.showStubs===false, insert a compact .noslop-stub ("Hidden: AI content — <reason> · Show · Never show @author");
-//   adapter.stubPlacement(el,item) -> 'inside' (el.firstChild, default) | 'before' (previous sibling + .noslop-hidden--host display:none on el,
-//   for shadow hosts such as a bare reddit shreddit-post whose shadow chrome the child-hiding CSS cannot reach). Un-hide restores `muted`.
+// Hidden-item stub: unless settings.showStubs===false, insert a compact .noslop-stub (label "Hidden: AI content", the reason, a Show button,
+//   a "Never show @author" button); adapter.stubPlacement(el,item) -> 'inside' (el.firstChild, default) | 'before' (previous sibling +
+//   .noslop-hidden--host display:none on el, for shadow hosts such as a bare reddit shreddit-post whose shadow chrome the child-hiding CSS
+//   cannot reach). Un-hide restores `muted`.
 //   Show -> unhide this one (session allow); Never -> settings.blockedAccounts[site].push(author) via host.
 // Auto-promotion: N (settings.autoPromote.hits, default 3) tier-0/1 hits on the same author -> added to blockedAccounts (reversible in the app/popup).
 //   Requires a STABLE identifier (author.handle || author.id; never a display name); account:*, ad:* and label:reddit_flair verdicts never promote.
@@ -157,7 +156,7 @@ Item shape:
 ```
 Verdict actions: `'hide' | 'dim' | 'none'`. `reasons` are short machine ids (`label:youtube_badge`, `hashtag:#aiart`, `account:block`, `style:contrast_pivot`).
 
-## 5. Scorer contract (lib/scorer.js) — pure, no DOM, fully unit-tested
+## 5. Scorer contract (lib/scorer.js): pure, no DOM, fully unit-tested
 `NoSlop.scorer.score(item, rules, settings, site) -> verdict`.
 Tiers: 0 platform label (1.5) · 1 disclosure / hashtags / tool names / chatbot residue / prompt metadata · 2 accounts
 (user block list = 1.5, seed list = 1.0, allow list -> action none always) · 3 style (sum capped at rules.scoring.styleCap; can only reach 'dim').
@@ -165,7 +164,7 @@ Mode thresholds from rules.scoring.modes[settings.sites[site].mode]; mode 'off' 
 Custom phrases/hashtags from settings score 1.0. Promoted/ads: hide only when settings.surfaces.hideAds.
 Golden-set gate (tests/corpus): on human.json, hide = 0 and dim <= 2 %; on ai.json, labelled/disclosed items hide >= 95 %.
 
-## 6. Host contract (lib/host-extension.js; a WKWebView shim implements the same)
+## 6. Host contract (lib/host-extension.js; the WKWebView shim implements the same)
 ```js
 NoSlop.host = {
   getSettings(): Promise<Settings>, onSettingsChanged(cb), patchSettings(partial): Promise<Settings>,
@@ -207,20 +206,20 @@ Sync: last-writer-wins on `updatedAt`. Background pulls shared settings on start
 Tabs/sidebar: **Home** (status + today's counts from App Group stats, "Enable in Safari" steps per platform),
 **Sites** (per-site mode strict/balanced/off, surface toggles, YouTube prefetch), **Lists** (blocked/allowed accounts, custom phrases/hashtags,
 import list from URL), **Platform controls** (paste-lists + deep links from rules.platformActions: X muted words, Instagram Hidden Words / Your Algorithm,
-TikTok AIGC slider path, YouTube "Don't recommend"), **Feeds** (only when `NOSLOP_CLEAN_FEEDS` is defined — Debug/sideload builds: WKWebView tabs for
-instagram.com, x.com, m.youtube.com with the extension scripts injected at documentStart in `.defaultClient` world via a `host-webview.js` shim),
-**About** (the honest ceiling). App writes settings to App Group with `updatedAt`; extension picks them up (see §7).
-macOS: `SFSafariApplication.showPreferencesForExtension(withIdentifier: "com.szwedk.noslop.Extension")`. iOS: deep link to Settings is not possible; show steps.
-App icon: generate a 1024 px PNG programmatically (dark rounded square, white slashed-circle glyph) into `App/Shared/Assets.xcassets/AppIcon.appiconset`.
+TikTok AIGC slider path, YouTube "Don't recommend"), **Feeds** (only when `NOSLOP_CLEAN_FEEDS` is defined, i.e. Debug/sideload builds: WKWebView tabs for
+instagram.com, x.com, m.youtube.com with the extension scripts injected at documentStart in `.defaultClient` world via the `host-webview.js` shim),
+**About** (the honest ceiling). The app writes settings to the App Group with `updatedAt`; the extension picks them up (see §7).
+macOS: `SFSafariApplication.showPreferencesForExtension(withIdentifier: "com.szwedk.noslop.Extension")`. iOS: no deep link to Settings exists; the app shows the steps.
+App icon: a 1024 px PNG generated programmatically (dark rounded square, white slashed-circle glyph) into `App/Shared/Assets.xcassets/AppIcon.appiconset`.
 
 ## 9. Chrome build (tools/build-chrome.mjs)
 Copy Extension/Resources to dist/chrome; rewrite manifest: `background.service_worker` (importScripts the same background.js), add `action` popup,
 drop `browser_specific_settings`, prepend `globalThis.browser ??= chrome;` polyfill to each script. Load unpacked for smoke tests.
 
-## 10. Verification bar before "done"
+## 10. Verification bar
 `scripts/test.sh` = `npm test` (node --test "tests/**/*.test.mjs"; a bare `node --test tests/` fails on Node 26) · `npm run build:rules -- --check` ·
 `node --check` on every extension script · `npm run build:chrome` (dist/chrome; exits 1 if a manifest-referenced file is missing) · macOS signed build +
 `node tools/check-bundle.mjs build/NoSlop.app` · iOS signed device build + bundle check (`NOSLOP_SKIP_IOS=1` skips it; `NOSLOP_NO_APP_GROUP=1 scripts/build-ios.sh`
 sideloads without app<->extension sync while the Apple PLA is unaccepted) · live smoke: inject the content scripts into youtube.com in a browser and
-observe hides/dims with reasons (card hides arrive via the watch-HTML prefetch, a second or two after render) · adversarial review (correctness under
-virtualization, false-positive risk, Safari-iOS API compatibility) with fixes applied. Current state: docs/STATUS.md.
+observe hides/dims with reasons (card hides arrive via the watch-HTML prefetch, a second or two after render) · review for correctness under
+virtualization, false-positive risk and Safari-iOS API compatibility. Current state: docs/STATUS.md.

@@ -1,7 +1,7 @@
 # reddit.com fixtures — capture notes
 
-Captured 2026-11-02 (UTC ~23:05). **reddit.com is blocked in the Claude Browser pane**
-("not allowed due to safety restrictions"), and `https://www.reddit.com/r/aiArt/` fetched with
+Captured 2026-11-02 (UTC ~23:05). **reddit.com could not be loaded in the headless browser**,
+and `https://www.reddit.com/r/aiArt/` fetched with
 curl returns the "Reddit - Prove your humanity" reCAPTCHA page (not bypassed). The fixtures were
 instead taken from Reddit's own feed-pagination endpoint, which returns the identical
 server-rendered `shreddit-post` light DOM that `shreddit-feed` inserts when you scroll:

@@ -10,7 +10,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIG="${CONFIG:-Debug}"
-DD="${DERIVED_DATA:-/tmp/claude-501/noslop-dd-ios}"
+DD="${DERIVED_DATA:-${TMPDIR:-/tmp}/noslop-dd-ios}"
 KEY_PATH="${ASC_KEY_PATH:-$HOME/.appstoreconnect/private_keys/AuthKey_83Z56LMU9Y.p8}"
 KEY_ID="${ASC_KEY_ID:-83Z56LMU9Y}"
 ISSUER_ID="${ASC_ISSUER_ID:-d14468ee-5a66-4a45-9936-74e3e096cae5}"

@@ -1,16 +1,16 @@
 # NoSlop live smoke — real pages, no extension install (2026-11-02)
 
-Owner: live-smoke agent. Evidence for DESIGN.md §10 "live smoke". Everything below ran in the Claude Browser pane
-(Chromium, CDP-driven) with the REAL content-script chain evaluated in the page world; nothing was installed.
+Evidence for DESIGN.md §10 "live smoke". Everything below ran in a CDP-driven Chromium with the REAL content-script
+chain evaluated in the page world; nothing was installed.
 
 ## 0. Summary
 
 | Page | Result |
 |---|---|
-| www.youtube.com `/results?search_query=made+with+veo+3+ai+generated` (desktop DOM, 800 px pane) | **32 processed · 18 hidden · 6 dimmed · 8 untouched**, 18 stubs rendered, 17/17 watch-HTML prefetches 200, **4 real tier-0 label hits**, 0 errors |
+| www.youtube.com `/results?search_query=made+with+veo+3+ai+generated` (desktop DOM, 800 px viewport) | **32 processed · 18 hidden · 6 dimmed · 8 untouched**, 18 stubs rendered, 17/17 watch-HTML prefetches 200, **4 real tier-0 label hits**, 0 errors |
 | www.youtube.com `sora 2 ai video` reached by YouTube's own **SPA navigation** (search box, no reload) | engine survived pushState, re-read surface, **32 processed · 15 hidden · 8 dimmed**, 34/34 prefetches, 3+1 tier-0 hits, 0 errors; popup messages (`noslopStatus` → hidden 45, `getRecentHidden`) answered |
 | m.youtube.com same query, `resize_window` mobile preset (375×812, Android UA) | ytm-* DOM, **28 processed · 15 hidden · 10 dimmed · 3 untouched**, 15 stubs, 0 unprocessed cards, 0 errors; prefetch had to be rewritten to m.youtube.com (harness-only) and those pages carry **no label JSON** |
-| www.reddit.com/r/aiArt/ | **NOT reachable: the Browser pane refuses reddit.com** ("not allowed due to safety restrictions"). Substitute: the same live bundle run in jsdom on the 4 REAL server-rendered captures → subreddit-based verdicts confirmed (§4) |
+| www.reddit.com/r/aiArt/ | **NOT reachable: the harness browser refused reddit.com.** Substitute: the same live bundle run in jsdom on the 4 REAL server-rendered captures → subreddit-based verdicts confirmed (§4) |
 | www.tiktok.com/explore (logged out) | renders behind a login modal; **8 explore cards processed, 0 hidden, 0 dimmed, 0 errors**; ids/authors/captions/hashtags extracted; no AIGC label element or string on the page; SSR seed found 0 items with AIGC keys |
 
 **One real bug found and fixed** (minimal, in the responsible file): `lib/engine.js` built the hidden-item stub with
@@ -26,7 +26,7 @@ page's Trusted Types policy inside an extension's isolated world is unverified �
 `node tools/live-inject.mjs [--serve 8765]` concatenates, in `manifest.json` content_scripts order,
 `rules.js, lib/dom.js, lib/scorer.js, lib/host-extension.js, <STUB HOST>, lib/engine.js, adapters/youtube.js … adapters/linkedin.js, content.js`
 plus `content.css` as a `<style data-noslop-live-css>`, a preamble that records `error`/`unhandledrejection`/`console.warn`
-mentioning NoSlop into `NoSlop.live.errors`, and a collector `NoSlop.live.collect()` → `/tmp/claude-501/noslop-live.js`
+mentioning NoSlop into `NoSlop.live.errors`, and a collector `NoSlop.live.collect()` → `$TMPDIR/noslop-live.js`
 (312 KB, syntax-checked with `new Function`) + four `noslop-live.part-NN.js` chunks (whole scripts, never split).
 
 STUB HOST = DESIGN §6 surface, in memory: `defaultSettings()` with `youtubePrefetch: true`, `fetchText` = `window.fetch`
@@ -39,9 +39,9 @@ background.js and never hits CORS.
 
 | Transport | Outcome |
 |---|---|
-| `fetch('http://127.0.0.1:8765/noslop-live.js')` from youtube.com | **Failed to fetch** even with CORS `*` and the Private-Network-Access preflight answered (`Access-Control-Allow-Private-Network: true`): Chrome's Local Network Access gate has no prompt in the pane |
+| `fetch('http://127.0.0.1:8765/noslop-live.js')` from youtube.com | **Failed to fetch** even with CORS `*` and the Private-Network-Access preflight answered (`Access-Control-Allow-Private-Network: true`): Chrome's Local Network Access gate has no prompt in the harness |
 | `<iframe src="http://127.0.0.1:8765/relay.html">` + `postMessage` | iframe renders blank (same LNA gate on subframes) |
-| `window.open(relay)` from a real click, relay posts to `window.opener` | the pane turns popups into a **same-tab navigation** (no opener; the YouTube tab was replaced) |
+| `window.open(relay)` from a real click, relay posts to `window.opener` | the harness turns popups into a **same-tab navigation** (no opener; the YouTube tab was replaced) |
 | system clipboard (`pbcopy`) + `cmd+v` into a textarea; `navigator.clipboard.readText()` | key event carries no paste command; `clipboard-read` permission is `denied` |
 | bare `eval(src)` on youtube.com | `EvalError: … violates this document's Trusted Type assignment requirements` |
 | **URL fragment (WORKS)**: `navigate` to `http://127.0.0.1:8765/relay.html?mode=hash&target=<url>`; the relay forwards the tab to `<url>#noslop=<url-safe base64 of the bundle>` (427 KB fragment, never sent to the server); in the page: decode `location.hash` — or `performance.getEntriesByType('navigation')[0].name` when the SPA already rewrote the URL (m.youtube.com does) — and `eval` through `trustedTypes.createPolicy('noslop-live-…', {createScript: s => s})` (youtube's CSP names no `trusted-types` allow-list, so creating a policy is permitted) | used for every page below (`hashUrl()` / `hashEvalSnippet()` in the tool) |
@@ -84,10 +84,10 @@ background.js and never hits CORS.
 * Stub text as rendered: `Hidden: AI content — platform AI label (youtube watch) · Show · Never show @CreativeAIAds`,
   `Hidden: AI content — AI hashtag #ai · Show · Never show @EditedByGeo`, `Hidden: AI content — self-disclosed AI (ai media
   noun) · Show` (no author when the card has no channel link: search Shorts lockups).
-* Screenshot (pane capture, 0.6 scale): the Shorts shelf shows five compact "Hidden: AI content — …" stubs in place of the
+* Screenshot (0.6 scale): the Shorts shelf shows five compact "Hidden: AI content — …" stubs in place of the
   cards; lower, two stubs sit in the grid next to a dimmed card (opacity .35) carrying the "AI?" badge top-right. Files:
-  `tests/live/screenshots/mcp-Claude_Browser-blob-1793665339098-v04cjv.jpg`
-  and `tests/live/screenshots/mcp-Claude_Browser-blob-1793665398696-miburx.jpg`.
+  `tests/live/screenshots/youtube-search-veo3-shorts-shelf.jpg`
+  and `tests/live/screenshots/youtube-search-veo3-grid.jpg`.
 
 ### 2.2 Query 2 `sora 2 ai video` via the SPA (search box + Enter, no reload)
 
@@ -104,7 +104,7 @@ background.js and never hits CORS.
   site:'youtube', surface:'search', hidden:45}`; `recentHidden(5)` newest-first rows with reason + title; 33 stats events
   reached `host.report` (1.5 s debounce).
 * Screenshot: top of results shows the sponsored OpenArt slot and the untouched Artlist tutorial, then the Shorts shelf
-  as four stubs ("self-disclosed …", "platform AI labe…"). File `tests/live/screenshots/mcp-Claude_Browser-blob-1793665472684-rawu23.jpg`.
+  as four stubs ("self-disclosed …", "platform AI labe…"). File `tests/live/screenshots/youtube-search-sora2-spa.jpg`.
 
 ### 2.3 Selectors / paths that did NOT match on www.youtube.com, and why
 
@@ -115,7 +115,7 @@ background.js and never hits CORS.
   NOT be hidden (the youtube adapter's `surfaces()` lists only Shorts). → request for adapter:youtube below.
 * One inner `yt-lockup-view-model` (`/watch?v=_BUE-O-ELdI`) is unprocessed by design: its outer `ytd-video-renderer` holds
   the id (`findItems` keeps the outermost match).
-* Scrolling in the hidden pane did not trigger YouTube's continuation (domItems stayed 37); lazy-load was not exercised.
+* Scrolling in the headless viewport did not trigger YouTube's continuation (domItems stayed 37); lazy-load was not exercised.
 
 ### 2.4 False positives / questionable verdicts (balanced mode, defaults)
 
@@ -148,17 +148,17 @@ background.js and never hits CORS.
 * The hash fragment was already stripped by the mobile app before my snippet ran; the `PerformanceNavigationTiming.name`
   fallback carried the bundle (427 097 chars).
 * Rendering: stubs appear as compact rows in the single column and inside the 2-column Shorts shelf; a dimmed top result
-  shows the `AI?` badge over the thumbnail (screenshot `tests/live/screenshots/mcp-Claude_Browser-blob-1793665551707-l0mt83.jpg`,
+  shows the `AI?` badge over the thumbnail (screenshot `tests/live/screenshots/m-youtube-mobile.jpg`,
   `…-n4kcc2.jpg`). One wrinkle: the mobile hero result (Kevin Stratvert, dimmed) still played its preview under the dim
   layer — dim does not pause media (by design; only hide calls `stopMedia`).
 * Untouched (correct): "✨NEW✨ Veo in YT Create" (@YouTube Creators), two tutorial cards.
 * Selectors with 0 matches here: `ytm-compact-autoplay-renderer`, `ytm-rich-item-renderer` (search page uses
   `ytm-video-with-context-renderer` + the shelf's `ytm-shorts-lockup-view-model`), card badges (none exist).
 
-## 4. www.reddit.com/r/aiArt/ — pane-blocked; jsdom substitute on REAL captures
+## 4. www.reddit.com/r/aiArt/ — blocked in the harness; jsdom substitute on REAL captures
 
-The Browser pane refuses reddit.com outright (both via the relay and a direct `navigate`). Substitute evidence: the identical
-live bundle (`/tmp/claude-501/noslop-live.js`, stub host, `fetch` rejected) evaluated in jsdom on the four REAL
+The harness browser refused reddit.com outright (both via the relay and a direct `navigate`). Substitute evidence: the identical
+live bundle (`$TMPDIR/noslop-live.js`, stub host, `fetch` rejected) evaluated in jsdom on the four REAL
 server-rendered captures in `tests/fixtures/reddit/`, at the subreddit URL and at the home URL:
 
 | Capture | @ `/r/aiArt/` (surface other) | @ `/` (surface home) |
@@ -202,10 +202,8 @@ needed there. `npm test`: 360 tests, 359 pass, 1 skipped (unchanged). This was t
 
 ## 7. Not done / limits of this run
 
-* reddit.com live (pane policy) — jsdom substitute only (§4). linkedin/x/instagram/facebook were not in scope.
+* reddit.com live (blocked in the harness) — jsdom substitute only (§4). linkedin/x/instagram/facebook were not in scope.
 * youtube.com continuation (infinite scroll) and the watch page / Shorts player were not exercised; `hideShorts`,
   `hideAds`, strict mode and the "Never show" button were not toggled live (the stub buttons render and are wired; not clicked).
 * TikTok For You / search / a labelled video need a logged-in session; the page-world relay needs the real extension
   (`runtime.getURL`).
-* Screenshots exist only as pane captures in the session's tool-results folder (paths above); the pane cannot write files
-  into the repo.

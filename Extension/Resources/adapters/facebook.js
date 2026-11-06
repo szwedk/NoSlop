@@ -1,4 +1,4 @@
-// NoSlop — facebook.com adapter (owner: adapter:facebook). Plain classic script, no modules.
+// NoSlop — facebook.com adapter. Plain classic script, no modules.
 // Runs in Safari 17+ (iOS/macOS) and Chrome 121+. Contract: adapters/_template.js, docs/DESIGN.md §4.
 //
 // Selectors come from NoSlop.rules.sites.facebook (rules.json), whose _src is
